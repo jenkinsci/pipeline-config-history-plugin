@@ -1,0 +1,11 @@
+*.iml
+*.ipr
+*.iws
+.idea/
+.classpath
+.directory
+.project
+.settings/
+.checkstyle/
+target/
+work/

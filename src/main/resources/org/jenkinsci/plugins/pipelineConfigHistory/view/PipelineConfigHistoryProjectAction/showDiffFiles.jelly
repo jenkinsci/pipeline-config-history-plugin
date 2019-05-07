@@ -1,0 +1,176 @@
+<!--
+ ~ The MIT License
+ ~
+ ~ Copyright (c) 2019, Robin Schulz
+ ~
+ ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+ ~ of this software and associated documentation files (the "Software"), to deal
+ ~ in the Software without restriction, including without limitation the rights
+ ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ ~ copies of the Software, and to permit persons to whom the Software is
+ ~ furnished to do so, subject to the following conditions:
+ ~
+ ~ The above copyright notice and this permission notice shall be included in
+ ~ all copies or substantial portions of the Software.
+ ~
+ ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ ~ THE SOFTWARE.
+ -->
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+    <l:layout title="Pipeline Configuration History">
+
+        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipelineConfigHistory/css/style.css"></link>
+
+        <st:include it="${it.project}" page="sidepanel.jelly" />
+        <l:main-panel>
+            <j:set var="timestamp1" value="${request.getParameter(&quot;timestamp1&quot;)}"/>
+            <j:set var="timestamp2" value="${request.getParameter(&quot;timestamp2&quot;)}"/>
+            <j:set var="matches" value="${it.getMatchingFiles(timestamp1, timestamp2)}"/>
+            <j:set var="cuttingString1" value="${it.getRevision(timestamp1).toString()}"/>
+            <j:set var="cuttingString2" value="${it.getRevision(timestamp2).toString()}"/>
+            <j:set var="anyMatchUnequal" value="${it.isAnyMatchUnequal(timestamp1, timestamp2)}"/>
+            <h1>${%Pipeline Configuration History}</h1>
+
+            <j:choose>
+                <j:when test="${anyMatchUnequal}">
+                    <table class="center sortable" style="width:100%">
+                        <caption>
+                            ${it.getProject().getFullName()} Differences
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th>
+                                    Files (${it.getTimestampWellFormatted(timestamp1)}
+                                    <j:if test="${it.isBuiltfromReplay(timestamp1)}">
+                                        , Replay from build
+                                        ${it.getOriginalNumberFromReplayBuild(timestamp1)}
+                                    </j:if>
+                                    )
+                                </th>
+                                <th>
+                                    Files (${it.getTimestampWellFormatted(timestamp2)}
+                                    <j:if test="${it.isBuiltfromReplay(timestamp2)}">
+                                        , Replay from build
+                                        ${it.getOriginalNumberFromReplayBuild(timestamp2)}
+                                    </j:if>
+                                    )
+                                </th>
+                                <j:if test="${anyMatchUnequal}">
+                                    <th>
+                                        Show Diff
+                                    </th>
+                                </j:if>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <j:forEach var="match" items="${matches}">
+                                <tr class="alternate">
+                                    <j:choose>
+                                        <j:when test="${match.getKind() == match.UNEQUAL}">
+                                            <!--Not the build.xml-->
+                                            <td class="unequal">
+                                                <j:choose>
+                                                    <j:when test="${match.getFile1().getName().equals(&quot;build.xml&quot;)}">
+                                                        Jenkinsfile
+                                                        <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                            &#128279;
+                                                        </a>
+                                                    </j:when>
+                                                    <j:otherwise>
+                                                        ${match.getFile1().toString().replaceFirst(cuttingString1, "").replace('/', ' » ')}
+                                                        <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}" style="text-decoration:none">
+                                                            &#128279;
+                                                        </a>
+                                                    </j:otherwise>
+                                                </j:choose>
+                                            </td>
+                                            <td class="unequal">
+                                                <j:choose>
+                                                    <j:when test="${match.getFile2().getName().equals(&quot;build.xml&quot;)}">
+                                                        Jenkinsfile
+                                                        <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                            &#128279;
+                                                        </a>
+                                                    </j:when>
+                                                    <j:otherwise>
+                                                        ${match.getFile2().toString().replaceFirst(cuttingString2, "").replace('/', ' » ')}
+                                                        <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}" style="text-decoration:none">
+                                                            &#128279;
+                                                        </a>
+                                                    </j:otherwise>
+                                                </j:choose>
+                                            </td>
+                                            <td>
+                                                <j:choose>
+                                                    <j:when test="${match.getFile1().getName().equals(&quot;build.xml&quot;)}">
+                                                        <!--build.xml-->
+                                                        (<a href="showSingleDiff?timestamp1=${timestamp1}&amp;timestamp2=${timestamp2}&amp;fileHash1=${match.getFile1().hashCode()}&amp;fileHash2=${match.getFile2().hashCode()}&amp;buildXmlDisplayType=Jenkinsfile">
+                                                        Show Diff
+                                                    </a>)
+
+                                                    </j:when>
+                                                    <j:otherwise>
+                                                        (<a href="showSingleDiff?timestamp1=${timestamp1}&amp;timestamp2=${timestamp2}&amp;fileHash1=${match.getFile1().hashCode()}&amp;fileHash2=${match.getFile2().hashCode()}">
+                                                        Show Diff
+                                                    </a>)
+                                                    </j:otherwise>
+                                                </j:choose>
+
+                                                <j:if >
+                                                </j:if>
+                                            </td>
+                                        </j:when>
+                                        <j:when test="${match.getKind() == match.EQUAL}">
+                                            <!--Show nothing.-->
+                                        </j:when>
+                                        <j:when test="${match.getKind() == match.SINGLE_1}">
+                                            <td class="single">
+                                                ${match.getFile1().toString().replaceFirst(cuttingString1, "").replace('/', ' » ')}
+                                                <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}" style="text-decoration:none">
+                                                    &#128279;
+                                                </a>
+                                            </td>
+                                            <td>
+                                            </td>
+                                            <j:if test="${anyMatchUnequal}">
+                                                <td>
+                                                    <!--existent but empty-->
+                                                </td>
+                                            </j:if>
+                                        </j:when>
+                                        <j:otherwise>
+                                            <!--match.getKind() == match.SINGLE_2-->
+                                            <td>
+                                            </td>
+                                            <td class="single">
+                                                ${match.getFile2().toString().replaceFirst(cuttingString2, "").replace('/', ' » ')}
+                                                <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}" style="text-decoration:none">
+                                                    &#128279;
+                                                </a>
+                                            </td>
+                                            <j:if test="${anyMatchUnequal}">
+                                                <td>
+                                                    <!--existent but empty-->
+                                                </td>
+                                            </j:if>
+                                        </j:otherwise>
+                                    </j:choose>
+                                </tr>
+                            </j:forEach>
+                        </tbody>
+                    </table>
+                </j:when>
+                <j:otherwise>
+                    <!--no diff existing-->
+                    <table><caption style="width:100%">${it.getProject().getFullName()}: Revisions are not different.</caption></table>
+                </j:otherwise>
+            </j:choose>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>

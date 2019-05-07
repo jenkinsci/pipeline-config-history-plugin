@@ -1,0 +1,234 @@
+/*
+ * This is a modified version of GetDiffLines from jobConfigHistory, which is to be found here:
+ * https://github.com/jenkinsci/jobConfigHistory-plugin
+ * The original license:
+ *
+ * The MIT License
+ *
+ * Copyright 2013 Mirko Friedenhagen, Kojima Takanori.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+package org.jenkinsci.plugins.pipelineConfigHistory.view;
+
+import difflib.Chunk;
+import difflib.Delta;
+import difflib.DiffRow;
+import difflib.DiffRowGenerator;
+import difflib.DiffUtils;
+import difflib.Patch;
+
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
+/**
+ * Returns side-by-side (i.e. human-readable) diff view lines.
+ *
+ * @author Mirko Friedenhagen
+ * @author Kojima Takanori
+ */
+public class GetDiffLines {
+
+  /**
+   * Lines.
+   */
+  private final List<String> diffLines;
+  /**
+   * View.
+   */
+  private final SideBySideView view;
+  /**
+   * Generator for diff rows.
+   */
+  private final DiffRowGenerator dfg;
+
+  /**
+   * Constructor.
+   *
+   * @param diffLines to construct the {@link SideBySideView} for.
+   */
+  public GetDiffLines(List<String> diffLines) {
+    final DiffRowGenerator.Builder builder = new DiffRowGenerator.Builder();
+    builder.columnWidth(Integer.MAX_VALUE);
+    dfg = builder.build();
+    this.diffLines = diffLines;
+    view = new SideBySideView();
+  }
+
+  /**
+   * Returns a list of {@link SideBySideView} lines.
+   *
+   * @return list of {@link SideBySideView} lines.
+   */
+  public List<SideBySideView.Line> get() {
+    final Patch diff = DiffUtils.parseUnifiedDiff(diffLines);
+    int previousLeftPos = 0;
+    for (final Delta delta : diff.getDeltas()) {
+      previousLeftPos = deltaLoop(delta, previousLeftPos);
+    }
+    view.clearDuplicateLines();
+    return view.getLines();
+  }
+
+  /**
+   * DeltaLoop.
+   */
+  static class DeltaLoop {
+
+    private static final String DIFF_ORIGINAL = "diff_original";
+    private static final String DIFF_REVISED = "diff_revised";
+
+    /**
+     * View.
+     */
+    private final SideBySideView view;
+    /**
+     * Dfg.
+     */
+    private final DiffRowGenerator dfg;
+    /**
+     * delta.
+     */
+    private final Delta delta;
+    /**
+     * Current leftPos.
+     */
+    private int leftPos;
+    /**
+     * Current rightPos.
+     */
+    private int rightPos;
+
+    /**
+     * The constructor.
+     *
+     * @param view  to extend.
+     * @param dfg   dfg
+     * @param delta delta
+     */
+    public DeltaLoop(SideBySideView view, DiffRowGenerator dfg,
+                     Delta delta) {
+      this.view = view;
+      this.dfg = dfg;
+      this.delta = delta;
+    }
+
+    /**
+     * Loop through Delta.
+     *
+     * @param previousLeftPos previous indentation
+     * @return current indentation
+     */
+    int loop(int previousLeftPos) {
+      final Chunk original = delta.getOriginal();
+      final Chunk revised = delta.getRevised();
+      @SuppressWarnings("unchecked") final List<DiffRow> diffRows = dfg.generateDiffRows(
+          (List<String>) original.getLines(),
+          (List<String>) revised.getLines());
+      // Chunk#getPosition() returns 0-origin line numbers, but we need
+      // 1-origin line numbers
+      leftPos = original.getPosition() + 1;
+      rightPos = revised.getPosition() + 1;
+      if (previousLeftPos > 0 && leftPos - previousLeftPos > 1) {
+        final SideBySideView.Line skippingLine = new SideBySideView.Line();
+        skippingLine.setSkipping(true);
+        view.addLine(skippingLine);
+      }
+      for (final DiffRow row : diffRows) {
+        previousLeftPos = processDiffRow(row);
+      }
+      return previousLeftPos;
+    }
+
+    /**
+     * Processes one DiffRow.
+     *
+     * @param row to process
+     * @return indentation
+     */
+    int processDiffRow(final DiffRow row) {
+      final DiffRow.Tag tag = row.getTag();
+      final SideBySideView.Line line = new SideBySideView.Line();
+      final SideBySideView.Line.Item left = line.getLeft();
+      final SideBySideView.Line.Item right = line.getRight();
+
+
+      switch (tag) {
+        case INSERT:
+          left.setCssClass(DIFF_ORIGINAL);
+          right.setLineNumber(rightPos);
+          right.setText(row.getNewLine());
+          right.setCssClass(DIFF_REVISED);
+          rightPos++;
+          break;
+        case CHANGE:
+          if (StringUtils.isNotEmpty(row.getOldLine())) {
+            left.setLineNumber(leftPos);
+            left.setText(row.getOldLine());
+            leftPos++;
+          }
+          left.setCssClass(DIFF_ORIGINAL);
+          if (StringUtils.isNotEmpty(row.getNewLine())) {
+            right.setLineNumber(rightPos);
+            right.setText(row.getNewLine());
+            rightPos++;
+          }
+          right.setCssClass(DIFF_REVISED);
+          break;
+        case DELETE:
+          left.setLineNumber(leftPos);
+          left.setText(row.getOldLine());
+          left.setCssClass(DIFF_ORIGINAL);
+          leftPos++;
+          right.setCssClass(DIFF_REVISED);
+          break;
+        case EQUAL:
+          left.setLineNumber(leftPos);
+          left.setText(row.getOldLine());
+          leftPos++;
+          right.setLineNumber(rightPos);
+          right.setText(row.getNewLine());
+          rightPos++;
+          break;
+         default:
+           throw new IllegalStateException("Unknown tag pattern: " + tag);
+      }
+
+      line.setTag(tag);
+      view.addLine(line);
+      return leftPos;
+    }
+
+  }
+
+  /**
+   * Extends view with lines of a single delta.
+   *
+   * @param delta           to inspect.
+   * @param previousLeftPos indentation.
+   * @return new previousLeftPos
+   */
+  int deltaLoop(final Delta delta, int previousLeftPos) {
+    return new DeltaLoop(view, dfg, delta).loop(previousLeftPos);
+  }
+
+}
+

@@ -1,0 +1,101 @@
+/*
+ * The MIT License
+ *
+ * Copyright (c) 2019, Robin Schulz
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+.diffLineWrapper-left {
+    border-right: 0px solid white !important;
+    border-left: 15px solid white !important;
+    border-bottom: 15px solid white !important;
+
+    margin-left: 15px;
+
+    height:100%;
+}
+
+.diffLineWrapper-right {
+    border-right: 15px solid white !important;
+    border-left: 0px solid white !important;
+    border-bottom: 15px solid white !important;
+
+    height:100%;
+ }
+
+.diffLineTable {
+    width:100%;
+    height:100%;
+}
+
+
+pre {
+	margin: 0;
+	white-space: pre-wrap;
+
+	background-color: inherit !important;
+}
+
+table th.lineNum {
+    width: 1%;
+    min-width:1%;
+    min-height:1%;
+    height:1%;
+    white-space: nowrap;
+    padding: 0px;
+	padding-left: 3px;
+	padding-right: 3px;
+    border-bottom: 0px;
+    border-radius: 0px;
+
+    color: #3762a8 !important;
+    font-size: 14px;
+    background-color: #f7f7f7;
+}
+
+td.skipping {
+    //height:100%;
+	background-color: #EAF2F5 !important;
+}
+
+td.diff_original {
+    //height:100%;
+	background-color: #FF8C8C !important;
+}
+
+td.diff_revised {
+    //height:100%;
+	background-color: #CCCCFF !important;
+}
+
+
+table td {
+    padding:0px !important;
+    height:20px;
+    border-top: 0px !important;
+    text-align:left !important;
+}
+
+code {
+    padding:0px !important;
+	background-color: inherit !important;
+}
+
+
+

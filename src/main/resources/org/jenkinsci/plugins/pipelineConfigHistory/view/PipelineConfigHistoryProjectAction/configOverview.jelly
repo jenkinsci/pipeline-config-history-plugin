@@ -1,0 +1,132 @@
+<!--
+ ~ The MIT License
+ ~
+ ~ Copyright (c) 2019, Robin Schulz
+ ~
+ ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+ ~ of this software and associated documentation files (the "Software"), to deal
+ ~ in the Software without restriction, including without limitation the rights
+ ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ ~ copies of the Software, and to permit persons to whom the Software is
+ ~ furnished to do so, subject to the following conditions:
+ ~
+ ~ The above copyright notice and this permission notice shall be included in
+ ~ all copies or substantial portions of the Software.
+ ~
+ ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ ~ THE SOFTWARE.
+ -->
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
+    <l:layout title="Pipeline Configuration History">
+
+        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipelineConfigHistory/css/style.css"></link>
+
+        <st:include it="${it.project}" page="sidepanel.jelly" />
+        <l:main-panel>
+            <h1>${%Pipeline Configuration History}</h1>
+            <j:set var="timestamp" value="${request.getParameter(&quot;timestamp&quot;)}"/>
+            <j:set var="rootDirectory" value="${it.getRevision(timestamp)}"/>
+            <j:set var="allFiles" value="${it.getAllFilesExceptHistoryXmlFromDirectory(rootDirectory)}"/>
+            <j:set var="cuttingString" value="${it.getRevision(timestamp).toString()}"/>
+            <table class="sortable" style="width:100%">
+                <caption>
+                    ${it.getProject().getFullName()}: Revision
+                    <span class="target">
+                        ${it.getTimestampWellFormatted(timestamp)}
+                        <j:if test="${it.isBuiltfromReplay(timestamp)}">
+                            (Replay from build
+                            ${it.getOriginalNumberFromReplayBuild(timestamp)})
+                        </j:if>
+
+                    </span>
+                </caption>
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Download</th>
+                        <th>Show File</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <j:forEach var="realFile" items="${allFiles}">
+
+                        <!--j:set var="fileNameDisplayAble" value="${realFile.toString().substring(realFile.toString().indexOf(it.getProject().getFullName())).replace('/', ' » ')}"/-->
+                        <j:set var="fileNameDisplayAble" value="${realFile.toString().replaceFirst(cuttingString, &quot;&quot;).replace('/', ' » ').trim()}"/>
+                        <j:if test="${fileNameDisplayAble.startsWith(&quot;» &quot;)}">
+                            <!--delete it-->
+                            <j:set var="fileNameDisplayAble" value="${fileNameDisplayAble.replaceFirst(&quot;» &quot;, &quot;&quot;)}"/>
+                        </j:if>
+                        <tr class="alternate">
+                            <td style="text-align:center">
+                                <j:choose>
+                                    <j:when test="${realFile.getName().equals(&quot;build.xml&quot;)}">
+                                        <b>Jenkinsfile</b>
+                                        <br/>
+                                        (Src:
+                                        ${it.getJenkinsfilePath()})
+                                    </j:when>
+                                    <j:otherwise>
+                                        ${fileNameDisplayAble}
+                                    </j:otherwise>
+                                </j:choose>
+                            </td>
+                            <td>
+                                <j:choose>
+                                    <j:when test="${realFile.getName().equals(&quot;build.xml&quot;)}">
+                                        <a class="download-arrow small" href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile-raw" download="Jenkinsfile">
+                                            &#11015;
+                                        </a>
+                                    </j:when>
+                                    <j:otherwise>
+                                        <a class="download-arrow small" href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=download" download="${realFile.getName()}">
+                                            &#11015;
+                                        </a>
+                                    </j:otherwise>
+                                </j:choose>
+
+                            </td>
+                            <td style="min-width:200px">
+                                <j:if test="${realFile.getName().equals(&quot;build.xml&quot;)}">
+
+                                </j:if>
+                                <j:choose>
+                                    <j:when test="${realFile.getName().equals(&quot;build.xml&quot;)}">
+                                        <span style="padding-right:5px; padding-left:5px">
+                                            <a href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile">
+                                                View Fancy
+                                            </a>
+                                        </span>
+                                        <span style="padding-right:5px; padding-left:5px">
+                                            <a href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile-raw">
+                                                (RAW)
+                                            </a>
+                                        </span>
+                                    </j:when>
+                                    <j:otherwise>
+                                        <span style="padding-right:5px; padding-left:5px">
+                                            <a href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=embedded">
+                                                View Fancy
+                                            </a>
+                                        </span>
+                                        <span style="padding-right:5px; padding-left:5px">
+                                            <a href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=raw">
+                                                (RAW)
+                                            </a>
+                                        </span>
+                                    </j:otherwise>
+                                </j:choose>
+                            </td>
+                        </tr>
+                    </j:forEach>
+                </tbody>
+            </table>
+            <br/>
+        </l:main-panel>
+    </l:layout>
+</j:jelly>
