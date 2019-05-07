@@ -80,14 +80,7 @@ public class WebTestNonScm {
       assertTrue(currentIndexPageAsText.contains("Build #1"));
       assertTrue(currentIndexPageAsText.contains("Build #2"));
 
-//
-//      final String pageAsXml = indexPage.asXml();
-//      Assert.assertTrue(pageAsXml.contains("<body class=\"composite\">"));
-//
-//      final String pageAsText = indexPage.asText();
-//      Assert.assertTrue(pageAsText.contains("Support for the HTTP and HTTPS protocols"));
     }
-//    jenkinsRule.submit(HtmlForm.)
   }
 
   private WorkflowJob createWorkflowJob(String name, String script) throws IOException {
