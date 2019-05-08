@@ -66,7 +66,7 @@ public final class PluginUtils {
    */
   public static PipelineItemHistoryDao getHistoryDao() {
     return new FilePipelineItemHistoryDao(
-        new File(Jenkins.get().getRootDir(), PipelineConfigHistoryConsts.DEFAULT_HISTORY_DIR)
+        new File(Jenkins.getInstance().getRootDir(), PipelineConfigHistoryConsts.DEFAULT_HISTORY_DIR)
     );
   }
 
@@ -142,7 +142,7 @@ public final class PluginUtils {
    * @return the associated workflowJob.
    */
   public static WorkflowJob getWorkflowJob(String fullName) {
-    Item pipelineItem = Jenkins.get().getItemByFullName(fullName);
+    Item pipelineItem = Jenkins.getInstance().getItemByFullName(fullName);
     if (!(pipelineItem instanceof WorkflowJob)) {
       throw new IllegalArgumentException(fullName + " is not an instance of WorkflowJob");
     }
@@ -186,7 +186,7 @@ public final class PluginUtils {
    * @return the current Jenkins root directory
    */
   public static File getJenkinsRootDir() {
-    return new File(Jenkins.get().root.getPath());
+    return new File(Jenkins.getInstance().root.getPath());
   }
 
   /**
@@ -204,7 +204,7 @@ public final class PluginUtils {
    * @return the missing required plugins.
    */
   public static String getMissingRequiredPlugins() {
-    List<PluginWrapper> plugins = Jenkins.get().getPluginManager().getPlugins();
+    List<PluginWrapper> plugins = Jenkins.getInstance().getPluginManager().getPlugins();
 
     HashSet<String> shortNames =
         new HashSet<>(Arrays.asList(PipelineConfigHistoryConsts.REQUIRED_PLUGINS_SHORT_NAMES));

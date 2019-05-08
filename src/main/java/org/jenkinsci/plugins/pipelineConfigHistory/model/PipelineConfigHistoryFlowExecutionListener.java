@@ -64,7 +64,7 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
 
     //get the corresponding Jenkins job and cast it to a pipeline job.
 
-    Item pipelineItem = Jenkins.get().getItemByFullName(pipelineNameOptional.get());
+    Item pipelineItem = Jenkins.getInstance().getItemByFullName(pipelineNameOptional.get());
     if (pipelineItem == null) {
       LOG.log(Level.WARNING, "pipeline item could not be found.");
       return;

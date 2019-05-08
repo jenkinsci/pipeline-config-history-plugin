@@ -168,7 +168,7 @@ public class PluginUtilsTest {
 
 	@Test
 	public void getJenkinsRootDir() {
-		assertEquals(jenkinsRule.jenkins.get().root.getPath(), PluginUtils.getJenkinsRootDir().getPath());
+		assertEquals(jenkinsRule.jenkins.getInstance().root.getPath(), PluginUtils.getJenkinsRootDir().getPath());
 	}
 
 	@Test

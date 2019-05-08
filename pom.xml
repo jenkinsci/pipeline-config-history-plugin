@@ -31,7 +31,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>3.37</version>
+        <version>3.43</version>
         <relativePath/>
     </parent>
 
@@ -43,9 +43,6 @@
 
     <properties>
         <java.level>8</java.level>
-        <!--This is the minimum version to make things work properly.-->
-        <!--"Pipeline" can only be installed with this as minimum version.-->
-        <jenkins.version>2.150.1</jenkins.version>
     </properties>
 
     <build>
@@ -75,60 +72,25 @@
     </build>
 
     <dependencies>
-        <!--WorkflowPlugin Dependencies-->
-
-        <!-- https://mvnrepository.com/artifact/org.jenkins-ci.plugins.workflow/workflow-aggregator -->
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
             <artifactId>workflow-aggregator</artifactId>
             <!--This is the lowest version that will make a hello world pipeline build and also trigger the FlowExecutionListener.-->
             <version>2.6</version>
         </dependency>
-        <!--needed for workflow-aggregator 2.6-->
-        <!-- https://mvnrepository.com/artifact/org.jenkins-ci.plugins/script-security -->
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>script-security</artifactId>
             <version>1.46</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jenkins-ci.plugins/mailer -->
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>mailer</artifactId>
             <version>1.20</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jenkins-ci.plugins.workflow/workflow-cps-global-lib -->
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-cps-global-lib</artifactId>
-            <version>2.12</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jenkins-ci.plugins.workflow/workflow-cps -->
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-cps</artifactId>
-            <version>2.57</version>
-        </dependency>
-
-
-        <!--Other plugin dependencies-->
-
-        <!-- https://mvnrepository.com/artifact/org.jenkins-ci.plugins/plain-credentials -->
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>credentials</artifactId>
-            <version>2.1.18</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.jenkins-ci.plugins/plain-credentials -->
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>plain-credentials</artifactId>
-            <version>1.3</version>
-        </dependency>
 
 
         <!--Non-Jenkins dependencies-->
-        <!-- https://mvnrepository.com/artifact/xmlunit/xmlunit -->
         <dependency>
             <groupId>org.xmlunit</groupId>
             <artifactId>xmlunit-core</artifactId>
@@ -139,18 +101,14 @@
             <artifactId>diffutils</artifactId>
             <version>1.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
 
 
         <!--test dependencies-->
-
-        <!-- https://mvnrepository.com/artifact/org.jenkins-ci.plugins.workflow/workflow-support -->
-        <dependency>
-            <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-support</artifactId>
-            <version>2.20</version>
-            <scope>test</scope>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.awaitility/awaitility -->
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
