@@ -153,7 +153,7 @@ public class WebTestNonScm {
   }
 
   @Test
-  public void test_2_configOverviewDownloadTest() throws Exception {
+  public void test_1_1_configOverviewDownloadTest() throws Exception {
     workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
 
     try (final WebClient webClient = jenkinsRule.createWebClient()) {
@@ -189,7 +189,64 @@ public class WebTestNonScm {
     }
   }
 
+  @Test
+  public void test_1_2_configOverviewShowFileTest() throws Exception {
+    workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
 
+    try (final WebClient webClient = jenkinsRule.createWebClient()) {
+      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
+      // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
+      WebClientUtil.waitForJSExec(webClient);
+
+      //don't throw exceptions. Somehow this framework won't find no stylesheets or .js files...
+      webClient.getOptions().setThrowExceptionOnScriptError(false);
+      webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+
+
+      //go to the index page of pipelineconfighistory
+      createNewBuild(workflowJob, SCRIPT);
+      currentPage = webClient.getPage(indexUrl());
+      refresh();
+
+      // go to configOverview
+      currentPage = currentPage.getAnchors()
+          .stream()
+          .filter(htmlAnchor -> htmlAnchor.getHrefAttribute().startsWith(configOverviewString))
+          .collect(Collectors.toCollection(LinkedList::new)).getFirst()
+          .click(new Event(), true);
+      refresh();
+
+
+      //test view fancy and raw
+      LinkedList<HtmlAnchor> configSingleFileAnchors = currentPage.getAnchors().stream()
+          .filter(htmlAnchor ->
+              !htmlAnchor.hasAttribute("download")
+              && htmlAnchor.getHrefAttribute().startsWith(configSingleFileString))
+          .collect(Collectors.toCollection(LinkedList::new));
+      assertEquals(2, configSingleFileAnchors.size());
+
+      //test raw
+      HtmlAnchor rawAnchor = configSingleFileAnchors.stream().filter(htmlAnchor -> htmlAnchor.getTextContent().trim().equals("(RAW)")).findAny().get();
+      currentPage = rawAnchor.click(new Event(), true);
+      WebClientUtil.waitForJSExec(webClient);
+      refresh();
+
+      assertEquals(
+          SCRIPT,
+          removeEnclosingTagFromXml(currentPage.getBody().asXml(), "body")
+      );
+
+      //test view fancy
+      HtmlAnchor viewFancyAnchor = configSingleFileAnchors.stream().filter(htmlAnchor -> htmlAnchor.getTextContent().trim().equals("View Fancy")).findAny().get();
+      currentPage = viewFancyAnchor.click(new Event(), true);
+      WebClientUtil.waitForJSExec(webClient);
+      refresh();
+
+      assertTrue(currentIndexPageAsText.contains("Jenkinsfile (Root Script)"));
+      assertTrue(currentIndexPageAsText.contains("(Src: from Pipeline-Job Configuration)"));
+      assertTrue(currentIndexPageAsText.contains(SCRIPT));
+    }
+  }
 
   private String removeEnclosingTagFromXml(String xmlString, String tag) {
     String newLineRegex = "(\r\n|\r|\n)+";
