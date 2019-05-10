@@ -84,14 +84,28 @@
                                             <a href="configOverview?timestamp=${historyDescription.getTimestamp()}">Show Configuration</a>
                                         </td>
 
+                                        <!--No need to look at the historyDescriptions.size() > 2 case
+                                        because no buttons will be shown in that case.-->
                                         <td>
-                                        <!--checked=${configNr == ...} wont work since we don't use <f:radio>-->
-                                            <input type="radio" name="timestamp1" value="${historyDescription.getTimestamp()}" checked="${configNr == 1}"/>
+                                            <j:choose>
+                                                <j:when test="${configNr == historyDescriptions.size()-1}">
+                                                    <input type="radio" name="timestamp1" value="${historyDescription.getTimestamp()}" checked="true"/>
+                                                </j:when>
+                                                <j:otherwise>
+                                                    <input type="radio" name="timestamp1" value="${historyDescription.getTimestamp()}"/>
+                                                </j:otherwise>
+                                            </j:choose>
                                         </td>
 
                                         <td>
-                                            <!--checked=${configNr == ...} wont work since we don't use <f:radio>-->
-                                            <input type="radio" name="timestamp2" value="${historyDescription.getTimestamp()}" checked="${configNr == 0}"/>
+                                            <j:choose>
+                                                <j:when test="${configNr == historyDescriptions.size()-2}">
+                                                    <input type="radio" name="timestamp2" value="${historyDescription.getTimestamp()}" checked="true"/>
+                                                </j:when>
+                                                <j:otherwise>
+                                                    <input type="radio" name="timestamp2" value="${historyDescription.getTimestamp()}"/>
+                                                </j:otherwise>
+                                            </j:choose>
                                         </td>
                                     </tr>
                                     <j:set var="configNr" value="${configNr + 1}"/>

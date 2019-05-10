@@ -4,6 +4,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebClientUtil;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import com.gargoylesoftware.htmlunit.javascript.host.Element;
 import com.gargoylesoftware.htmlunit.javascript.host.event.Event;
 import hudson.model.Job;
 import hudson.model.queue.QueueTaskFuture;
@@ -62,6 +63,7 @@ public class WebTestNonScm {
   private String currentIndexPageAsText;
   private final String configOverviewString = "configOverview";
   private final String configSingleFileString = "configSingleFile";
+  private final String showAllDiffsString = "showAllDiffs";
 
 
   @Test
@@ -246,6 +248,50 @@ public class WebTestNonScm {
       assertTrue(currentIndexPageAsText.contains("(Src: from Pipeline-Job Configuration)"));
       assertTrue(currentIndexPageAsText.contains(SCRIPT));
     }
+  }
+
+  @Test
+  public void test_2_showAllDiffsTest() throws Exception {
+    workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
+
+    try (final WebClient webClient = jenkinsRule.createWebClient()) {
+      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
+      // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
+      WebClientUtil.waitForJSExec(webClient);
+
+      //don't throw exceptions. Somehow this framework won't find no stylesheets or .js files...
+      webClient.getOptions().setThrowExceptionOnScriptError(false);
+      webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+
+
+      //go to the index page of pipelineconfighistory
+      createNewBuild(workflowJob, SCRIPT);
+      createNewBuild(workflowJob, SCRIPT_2);
+      currentPage = webClient.getPage(indexUrl());
+      refresh();
+
+      //this button is not an anchor but an <input>, so it must be found via its name.
+      currentPage = currentPage.getElementByName("showDiffsInOneSite").click(new Event(), true);
+      // go to showAllDiffs
+      refresh();
+//      System.out.println(currentIndexPageAsText);
+//      System.out.println("\n\n\nAsXML:\n" + currentIndexPageAsXml);
+//      System.out.println("SCRIPT:\n\n"+getIndexedScript(SCRIPT));
+//      assertTrue(currentIndexPageAsText.contains(getIndexedScript(SCRIPT)));
+    }
+
+  }
+
+  private String getIndexedScript(String script) {
+    StringBuilder resultBuilder = new StringBuilder();
+    String[] lines = script.split("\\n");
+    for (int i = 0; i < lines.length; ++i) {
+      resultBuilder.append(i+1).append(" \n").append(lines[i]);
+      if ( i < lines.length-1) {
+        resultBuilder.append("\n");
+      }
+    }
+    return resultBuilder.toString();
   }
 
   private String removeEnclosingTagFromXml(String xmlString, String tag) {
