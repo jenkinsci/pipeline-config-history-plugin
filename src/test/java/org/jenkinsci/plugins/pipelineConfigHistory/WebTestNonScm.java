@@ -43,18 +43,12 @@ public class WebTestNonScm {
   public JenkinsRule jenkinsRule = new JenkinsRule();
 
   public static final String PIPELINE_NAME = "pipeline";
-  public static final String PIPELINE_NEW_NAME = "pipeline_new";
   public static final String SCRIPT = "node {\n" +
       "//nothing\n" +
       "}";
   public static final String SCRIPT_2 =
       "node {\n" +
           "//nothing2\n" +
-          "}";
-  public static final String SCRIPT_3 =
-      "node {\n" +
-          "//nothing2\n" +
-          "\n" +
           "}";
 
   public WorkflowJob workflowJob;
@@ -63,7 +57,6 @@ public class WebTestNonScm {
   private String currentIndexPageAsText;
   private final String configOverviewString = "configOverview";
   private final String configSingleFileString = "configSingleFile";
-  private final String showAllDiffsString = "showAllDiffs";
 
 
   @Test
@@ -274,7 +267,7 @@ public class WebTestNonScm {
       currentPage = currentPage.getElementByName("showDiffsInOneSite").click(new Event(), true);
       // go to showAllDiffs
       refresh();
-//      System.out.println(currentIndexPageAsText);
+      System.out.println(currentIndexPageAsText);
 //      System.out.println("\n\n\nAsXML:\n" + currentIndexPageAsXml);
 //      System.out.println("SCRIPT:\n\n"+getIndexedScript(SCRIPT));
 //      assertTrue(currentIndexPageAsText.contains(getIndexedScript(SCRIPT)));
@@ -329,7 +322,7 @@ public class WebTestNonScm {
   }
 
   private String indexUrl() throws IOException {
-    return jenkinsRule.getURL() + workflowJob.getUrl() + "pipelineConfigHistory/";
+    return jenkinsRule.getURL() + workflowJob.getUrl() + "pipeline-config-history/";
   }
 
   private String configOverviewUrl(String timestamp) throws  IOException {
