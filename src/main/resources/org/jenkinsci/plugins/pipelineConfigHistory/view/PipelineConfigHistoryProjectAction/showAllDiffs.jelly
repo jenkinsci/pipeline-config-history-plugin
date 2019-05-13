@@ -25,11 +25,11 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
     <l:layout title="Pipeline Configuration History">
 
-        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipelineConfigHistory/css/diff_highlight.css"></link>
-        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipelineConfigHistory/css/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipeline-config-history/css/diff_highlight.css"></link>
+        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipeline-config-history/css/style.css"></link>
 
-        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipelineConfigHistory/highlight.js/styles/xcode.css"/>
-        <script src="${rootURL}/plugin/pipelineConfigHistory/highlight.js/highlight.pack.js"></script>
+        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipeline-config-history/highlight.js/styles/xcode.css"/>
+        <script src="${rootURL}/plugin/pipeline-config-history/highlight.js/highlight.pack.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
 
         <st:include it="${it.project}" page="sidepanel.jelly" />

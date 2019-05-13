@@ -25,7 +25,7 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:i="jelly:fmt">
     <l:layout title="Pipeline Configuration History">
 
-        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipelineConfigHistory/css/style.css"></link>
+        <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipeline-config-history/css/style.css"></link>
 
         <st:include it="${it.project}" page="sidepanel.jelly" />
         <l:main-panel>

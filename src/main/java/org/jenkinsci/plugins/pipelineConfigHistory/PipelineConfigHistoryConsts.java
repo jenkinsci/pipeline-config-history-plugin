@@ -35,9 +35,9 @@ public final class PipelineConfigHistoryConsts {
   }
 
   /**
-   * Path to the pipelineConfigHistory base.
+   * Path to the pipeline-config-history base.
    */
-  public static final String PLUGIN_BASE_PATH = "pipelineConfigHistory";
+  public static final String PLUGIN_BASE_PATH = "pipeline-config-history";
 
   /**
    * This plugin's name.
@@ -47,7 +47,7 @@ public final class PipelineConfigHistoryConsts {
   /**
    * Path to the config history icon.
    */
-  public static final String ICON_PATH = "/plugin/pipelineConfigHistory/icons/confighistory.png";
+  public static final String ICON_PATH = "/plugin/pipeline-config-history/icons/confighistory.png";
 
   /**
    * Path to the history base. Usage: JENKINS_HOME/DEFAULT_HISTORY_DIR

@@ -48,9 +48,9 @@
             <!--fancy view-->
             <l:layout title="Pipeline Configuration History">
                 <st:contentType value="text/html; charset=UTF-8"/>
-                <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipelineConfigHistory/highlight.js/styles/xcode.css"/>
-                <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipelineConfigHistory/css/style.css"/>
-                <script src="${rootURL}/plugin/pipelineConfigHistory/highlight.js/highlight.pack.js"></script>
+                <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipeline-config-history/highlight.js/styles/xcode.css"/>
+                <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipeline-config-history/css/style.css"/>
+                <script src="${rootURL}/plugin/pipeline-config-history/highlight.js/highlight.pack.js"></script>
                 <script>hljs.initHighlightingOnLoad();</script>
 
                 <st:include it="${it.project}" page="sidepanel.jelly" />
