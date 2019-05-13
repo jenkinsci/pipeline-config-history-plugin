@@ -115,7 +115,7 @@
 
                                         <tr>
                                             <td class="diffLineWrapper-left">
-                                                <table class="diffLineTable">
+                                                <table class="diffLineTable" name="left-table">
                                                     <thead>
 
                                                     </thead>
@@ -149,7 +149,7 @@
                                                 </table>
                                             </td>
                                             <td class="diffLineWrapper-right">
-                                                <table class="diffLineTable">
+                                                <table class="diffLineTable" name="right-table">
                                                     <thead>
 
                                                     </thead>
@@ -198,7 +198,7 @@
                                         </tr>
                                         <tr>
                                             <td class="diffLineWrapper-left">
-                                                <table class="diffLineTable">
+                                                <table class="diffLineTable" name="left-table">
                                                     <thead>
 
                                                     </thead>
@@ -233,7 +233,7 @@
                                                 </table>
                                             </td>
                                             <td class="diffLineWrapper-right">
-                                                <table class="diffLineTable">
+                                                <table class="diffLineTable" name="right-table">
                                                     <thead>
 
                                                     </thead>
@@ -259,7 +259,7 @@
                                         </tr>
                                         <tr>
                                             <td class="diffLineWrapper-left">
-                                                <table class="diffLineTable">
+                                                <table class="diffLineTable" name="left-table">
                                                     <thead>
 
                                                     </thead>
@@ -269,7 +269,7 @@
                                                 </table>
                                             </td>
                                             <td class="diffLineWrapper-right">
-                                                <table class="diffLineTable">
+                                                <table class="diffLineTable" name="right-table">
                                                     <thead>
 
                                                     </thead>

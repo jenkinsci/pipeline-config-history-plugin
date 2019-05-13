@@ -2,9 +2,9 @@ package org.jenkinsci.plugins.pipelineConfigHistory;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.WebClientUtil;
+import com.gargoylesoftware.htmlunit.html.DomElement;
 import com.gargoylesoftware.htmlunit.html.HtmlAnchor;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.javascript.host.Element;
 import com.gargoylesoftware.htmlunit.javascript.host.event.Event;
 import hudson.model.Job;
 import hudson.model.queue.QueueTaskFuture;
@@ -21,6 +21,7 @@ import org.jvnet.hudson.test.JenkinsRule;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,10 +54,11 @@ public class WebTestNonScm {
 
   public WorkflowJob workflowJob;
   private HtmlPage currentPage;
-  private String currentIndexPageAsXml;
-  private String currentIndexPageAsText;
+  private String currentPageAsXml;
+  private String currentPageAsText;
   private final String configOverviewString = "configOverview";
   private final String configSingleFileString = "configSingleFile";
+  private final String showSingleDiff = "showSingleDiff";
 
 
   @Test
@@ -75,8 +77,8 @@ public class WebTestNonScm {
       Assert.assertEquals(PipelineConfigHistoryConsts.DISPLAY_NAME + " [Jenkins]", currentPage.getTitleText());
       refresh();
 
-      assertTrue(currentIndexPageAsXml.contains("No pipeline configuration history available."));
-      assertFalse(currentIndexPageAsXml.contains("Show Configuration"));
+      assertTrue(currentPageAsXml.contains("No pipeline configuration history available."));
+      assertFalse(currentPageAsXml.contains("Show Configuration"));
 
       createNewBuild(workflowJob, SCRIPT);
       createNewBuild(workflowJob, SCRIPT_2);
@@ -85,10 +87,10 @@ public class WebTestNonScm {
       currentPage = webClient.getPage(indexUrl());
       refresh();
 
-      assertTrue(currentIndexPageAsText.contains("Show Configuration"));
-      assertFalse(currentIndexPageAsText.contains("No pipeline configuration history available."));
-      assertTrue(currentIndexPageAsText.contains("Build #1"));
-      assertTrue(currentIndexPageAsText.contains("Build #2"));
+      assertTrue(currentPageAsText.contains("Show Configuration"));
+      assertFalse(currentPageAsText.contains("No pipeline configuration history available."));
+      assertTrue(currentPageAsText.contains("Build #1"));
+      assertTrue(currentPageAsText.contains("Build #2"));
 
     }
   }
@@ -97,7 +99,7 @@ public class WebTestNonScm {
   Test configOverview with one single configuration.
    */
   @Test
-  public void test_1_configOverviewTest() throws Exception {
+  public void test_1_0_configOverviewTest() throws Exception {
     workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
 
     try (final WebClient webClient = jenkinsRule.createWebClient()) {
@@ -125,7 +127,7 @@ public class WebTestNonScm {
 
       //now we're on configOverview. Test that the one build exists.
 //      currentPage.getAnchors().stream().forEach(htmlAnchor -> System.out.println("Anchor: " + htmlAnchor.toString()));
-      assertTrue(currentIndexPageAsText.contains("Jenkinsfile"));
+      assertTrue(currentPageAsText.contains("Jenkinsfile"));
       List<HtmlAnchor> configOverviewAnchors = currentPage.getAnchors();
 
       //download button
@@ -174,8 +176,8 @@ public class WebTestNonScm {
           .collect(Collectors.toCollection(LinkedList::new)).getFirst()
           .click(new Event(), true);
       refresh();
-      System.out.println("DOWNLOADTEXTCONTENT:\n" + currentIndexPageAsText);
-      System.out.println("DOWNLOADXMLCONTENT:\n" + currentIndexPageAsXml);
+      System.out.println("DOWNLOADTEXTCONTENT:\n" + currentPageAsText);
+      System.out.println("DOWNLOADXMLCONTENT:\n" + currentPageAsXml);
 
       assertEquals(
           SCRIPT,
@@ -237,9 +239,9 @@ public class WebTestNonScm {
       WebClientUtil.waitForJSExec(webClient);
       refresh();
 
-      assertTrue(currentIndexPageAsText.contains("Jenkinsfile (Root Script)"));
-      assertTrue(currentIndexPageAsText.contains("(Src: from Pipeline-Job Configuration)"));
-      assertTrue(currentIndexPageAsText.contains(SCRIPT));
+      assertTrue(currentPageAsText.contains("Jenkinsfile (Root Script)"));
+      assertTrue(currentPageAsText.contains("(Src: from Pipeline-Job Configuration)"));
+      assertTrue(currentPageAsText.contains(SCRIPT));
     }
   }
 
@@ -264,13 +266,113 @@ public class WebTestNonScm {
       refresh();
 
       //this button is not an anchor but an <input>, so it must be found via its name.
+      //the following test code assumes that the two selection "radio"s are set on different configs by default.
       currentPage = currentPage.getElementByName("showDiffsInOneSite").click(new Event(), true);
       // go to showAllDiffs
       refresh();
-      System.out.println(currentIndexPageAsText);
-//      System.out.println("\n\n\nAsXML:\n" + currentIndexPageAsXml);
-//      System.out.println("SCRIPT:\n\n"+getIndexedScript(SCRIPT));
-//      assertTrue(currentIndexPageAsText.contains(getIndexedScript(SCRIPT)));
+
+      DomElement leftTable = currentPage.getElementByName("left-table");
+      DomElement rightTable = currentPage.getElementByName("right-table");
+
+      assertEquals(leftTable.asText(), getIndexedScript(SCRIPT));
+      assertEquals(rightTable.asText(), getIndexedScript(SCRIPT_2));
+    }
+  }
+
+  @Test
+  public void test_3_0_showDiffFilesTest() throws Exception {
+    workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
+
+    try (final WebClient webClient = jenkinsRule.createWebClient()) {
+      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
+      // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
+      WebClientUtil.waitForJSExec(webClient);
+
+      //don't throw exceptions. Somehow this framework won't find no stylesheets or .js files...
+      webClient.getOptions().setThrowExceptionOnScriptError(false);
+      webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+
+
+      //go to the index page of pipelineconfighistory
+      createNewBuild(workflowJob, SCRIPT);
+      createNewBuild(workflowJob, SCRIPT_2);
+      currentPage = webClient.getPage(indexUrl());
+      refresh();
+
+      //this button is not an anchor but an <input>, so it must be found via its name.
+      //the following test code assumes that the two selection "radio"s are set on different configs by default.
+      currentPage = currentPage.getElementByName("showAllDiffs").click(new Event(), true);
+      // go to showAllDiffs
+      refresh();
+
+//      Thread.sleep(5000000);
+      assertTrue(currentPageAsText.contains(PIPELINE_NAME + " Differences"));
+      assertTrue(currentPageAsText.contains("Show Diff"));
+      assertTrue(currentPageAsText.contains("Jenkinsfile"));
+
+    }
+  }
+
+  @Test
+  public void test_3_1_showSingleDiffTest() throws Exception {
+    workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
+
+    try (final WebClient webClient = jenkinsRule.createWebClient()) {
+      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
+      // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
+      WebClientUtil.waitForJSExec(webClient);
+
+      //don't throw exceptions. Somehow this framework won't find no stylesheets or .js files...
+      webClient.getOptions().setThrowExceptionOnScriptError(false);
+      webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+
+
+      //go to the index page of pipelineconfighistory
+      createNewBuild(workflowJob, SCRIPT);
+      createNewBuild(workflowJob, SCRIPT_2);
+      currentPage = webClient.getPage(indexUrl());
+      refresh();
+
+      //this button is not an anchor but an <input>, so it must be found via its name.
+      //the following test code assumes that the two selection "radio"s are set on different configs by default.
+      // go to showAllDiffs
+      currentPage = currentPage.getElementByName("showAllDiffs").click(new Event(), true);
+      refresh();
+
+      //go to showSingleDiff
+      LinkedList<HtmlAnchor> showDiffAnchors = currentPage.getAnchors()
+          .stream()
+          .filter(htmlAnchor -> htmlAnchor.getHrefAttribute().startsWith(showSingleDiff))
+          .collect(Collectors.toCollection(LinkedList::new));
+      assertEquals(1, showDiffAnchors.size());
+      currentPage = showDiffAnchors.getFirst().click(new Event(), true);
+      refresh();
+
+      System.out.println(currentPageAsText);
+      DomElement tbody = currentPage.getElementById("tbody_versionDiffsShown");
+      Iterable<DomElement> tableRowsIterable = tbody.getChildElements();
+      ArrayList<DomElement> tableRowsList = new ArrayList<>(1);
+      tableRowsIterable.forEach(tableRow -> tableRowsList.add(tableRowsList.size(), tableRow));
+
+      String[] scriptAsArray = SCRIPT.split("\n");
+      String[] script2AsArray = SCRIPT_2.split("\n");
+
+
+      for (int i=0; i < tableRowsList.size(); ++i) {
+        DomElement tr = tableRowsList.get(i);
+        System.out.println("ROW: ");
+
+
+        DomElement[] tdArray = new DomElement[2];
+        int j = 0;
+        for (DomElement trChild : tr.getChildElements()) {
+          if (trChild.getTagName().equals("td")) {
+            tdArray[j++] = trChild;
+          }
+        }
+        assertEquals(scriptAsArray[i], tdArray[0].asText());
+        assertEquals(script2AsArray[i], tdArray[1].asText());
+      }
     }
 
   }
@@ -279,7 +381,7 @@ public class WebTestNonScm {
     StringBuilder resultBuilder = new StringBuilder();
     String[] lines = script.split("\\n");
     for (int i = 0; i < lines.length; ++i) {
-      resultBuilder.append(i+1).append(" \n").append(lines[i]);
+      resultBuilder.append(i+1).append("\t\n").append(lines[i]);
       if ( i < lines.length-1) {
         resultBuilder.append("\n");
       }
@@ -335,8 +437,8 @@ public class WebTestNonScm {
   private void refresh() throws IOException {
     //currentPage.refresh(); won't work unfortunately
 
-    currentIndexPageAsXml = currentPage.asXml();
-    currentIndexPageAsText = currentPage.asText();
+    currentPageAsXml = currentPage.asXml();
+    currentPageAsText = currentPage.asText();
   }
 
 }
