@@ -197,12 +197,6 @@ public class PluginUtilsTest {
 	}
 
 	@Test
-	public void parsedDate() {
-		String someTimestamp = "2019-04-11_12-46-05";
-		assertEquals("Thu Apr 11 12:46:05 CEST 2019", PluginUtils.parsedDate(someTimestamp).toString());
-	}
-
-	@Test
 	public void computeXmlDiff() throws IOException {
 		String fileName1 = someFileName +".xml";
 		String fileName2  = someFileName +"_2.xml";
