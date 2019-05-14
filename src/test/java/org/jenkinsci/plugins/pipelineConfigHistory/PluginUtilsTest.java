@@ -41,6 +41,7 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -139,12 +140,20 @@ public class PluginUtilsTest {
 
 	@Test
 	public void getLibDir() {
-		assertEquals(filePath + "/libs", PluginUtils.getLibDir(new File(filePath)).getPath());
+//		assertEquals(filePath + "/libs", PluginUtils.getLibDir(new File(filePath)).getPath());
+		assertEquals(
+				new File(filePath + "/libs"),
+				PluginUtils.getLibDir(new File(filePath))
+		);
 	}
 
 	@Test
 	public void getBuildDotXml() {
-		assertEquals(filePath + "/build.xml", PluginUtils.getBuildXml(new File(filePath)).getFile().getPath());
+//		assertEquals(filePath + "/build.xml", PluginUtils.getBuildXml(new File(filePath)).getFile().getPath());
+		assertEquals(
+				new File(filePath + "/build.xml"),
+				PluginUtils.getBuildXml(new File(filePath)).getFile()
+		);
 	}
 
 	@Test
