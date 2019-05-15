@@ -27,6 +27,7 @@ package org.jenkinsci.plugins.pipelineConfigHistory.model;
 import hudson.Extension;
 import hudson.model.Item;
 import jenkins.model.Jenkins;
+import org.apache.commons.lang.SystemUtils;
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;
 import org.jenkinsci.plugins.workflow.flow.FlowExecution;
 import org.jenkinsci.plugins.workflow.flow.FlowExecutionListener;
@@ -96,6 +97,11 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
 
   private Optional<String> getPipelineFullName(@Nonnull FlowExecution flowExecution) {
     String jobPlusSeparator = "job" + File.separator;
+    String jobPlusSeparatorForRegex = "job" + File.separator;
+    if (SystemUtils.IS_OS_WINDOWS) {
+      //File.separator is not enough, it needs to be escaped...
+      jobPlusSeparatorForRegex = "job" + "\\\\";
+    }
 
     File flowExecutionOwner;
     try {
@@ -107,7 +113,7 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
         return Optional.of(
             flowExecutionOwner.getParentFile()
                 .toString()
-                .replaceAll(jobPlusSeparator, "")
+                .replaceAll(jobPlusSeparatorForRegex, "")
                 .replaceAll("%20", " ")
         );
       }
