@@ -29,6 +29,7 @@ import hudson.model.AbstractItem;
 import hudson.model.Action;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.SystemUtils;
 import org.jenkinsci.plugins.pipelineConfigHistory.DirectoryUtils;
 import org.jenkinsci.plugins.pipelineConfigHistory.PipelineConfigHistoryConsts;
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;
@@ -404,14 +405,21 @@ public class PipelineConfigHistoryProjectAction implements Action {
     Set<File> remainingFiles1 = new HashSet<>(allFiles1);
     Set<File> remainingFiles2 = new HashSet<>(allFiles2);
 
-
     String cuttingString1 = revision1Dir.getPath();
     String cuttingString2 = revision2Dir.getPath();
+
+    //Windows support
+    if (SystemUtils.IS_OS_WINDOWS) {
+      cuttingString1 = cuttingString1.replaceAll("\\\\", "\\\\\\\\");
+      cuttingString2 = cuttingString2.replaceAll("\\\\", "\\\\\\\\");
+    }
+    final String finalCuttingString = cuttingString1;
+    final String finalCuttingString1 = cuttingString2;
 
     List<File> finalAllFiles2 = allFiles2;
     allFiles1.forEach(file1 -> {
       File[] matchingFiles = finalAllFiles2.stream()
-          .filter(file2 -> fileRelativePathEquals(file1, file2, cuttingString1, cuttingString2))
+          .filter(file2 -> fileRelativePathEquals(file1, file2, finalCuttingString, finalCuttingString1))
           .toArray(File[]::new);
       if (matchingFiles.length == 0) {
         //no matching file found, do nothing.
