@@ -96,7 +96,7 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
   }
 
   private Optional<String> getPipelineFullName(@Nonnull FlowExecution flowExecution) {
-    String jobPlusSeparator = "job" + File.separator;
+    final String jobPlusSeparator = "job" + File.separator;
     String jobPlusSeparatorForRegex = "job" + File.separator;
     if (SystemUtils.IS_OS_WINDOWS) {
       //File.separator is not enough, it needs to be escaped...
