@@ -40,10 +40,17 @@
     <version>1.0-SNAPSHOT</version>
     <name>Pipeline Configuration History Plugin</name>
     <description>Saves a copy of a pipeline's configuration on each build.</description>
+    <url>https://wiki.jenkins.io/display/JENKINS/Pipeline+Configuration+History</url>
 
     <properties>
         <java.level>8</java.level>
     </properties>
+
+    <scm>
+        <connection>scm:git:ssh://github.com/jenkinsci/pipeline-config-history-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/pipeline-config-history-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/pipeline-config-history-plugin</url>
+    </scm>
 
     <build>
         <plugins>

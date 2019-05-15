@@ -7,12 +7,13 @@ creates a history of pipeline configurations, triggered by their builds' "onComp
 Here you especially are able to see and compare changes in pipeline Libraries, 
 which are hidden in jobConfigHistory (or replay).
 
-Jenkins Wiki
+Links
 ------------
+* [Wiki-page](https://wiki.jenkins.io/display/JENKINS/Pipeline+Configuration+History)
 
 Continuous build
 ----------------
-* 
+* Jenkins own CI: [![Build Status](https://ci.jenkins.io/buildStatus/icon?job=Plugins/pipeline-config-history-plugin/master)](https://ci.jenkins.io/job/plugins/job/pipeline-config-history-plugin/)
 
 
 Make hpi:run work with shared libraries
