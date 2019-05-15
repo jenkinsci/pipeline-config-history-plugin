@@ -95,17 +95,19 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
   }
 
   private Optional<String> getPipelineFullName(@Nonnull FlowExecution flowExecution) {
+    String jobPlusSeparator = "job" + File.separator;
+
     File flowExecutionOwner;
     try {
       flowExecutionOwner = new File(flowExecution.getOwner().getUrl());
       //it always starts with "job/"
-      if (!flowExecutionOwner.toString().startsWith("job/")) {
+      if (!flowExecutionOwner.toString().startsWith(jobPlusSeparator)) {
         return Optional.empty();
       } else {
         return Optional.of(
             flowExecutionOwner.getParentFile()
                 .toString()
-                .replaceAll("job/", "")
+                .replaceAll(jobPlusSeparator, "")
                 .replaceAll("%20", " ")
         );
       }
