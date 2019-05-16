@@ -38,7 +38,7 @@ import static org.junit.Assert.*;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 //TODO handle all these exceptions spamming the console...
-public class WebTestNonScm {
+public class NonScmWebTest {
 
   @Rule
   public JenkinsRule jenkinsRule = new JenkinsRule();
