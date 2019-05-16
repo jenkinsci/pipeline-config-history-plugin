@@ -132,10 +132,12 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
         "build number has to be taken from a the workflowjob's \"last Build\""
             + ".Inconsistencies might occur!";
 
+    final String jobPlusSeparator = "job" + File.separator;
+
     try {
       flowExecutionOwner = new File(flowExecution.getOwner().getUrl());
       //it always starts with "job/"
-      if (!flowExecutionOwner.toString().startsWith("job/")) {
+      if (!flowExecutionOwner.toString().startsWith(jobPlusSeparator)) {
         LOG.log(Level.WARNING, errorMessage);
         return workflowJob.getLastBuild().number;
       } else {
