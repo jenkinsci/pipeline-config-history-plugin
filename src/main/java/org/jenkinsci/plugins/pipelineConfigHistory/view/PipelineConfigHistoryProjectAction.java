@@ -108,6 +108,11 @@ public class PipelineConfigHistoryProjectAction implements Action {
     }
   }
 
+  public String getFileNameDisplayable(String timestamp, File file) {
+
+    return getRevision(timestamp).toPath().relativize(file.toPath()).toString();
+  }
+
   public String getJenkinsfilePath() {
     return PluginUtils.getJenkinsfilePath(this.project);
   }

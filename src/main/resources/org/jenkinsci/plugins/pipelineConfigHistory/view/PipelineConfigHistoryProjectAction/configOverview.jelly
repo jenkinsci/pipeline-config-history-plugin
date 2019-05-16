@@ -33,7 +33,6 @@
             <j:set var="timestamp" value="${request.getParameter(&quot;timestamp&quot;)}"/>
             <j:set var="rootDirectory" value="${it.getRevision(timestamp)}"/>
             <j:set var="allFiles" value="${it.getAllFilesExceptHistoryXmlFromDirectory(rootDirectory)}"/>
-            <j:set var="cuttingString" value="${it.getRevision(timestamp).toString()}"/>
             <table class="sortable" style="width:100%">
                 <caption>
                     ${it.getProject().getFullName()}: Revision
@@ -56,12 +55,7 @@
                 <tbody>
                     <j:forEach var="realFile" items="${allFiles}">
 
-                        <!--j:set var="fileNameDisplayAble" value="${realFile.toString().substring(realFile.toString().indexOf(it.getProject().getFullName())).replace('/', ' » ')}"/-->
-                        <j:set var="fileNameDisplayAble" value="${realFile.toString().replaceFirst(cuttingString, &quot;&quot;).replace('/', ' » ').trim()}"/>
-                        <j:if test="${fileNameDisplayAble.startsWith(&quot;» &quot;)}">
-                            <!--delete it-->
-                            <j:set var="fileNameDisplayAble" value="${fileNameDisplayAble.replaceFirst(&quot;» &quot;, &quot;&quot;)}"/>
-                        </j:if>
+                        <j:set var="fileNameDisplayAble" value="${it.getFileNameDisplayable(timestamp, realFile)}"/>
                         <tr class="alternate">
                             <td style="text-align:center">
                                 <j:choose>
