@@ -279,7 +279,7 @@ public class NonScmWebTest {
       double levenshteinPercentage = 1 -
           ( (double) new LevenshteinDistance().apply(leftTable.asText(), getIndexedScript(SCRIPT)) / leftTable.asText().length());
       //this is an os fix. It also hides the uglyness of getIndexedScript(..)
-      assertTrue(levenshteinPercentage >= 0.9);
+      assertTrue(levenshteinPercentage >= 0.8);
 
       if (SystemUtils.IS_OS_UNIX) {
         //this will not work on windows.
