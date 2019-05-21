@@ -27,7 +27,6 @@ package org.jenkinsci.plugins.pipelineConfigHistory.model;
 import hudson.Extension;
 import hudson.model.Item;
 import jenkins.model.Jenkins;
-import org.apache.commons.lang.SystemUtils;
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;
 import org.jenkinsci.plugins.workflow.flow.FlowExecution;
 import org.jenkinsci.plugins.workflow.flow.FlowExecutionListener;
@@ -38,6 +37,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
 /**
@@ -97,32 +97,18 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
 
   private Optional<String> getPipelineFullName(@Nonnull FlowExecution flowExecution) {
     final String jobPlusSeparator = "job" + File.separator;
-    String jobPlusSeparatorForRegex = "job" + File.separator;
-    if (SystemUtils.IS_OS_WINDOWS) {
-      //File.separator is not enough, it needs to be escaped...
-      jobPlusSeparatorForRegex = "job" + "\\\\";
-    }
 
-    File flowExecutionOwner;
     try {
-      flowExecutionOwner = new File(flowExecution.getOwner().getUrl());
-      //it always starts with "job/"
+      File flowExecutionOwner = new File(flowExecution.getOwner().getUrl());
+      //it always starts with "job/" or "job\"
       if (!flowExecutionOwner.toString().startsWith(jobPlusSeparator)) {
         return Optional.empty();
       } else {
-
-        System.out.println("flowexecutionowner parentfile:" + flowExecutionOwner.getParentFile());
-        System.out.println("this is returned: " +
-            flowExecutionOwner.getParentFile()
-                .toString()
-                .replaceAll(jobPlusSeparatorForRegex, "")
-                .replaceAll("%20", " ")
-        );
-
         return Optional.of(
             flowExecutionOwner.getParentFile()
                 .toString()
-                .replaceAll(jobPlusSeparatorForRegex, "")
+                .replaceAll(Pattern.quote(jobPlusSeparator), "")
+                .replaceAll(Pattern.quote(File.separator), "/")
                 .replaceAll("%20", " ")
         );
       }
