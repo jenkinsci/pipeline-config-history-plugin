@@ -1,8 +1,6 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+All notable changes to this project are documented in this file.
 
-## [1.0.0] - datum tbd.
-### Added
-- added sth.
-### Changed
-### Removed
+## [1.0] - 21.05.19
+### First release
+Released this plugin for the first time.
