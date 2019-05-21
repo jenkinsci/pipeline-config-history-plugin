@@ -32,8 +32,6 @@
             <j:set var="timestamp1" value="${request.getParameter(&quot;timestamp1&quot;)}"/>
             <j:set var="timestamp2" value="${request.getParameter(&quot;timestamp2&quot;)}"/>
             <j:set var="matches" value="${it.getMatchingFiles(timestamp1, timestamp2)}"/>
-            <j:set var="cuttingString1" value="${it.getRevision(timestamp1).toString()}"/>
-            <j:set var="cuttingString2" value="${it.getRevision(timestamp2).toString()}"/>
             <j:set var="anyMatchUnequal" value="${it.isAnyMatchUnequal(timestamp1, timestamp2)}"/>
             <h1>${%Pipeline Configuration History}</h1>
 
@@ -83,7 +81,7 @@
                                                         </a>
                                                     </j:when>
                                                     <j:otherwise>
-                                                        ${match.getFile1().toString().replaceFirst(cuttingString1, "").replace('/', ' » ')}
+                                                        ${it.getFileNameDisplayable(timestamp1, match.getFile1())}
                                                         <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}" style="text-decoration:none">
                                                             &#128279;
                                                         </a>
@@ -99,7 +97,8 @@
                                                         </a>
                                                     </j:when>
                                                     <j:otherwise>
-                                                        ${match.getFile2().toString().replaceFirst(cuttingString2, "").replace('/', ' » ')}
+
+                                                        ${it.getFileNameDisplayable(timestamp2, match.getFile2())}
                                                         <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}" style="text-decoration:none">
                                                             &#128279;
                                                         </a>
@@ -131,7 +130,8 @@
                                         </j:when>
                                         <j:when test="${match.getKind() == match.SINGLE_1}">
                                             <td class="single">
-                                                ${match.getFile1().toString().replaceFirst(cuttingString1, "").replace('/', ' » ')}
+
+                                                ${it.getFileNameDisplayable(timestamp1, match.getFile1())}
                                                 <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}" style="text-decoration:none">
                                                     &#128279;
                                                 </a>
@@ -149,7 +149,8 @@
                                             <td>
                                             </td>
                                             <td class="single">
-                                                ${match.getFile2().toString().replaceFirst(cuttingString2, "").replace('/', ' » ')}
+
+                                                ${it.getFileNameDisplayable(timestamp2, match.getFile2())}
                                                 <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}" style="text-decoration:none">
                                                     &#128279;
                                                 </a>

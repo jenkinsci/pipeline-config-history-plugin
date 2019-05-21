@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 
 /**
@@ -95,17 +96,19 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
   }
 
   private Optional<String> getPipelineFullName(@Nonnull FlowExecution flowExecution) {
-    File flowExecutionOwner;
+    final String jobPlusSeparator = "job" + File.separator;
+
     try {
-      flowExecutionOwner = new File(flowExecution.getOwner().getUrl());
-      //it always starts with "job/"
-      if (!flowExecutionOwner.toString().startsWith("job/")) {
+      File flowExecutionOwner = new File(flowExecution.getOwner().getUrl());
+      //it always starts with "job/" or "job\"
+      if (!flowExecutionOwner.toString().startsWith(jobPlusSeparator)) {
         return Optional.empty();
       } else {
         return Optional.of(
             flowExecutionOwner.getParentFile()
                 .toString()
-                .replaceAll("job/", "")
+                .replaceAll(Pattern.quote(jobPlusSeparator), "")
+                .replaceAll(Pattern.quote(File.separator), "/")
                 .replaceAll("%20", " ")
         );
       }
@@ -124,10 +127,12 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
         "build number has to be taken from a the workflowjob's \"last Build\""
             + ".Inconsistencies might occur!";
 
+    final String jobPlusSeparator = "job" + File.separator;
+
     try {
       flowExecutionOwner = new File(flowExecution.getOwner().getUrl());
       //it always starts with "job/"
-      if (!flowExecutionOwner.toString().startsWith("job/")) {
+      if (!flowExecutionOwner.toString().startsWith(jobPlusSeparator)) {
         LOG.log(Level.WARNING, errorMessage);
         return workflowJob.getLastBuild().number;
       } else {

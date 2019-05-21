@@ -107,6 +107,11 @@ public class PipelineConfigHistoryProjectAction implements Action {
     }
   }
 
+  public String getFileNameDisplayable(String timestamp, File file) {
+
+    return getRevision(timestamp).toPath().relativize(file.toPath()).toString();
+  }
+
   public String getJenkinsfilePath() {
     return PluginUtils.getJenkinsfilePath(this.project);
   }
@@ -404,14 +409,10 @@ public class PipelineConfigHistoryProjectAction implements Action {
     Set<File> remainingFiles1 = new HashSet<>(allFiles1);
     Set<File> remainingFiles2 = new HashSet<>(allFiles2);
 
-
-    String cuttingString1 = revision1Dir.getPath();
-    String cuttingString2 = revision2Dir.getPath();
-
     List<File> finalAllFiles2 = allFiles2;
     allFiles1.forEach(file1 -> {
       File[] matchingFiles = finalAllFiles2.stream()
-          .filter(file2 -> fileRelativePathEquals(file1, file2, cuttingString1, cuttingString2))
+          .filter(file2 -> relativizedFileEquals(file1, file2, revision1Dir, revision2Dir))
           .toArray(File[]::new);
       if (matchingFiles.length == 0) {
         //no matching file found, do nothing.
@@ -569,11 +570,11 @@ public class PipelineConfigHistoryProjectAction implements Action {
         .toString();
   }
 
-  private boolean fileRelativePathEquals(File file1, File file2, String cuttingString1,
-                                         String cuttingString2) {
-    return file1.getAbsolutePath().replaceFirst(cuttingString1, "").equals(
-        file2.getAbsolutePath().replace(cuttingString2, "")
-    );
+  private boolean relativizedFileEquals(File file1, File file2, File root1, File root2) {
+    return
+        root1.toPath().relativize(file1.toPath()).equals(
+            root2.toPath().relativize(file2.toPath())
+        );
   }
 
   private boolean fileContentEquals(File file1, File file2) {
