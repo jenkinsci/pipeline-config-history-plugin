@@ -110,6 +110,15 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
       if (!flowExecutionOwner.toString().startsWith(jobPlusSeparator)) {
         return Optional.empty();
       } else {
+
+        System.out.println("flowexecutionowner parentfile:" + flowExecutionOwner.getParentFile());
+        System.out.println("this is returned: " +
+            flowExecutionOwner.getParentFile()
+                .toString()
+                .replaceAll(jobPlusSeparatorForRegex, "")
+                .replaceAll("%20", " ")
+        );
+
         return Optional.of(
             flowExecutionOwner.getParentFile()
                 .toString()

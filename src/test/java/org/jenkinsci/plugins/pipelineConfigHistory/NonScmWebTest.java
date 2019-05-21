@@ -18,8 +18,6 @@ import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.jupiter.api.condition.DisabledOnOs;
-import org.junit.jupiter.api.condition.OS;
 import org.junit.runners.MethodSorters;
 import org.jvnet.hudson.test.JenkinsRule;
 
