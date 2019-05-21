@@ -42,6 +42,8 @@ public interface PipelineItemHistoryDao {
    * Creates the history entry of this WorkflowJob.
    *
    * @param workflowJob the Pipeline Job.
+   * @param buildNumber the build number to be associated to the history entry.
+   * @throws IOException if creating a history entry fails on IO level.
    */
   void createHistory(WorkflowJob workflowJob, int buildNumber) throws IOException;
 
@@ -49,6 +51,8 @@ public interface PipelineItemHistoryDao {
    * Updates the history entry of this WorkflowJob.
    *
    * @param workflowJob the Pipeline Job.
+   * @param buildNumber the build number to be associated to the history entry.
+   * @throws IOException if updating the history fails on IO level.
    */
   void updateHistory(WorkflowJob workflowJob, int buildNumber) throws IOException;
 
@@ -56,6 +60,7 @@ public interface PipelineItemHistoryDao {
    * Deletes the history of this WorkflowJob, if present.
    *
    * @param workflowJob the Pipeline Job.
+   * @throws IOException if deleting the history fails on IO level.
    */
   void deleteHistory(WorkflowJob workflowJob) throws IOException;
 
@@ -63,6 +68,8 @@ public interface PipelineItemHistoryDao {
    * Change the history of this WorkflowJob, if present.
    *
    * @param workflowJob the Pipeline Job.
+   * @param oldFullName the old full name (its folder-including tree path)
+   * @param newFullName the new full name
    */
   void changeHistoryLocation(WorkflowJob workflowJob, String oldFullName, String newFullName);
 
@@ -71,6 +78,7 @@ public interface PipelineItemHistoryDao {
    *
    * @param workflowJob the workflowJob
    * @param identifier the identifier
+   * @throws FileNotFoundException if the revision id'd by the identifier can't be found.
    * @return the wanted revision identified by the workflowjob and a revision identifier.
    */ //TODO returning Files should not be part of the Dao!
   File getRevision(WorkflowJob workflowJob, String identifier) throws FileNotFoundException;
@@ -90,6 +98,7 @@ public interface PipelineItemHistoryDao {
    * For a given Pipeline Job, return all revisions.
    *
    * @param workflowJob the pipeline job
+   * @throws IOException if retrieving the history revisions fails on IO level.
    * @return all revisions the pipeline job has.
    */
   SortedMap<String, PipelineHistoryDescription> getRevisions(final WorkflowJob workflowJob)

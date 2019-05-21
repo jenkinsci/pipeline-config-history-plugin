@@ -221,6 +221,9 @@ public final class PluginUtils {
    *
    * @param xmlFile1 file1
    * @param xmlFile2 file2
+   * @throws ParserConfigurationException if creating a parser fails
+   * @throws IOException if one of the two files is corrupt.
+   * @throws SAXException if parsing one xml file fails
    * @return whether the scripts contained in the two files are equal.
    */
   public static boolean scriptInXmlFileIsEqual(XmlFile xmlFile1, XmlFile xmlFile2) throws ParserConfigurationException, IOException, SAXException {

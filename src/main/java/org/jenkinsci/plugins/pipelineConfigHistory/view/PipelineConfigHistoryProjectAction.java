@@ -207,7 +207,6 @@ public class PipelineConfigHistoryProjectAction implements Action {
    * @param file              the xml file.
    * @param syntaxHighlighted whether syntax highlighting html tags should be included or not
    * @return the wanted script
-   * @throws IOException if the xml file is corrupt or sth else.
    */
   public String getScriptFromXmlFile(File file, boolean syntaxHighlighted) {
     List<String> lines = null;

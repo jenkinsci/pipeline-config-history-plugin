@@ -47,6 +47,7 @@ public class DirectoryUtils {
    * Get all files the given directory contains, except the history xml in the root dir.
    *
    * @param directory the directory.
+   * @throws IOException if file walking fails.
    * @return all files this directory contains, except the history xml in the root dir.
    */
   public static File[] getAllFilesExceptHistoryXmlFromDirectory(File directory) throws IOException {
