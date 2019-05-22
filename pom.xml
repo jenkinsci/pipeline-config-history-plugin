@@ -48,8 +48,15 @@
         <connection>scm:git:ssh://github.com/jenkinsci/pipeline-config-history-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jenkinsci/pipeline-config-history-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/pipeline-config-history-plugin</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
+    
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
 
     <build>
         <plugins>
