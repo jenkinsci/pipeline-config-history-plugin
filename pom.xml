@@ -51,6 +51,11 @@
         <tag>HEAD</tag>
     </scm>
     
+    <issueManagement>
+        <system>JIRA</system>
+        <url>https://issues.jenkins-ci.org/issues/?jql=project %3D Jenkins AND status in (Open, "In Progress", Reopened) AND component %3D pipeline-config-history-plugin</url>
+    </issueManagement>
+    
     <licenses>
         <license>
             <name>MIT License</name>
