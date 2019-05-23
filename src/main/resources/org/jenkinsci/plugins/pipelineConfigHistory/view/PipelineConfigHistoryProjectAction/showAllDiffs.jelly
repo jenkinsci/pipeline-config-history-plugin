@@ -106,9 +106,18 @@
                                             <td colspan="4" class="subcaption-wrap">
                                                 <div class="subcaption">
                                                     ${subCaption}
-                                                    <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}" style="text-decoration:none">
-                                                        &#128279;
-                                                    </a>
+                                                    <j:choose>
+                                                        <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                                &#128279;
+                                                            </a>
+                                                        </j:when>
+                                                        <j:otherwise>
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=embedded" style="text-decoration:none">
+                                                                &#128279;
+                                                            </a>
+                                                        </j:otherwise>
+                                                    </j:choose>
                                                 </div>
                                             </td>
                                         </tr>
@@ -190,9 +199,18 @@
                                             <td colspan="4" class="subcaption-wrap">
                                                 <div class="subcaption">
                                                     file removed: ${subCaption}
-                                                    <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}" style="text-decoration:none">
-                                                        &#128279;
-                                                    </a>
+                                                    <j:choose>
+                                                        <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
+                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                                &#128279;
+                                                            </a>
+                                                        </j:when>
+                                                        <j:otherwise>
+                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=embedded" style="text-decoration:none">
+                                                                &#128279;
+                                                            </a>
+                                                        </j:otherwise>
+                                                    </j:choose>
                                                 </div>
                                             </td>
                                         </tr>
@@ -251,9 +269,18 @@
                                             <td colspan="4" class="subcaption-wrap">
                                                 <div class="subcaption">
                                                     file added: ${subCaption}
-                                                    <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}" style="text-decoration:none">
-                                                        &#128279;
-                                                    </a>
+                                                    <j:choose>
+                                                        <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                                &#128279;
+                                                            </a>
+                                                        </j:when>
+                                                        <j:otherwise>
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=embedded" style="text-decoration:none">
+                                                                &#128279;
+                                                            </a>
+                                                        </j:otherwise>
+                                                    </j:choose>
                                                 </div>
                                             </td>
                                         </tr>
