@@ -76,7 +76,7 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
   @Override
   public void createHistory(WorkflowJob workflowJob, int buildNumber) throws IOException {
     boolean isHistoryPresent = isHistoryPresent(workflowJob);
-    if (!isHistoryPresent(workflowJob)) {
+    if (!isHistoryPresent) {
       writeUpdateToDisk(workflowJob, buildNumber);
     }
     LOG.log(Level.FINEST,
