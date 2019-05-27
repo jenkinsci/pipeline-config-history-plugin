@@ -95,7 +95,7 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
       historyDescriptions.addAll(historyDescriptionsCollection);
       String timestamp1 = historyDescriptions.get(historyDescriptions.size()-2).getTimestamp();
       String timestamp2 = historyDescriptions.get(historyDescriptions.size()-1).getTimestamp();
-      String url = job.getAbsoluteUrl() + PipelineConfigHistoryConsts.PLUGIN_BASE_PATH + "/showAllDiffs?timestamp1=" + timestamp1 + "&timestamp2=" + timestamp2 + "&anyDiffExists=true";
+      String url = PipelineConfigHistoryConsts.PLUGIN_BASE_PATH + "/showAllDiffs?timestamp1=" + timestamp1 + "&timestamp2=" + timestamp2 + "&anyDiffExists=true";
       BadgeAction action = new BadgeAction(url);
       run.addAction(action);
     } catch (IOException e) {
