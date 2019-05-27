@@ -52,9 +52,10 @@ public interface PipelineItemHistoryDao {
    *
    * @param workflowJob the Pipeline Job.
    * @param buildNumber the build number to be associated to the history entry.
+   * @return if the history got updated,
    * @throws IOException if updating the history fails on IO level.
    */
-  void updateHistory(WorkflowJob workflowJob, int buildNumber) throws IOException;
+  boolean updateHistory(WorkflowJob workflowJob, int buildNumber) throws IOException;
 
   /**
    * Deletes the history of this WorkflowJob, if present.
