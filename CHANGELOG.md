@@ -4,6 +4,7 @@ All notable changes to this project are documented in this file.
 ## [1.2] - tbd
 * Fix single file view link
 * Bump jacoco-maven-plugin from 0.8.2 to 0.8.4
+* Fixed: No history entries created for pipeline branches containing a slash
 
 ## [1.1] - 22.05.19
 * Change dependency scope and configure enforcer
