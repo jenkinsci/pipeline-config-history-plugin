@@ -55,41 +55,41 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
     LOG.log(Level.FINEST, "Pipeline config history triggered.");
 
     try {
-        Executable executable = execution.getOwner().getExecutable();
-        if(!(executable instanceof WorkflowRun)) {
-            return;
-        }
+      Executable executable = execution.getOwner().getExecutable();
+      if(!(executable instanceof WorkflowRun)) {
+          return;
+      }
 
-        WorkflowRun run = (WorkflowRun) executable;
-        WorkflowJob workflowJob = run.getParent();
+      WorkflowRun run = (WorkflowRun) executable;
+      WorkflowJob workflowJob = run.getParent();
 
-        //do the I/O
-        PipelineItemHistoryDao historyDao = PluginUtils.getHistoryDao();
+      //do the I/O
+      PipelineItemHistoryDao historyDao = PluginUtils.getHistoryDao();
 
-        if (!historyDao.isHistoryPresent(workflowJob)) {
-            createHistory(historyDao, execution, workflowJob);
-        } else {
-            updateHistory(historyDao, execution, workflowJob);
-        }
+      if (!historyDao.isHistoryPresent(workflowJob)) {
+          createHistory(historyDao, execution, workflowJob);
+      } else {
+          updateHistory(historyDao, execution, workflowJob);
+      }
     } catch (IOException e) {
         LOG.log(Level.WARNING, "Failed to get execution: {0}", e.getMessage());
     }
   }
   
   private void createHistory(PipelineItemHistoryDao historyDao, FlowExecution execution, WorkflowJob workflowJob) {
-      try {
-          historyDao.createHistory(workflowJob, getBuildNumber(execution, workflowJob));
-      } catch (IOException e) {
-          LOG.log(Level.WARNING, "pipeline config could not be created: {0}", e.getMessage());
-      }
+    try {
+      historyDao.createHistory(workflowJob, getBuildNumber(execution, workflowJob));
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "pipeline config could not be created: {0}", e.getMessage());
+    }
   }
   
   private void updateHistory(PipelineItemHistoryDao historyDao, FlowExecution execution, WorkflowJob workflowJob) {
-      try {
-          historyDao.updateHistory(workflowJob, getBuildNumber(execution, workflowJob));
-      } catch (IOException e) {
-          LOG.log(Level.WARNING, "pipeline config could not be updated: {0}", e.getMessage());
-      }
+    try {
+      historyDao.updateHistory(workflowJob, getBuildNumber(execution, workflowJob));
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "pipeline config could not be updated: {0}", e.getMessage());
+    }
   }
 
   private int getBuildNumber(@Nonnull FlowExecution flowExecution, WorkflowJob workflowJob) {
