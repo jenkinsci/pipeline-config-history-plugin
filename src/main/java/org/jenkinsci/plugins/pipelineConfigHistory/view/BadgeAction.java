@@ -25,12 +25,18 @@ package org.jenkinsci.plugins.pipelineConfigHistory.view;
 
 import org.jenkinsci.plugins.pipelineConfigHistory.Messages;
 import org.jenkinsci.plugins.pipelineConfigHistory.PipelineConfigHistoryConsts;
+import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
 import hudson.model.BuildBadgeAction;
+import hudson.model.Run;
+import jenkins.model.Jenkins;
+import jenkins.model.RunAction2;
 
-public class BadgeAction implements BuildBadgeAction {
+public class BadgeAction implements BuildBadgeAction, RunAction2 {
 
   private String url;
+  
+  private transient WorkflowRun run;
 
   public BadgeAction(String url) {
     this.url = url;
@@ -48,11 +54,20 @@ public class BadgeAction implements BuildBadgeAction {
 
   @Override
   public String getUrlName() {
-    return this.url;
+    return Jenkins.get().getRootUrl() + run.getParent().getUrl() + this.url;
   }
-  
+
   public String getTooltip() {
     return Messages.BadgeAction_ToolTip();
   }
 
+  @Override
+  public void onAttached(Run<?, ?> r) {
+	  run = (WorkflowRun)r;
+  }
+
+  @Override
+  public void onLoad(Run<?, ?> r) {
+	  run = (WorkflowRun)r;
+  }
 }
