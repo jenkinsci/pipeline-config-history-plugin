@@ -88,20 +88,22 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
   }
 
   @Override
-  public void updateHistory(WorkflowJob workflowJob, int buildNumber) throws IOException {
+  public boolean updateHistory(WorkflowJob workflowJob, int buildNumber) throws IOException {
     //only create new entry if something has changed.
     boolean hasSomethingChanged = false;
     try {
       hasSomethingChanged = hasSomethingChanged(workflowJob, buildNumber);
     } catch (FileNotFoundException e) {
       LOG.log(Level.SEVERE, "history could not be updated: {0}", e.getMessage());
-      return;
+      return false;
     }
     if (hasSomethingChanged) {
       writeUpdateToDisk(workflowJob, buildNumber);
     }
     LOG.log(Level.FINEST,
         hasSomethingChanged ? "Pipeline history was updated" : "Pipeline history was not updated.");
+    
+    return hasSomethingChanged;
   }
 
   @Override

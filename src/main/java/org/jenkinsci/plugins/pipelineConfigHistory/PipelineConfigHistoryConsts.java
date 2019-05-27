@@ -48,6 +48,11 @@ public final class PipelineConfigHistoryConsts {
    * Path to the config history icon.
    */
   public static final String ICON_PATH = "/plugin/pipeline-config-history/icons/confighistory.png";
+  
+  /**
+   * Path to the build padge icon.
+   */
+  public static final String BADGE_ACTION_ICON_PATH = "/plugin/pipeline-config-history/icons/buildbadge.png";
 
   /**
    * Path to the history base. Usage: JENKINS_HOME/DEFAULT_HISTORY_DIR

@@ -26,7 +26,10 @@ package org.jenkinsci.plugins.pipelineConfigHistory.model;
 
 import hudson.Extension;
 import hudson.model.Queue.Executable;
+
+import org.jenkinsci.plugins.pipelineConfigHistory.PipelineConfigHistoryConsts;
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;
+import org.jenkinsci.plugins.pipelineConfigHistory.view.BadgeAction;
 import org.jenkinsci.plugins.workflow.flow.FlowExecution;
 import org.jenkinsci.plugins.workflow.flow.FlowExecutionListener;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
@@ -34,6 +37,9 @@ import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
@@ -69,10 +75,31 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
       if (!historyDao.isHistoryPresent(workflowJob)) {
           createHistory(historyDao, execution, workflowJob);
       } else {
-          updateHistory(historyDao, execution, workflowJob);
+          boolean isHistoryUpdated = updateHistory(historyDao, execution, workflowJob);
+          if(isHistoryUpdated) {
+            addBuildBadge(workflowJob, run);
+          }
       }
     } catch (IOException e) {
         LOG.log(Level.WARNING, "Failed to get execution: {0}", e.getMessage());
+    }
+  }
+
+  private void addBuildBadge(WorkflowJob job, WorkflowRun run) {
+    try {
+      Collection<PipelineHistoryDescription> historyDescriptionsCollection = PluginUtils.getHistoryDao().getRevisions(job).values();
+      if(historyDescriptionsCollection.size() < 2) {
+    	  return;
+      }
+      List<PipelineHistoryDescription> historyDescriptions = new ArrayList<>(historyDescriptionsCollection.size());
+      historyDescriptions.addAll(historyDescriptionsCollection);
+      String timestamp1 = historyDescriptions.get(historyDescriptions.size()-2).getTimestamp();
+      String timestamp2 = historyDescriptions.get(historyDescriptions.size()-1).getTimestamp();
+      String url = job.getAbsoluteUrl() + PipelineConfigHistoryConsts.PLUGIN_BASE_PATH + "/showAllDiffs?timestamp1=" + timestamp1 + "&timestamp2=" + timestamp2 + "&anyDiffExists=true";
+      BadgeAction action = new BadgeAction(url);
+      run.addAction(action);
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "Failed to get history descriptions: {0}", e.getMessage());
     }
   }
   
@@ -84,12 +111,13 @@ public class PipelineConfigHistoryFlowExecutionListener extends FlowExecutionLis
     }
   }
   
-  private void updateHistory(PipelineItemHistoryDao historyDao, FlowExecution execution, WorkflowJob workflowJob) {
+  private boolean updateHistory(PipelineItemHistoryDao historyDao, FlowExecution execution, WorkflowJob workflowJob) {
     try {
-      historyDao.updateHistory(workflowJob, getBuildNumber(execution, workflowJob));
+      return historyDao.updateHistory(workflowJob, getBuildNumber(execution, workflowJob));
     } catch (IOException e) {
       LOG.log(Level.WARNING, "pipeline config could not be updated: {0}", e.getMessage());
     }
+    return false;
   }
 
   private int getBuildNumber(@Nonnull FlowExecution flowExecution, WorkflowJob workflowJob) {
