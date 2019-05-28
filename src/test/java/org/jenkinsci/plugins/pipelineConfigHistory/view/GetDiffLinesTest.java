@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -71,7 +70,6 @@ public class GetDiffLinesTest {
 	}
 
 	GetDiffLines createGetDiffLines() throws IOException {
-		final String resourceName = "diff.txt";
 		final List<String> lines = Arrays.asList(resourceString.split("\n"));
 		GetDiffLines sut = new GetDiffLines(lines);
 		return sut;

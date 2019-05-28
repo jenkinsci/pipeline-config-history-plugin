@@ -1,4 +1,3 @@
-package org.jenkinsci.plugins.pipelineConfigHistory.model;
 /*
  * The MIT License
  *
@@ -22,6 +21,7 @@ package org.jenkinsci.plugins.pipelineConfigHistory.model;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package org.jenkinsci.plugins.pipelineConfigHistory.model;
 
 import hudson.model.Job;
 import hudson.model.queue.QueueTaskFuture;
@@ -29,7 +29,6 @@ import jenkins.model.ParameterizedJobMixIn;
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
-import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -83,8 +82,6 @@ public class PipelineConfigHistoryFlowExecutionListenerTest {
 
 	private void createNewBuild(WorkflowJob workflowJob, String script) throws Exception {
 		workflowJob.setDefinition(new CpsFlowDefinition(script, false));
-
-		WorkflowRun oldRun = workflowJob.getLastBuild();
 
 		QueueTaskFuture f = new ParameterizedJobMixIn() {
 			@Override protected Job asJob() {

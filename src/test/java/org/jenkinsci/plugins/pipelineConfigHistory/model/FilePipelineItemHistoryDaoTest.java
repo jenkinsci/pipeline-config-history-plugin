@@ -1,4 +1,3 @@
-package org.jenkinsci.plugins.pipelineConfigHistory.model;
 /*
  * The MIT License
  *
@@ -22,10 +21,10 @@ package org.jenkinsci.plugins.pipelineConfigHistory.model;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package org.jenkinsci.plugins.pipelineConfigHistory.model;
 
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
-import org.jenkinsci.plugins.workflow.flow.FlowExecution;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.junit.Before;
