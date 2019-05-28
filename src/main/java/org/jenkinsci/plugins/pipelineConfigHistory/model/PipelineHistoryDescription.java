@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package org.jenkinsci.plugins.pipelineConfigHistory.model;
 
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;

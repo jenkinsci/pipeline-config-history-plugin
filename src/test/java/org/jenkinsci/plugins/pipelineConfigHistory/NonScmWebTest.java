@@ -1,3 +1,26 @@
+/*
+ * The MIT License
+ *
+ * Copyright (c) 2019, Robin Schulz
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package org.jenkinsci.plugins.pipelineConfigHistory;
 
 import com.gargoylesoftware.htmlunit.WebClient;
@@ -13,7 +36,6 @@ import org.apache.commons.lang.SystemUtils;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
-import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.junit.Assert;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
@@ -69,7 +91,6 @@ public class NonScmWebTest {
 
 
     try (final WebClient webClient = jenkinsRule.createWebClient()) {
-      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
       // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
       WebClientUtil.waitForJSExec(webClient);
 
@@ -105,7 +126,6 @@ public class NonScmWebTest {
     workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
 
     try (final WebClient webClient = jenkinsRule.createWebClient()) {
-      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
       // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
       WebClientUtil.waitForJSExec(webClient);
 
@@ -128,7 +148,6 @@ public class NonScmWebTest {
 
 
       //now we're on configOverview. Test that the one build exists.
-//      currentPage.getAnchors().stream().forEach(htmlAnchor -> System.out.println("Anchor: " + htmlAnchor.toString()));
       assertTrue(currentPageAsText.contains("Jenkinsfile"));
       List<HtmlAnchor> configOverviewAnchors = currentPage.getAnchors();
 
@@ -156,7 +175,6 @@ public class NonScmWebTest {
     workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
 
     try (final WebClient webClient = jenkinsRule.createWebClient()) {
-      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
       // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
       WebClientUtil.waitForJSExec(webClient);
 
@@ -193,7 +211,6 @@ public class NonScmWebTest {
     workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
 
     try (final WebClient webClient = jenkinsRule.createWebClient()) {
-      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
       // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
       WebClientUtil.waitForJSExec(webClient);
 
@@ -255,7 +272,6 @@ public class NonScmWebTest {
     workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
 
     try (final WebClient webClient = jenkinsRule.createWebClient()) {
-      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
       // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
       WebClientUtil.waitForJSExec(webClient);
 
@@ -297,7 +313,6 @@ public class NonScmWebTest {
     workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
 
     try (final WebClient webClient = jenkinsRule.createWebClient()) {
-      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
       // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
       WebClientUtil.waitForJSExec(webClient);
 
@@ -318,7 +333,6 @@ public class NonScmWebTest {
       // go to showAllDiffs
       refresh();
 
-//      Thread.sleep(5000000);
       assertTrue(currentPageAsText.contains(PIPELINE_NAME + " Differences"));
       assertTrue(currentPageAsText.contains("Show Diff"));
       assertTrue(currentPageAsText.contains("Jenkinsfile"));
@@ -331,7 +345,6 @@ public class NonScmWebTest {
     workflowJob = createWorkflowJob(PIPELINE_NAME, SCRIPT);
 
     try (final WebClient webClient = jenkinsRule.createWebClient()) {
-      WebClientUtil.ExceptionListener exceptionListener = WebClientUtil.addExceptionListener(webClient);
       // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
       WebClientUtil.waitForJSExec(webClient);
 
@@ -391,31 +404,6 @@ public class NonScmWebTest {
   }
 
   private String getIndexedScript(String script) {
-
-    String s1 = "<1\t[\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] node {\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] 2\t\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] //nothing\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] 3\t\n" +
-        "]\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] }>";
-    String s2 = "<1\t[\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] node {\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] 2\t\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] //nothing\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] 3\t]\n" +
-        "\n" +
-        "[2019-05-16T14:54:25.941Z] }>\n";
-
     StringBuilder resultBuilder = new StringBuilder();
     String[] lines = script.split("\\n");
     for (int i = 0; i < lines.length; ++i) {
@@ -449,8 +437,6 @@ public class NonScmWebTest {
   private void createNewBuild(WorkflowJob workflowJob, String script) throws Exception {
     workflowJob.setDefinition(new CpsFlowDefinition(script, false));
 
-    WorkflowRun oldRun = workflowJob.getLastBuild();
-
     QueueTaskFuture f = new ParameterizedJobMixIn() {
       @Override protected Job asJob() {
         return workflowJob;
@@ -463,13 +449,6 @@ public class NonScmWebTest {
 
   private String indexUrl() throws IOException {
     return jenkinsRule.getURL() + workflowJob.getUrl() + "pipeline-config-history/";
-  }
-
-  private String configOverviewUrl(String timestamp) throws  IOException {
-    return
-        indexUrl()
-        + workflowJob.getFullName()
-        + "/" + timestamp;
   }
 
   private void refresh() throws IOException {

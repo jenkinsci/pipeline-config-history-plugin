@@ -1,4 +1,3 @@
-package org.jenkinsci.plugins.pipelineConfigHistory;
 /*
  * The MIT License
  *
@@ -22,6 +21,7 @@ package org.jenkinsci.plugins.pipelineConfigHistory;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package org.jenkinsci.plugins.pipelineConfigHistory;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Before;
@@ -63,31 +63,21 @@ public class DirectoryUtilsTest {
 	static final String dir1RootFile2Content = "3f92hf23\n";
 	static final String dir3RootFile2Content = "8fb";
 
-	private File dir1RootFile1;
-	private File dir2RootFile1;
-	private File dir3RootFile1;
-	private File dir4RootFile1;
-
-	private File dir1RootFile2;
-	private File dir2RootFile2;
-	private File dir3RootFile2;
-	private File dir4RootFile2;
-
 	@Rule
 	public JenkinsRule jenkinsRule = new JenkinsRule();
 
 	@Before
 	public void beforeTest() throws IOException {
 
-		dir1RootFile1 = createFile(dir1RootFile1Name, "");
-		dir2RootFile1 = createFile(dir2RootFile1Name, "");
-		dir3RootFile1 = createFile(dir3RootFile1Name, "");
-		dir4RootFile1 = createFile(dir4RootFile1Name, "");
+		createFile(dir1RootFile1Name, "");
+		createFile(dir2RootFile1Name, "");
+		createFile(dir3RootFile1Name, "");
+		createFile(dir4RootFile1Name, "");
 
-		dir1RootFile2 = createFile(dir1RootFile2Name, dir1RootFile2Content);
-		dir2RootFile2 = createFile(dir2RootFile2Name, "");
-		dir3RootFile2 = createFile(dir3RootFile2Name, dir3RootFile2Content);
-		dir4RootFile2 = createFile(dir4RootFile2Name, "");
+		createFile(dir1RootFile2Name, dir1RootFile2Content);
+		createFile(dir2RootFile2Name, "");
+		createFile(dir3RootFile2Name, dir3RootFile2Content);
+		createFile(dir4RootFile2Name, "");
 	}
 
 	@Test

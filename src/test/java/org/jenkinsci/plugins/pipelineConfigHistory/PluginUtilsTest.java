@@ -1,4 +1,3 @@
-package org.jenkinsci.plugins.pipelineConfigHistory;
 /*
  * The MIT License
  *
@@ -22,16 +21,13 @@ package org.jenkinsci.plugins.pipelineConfigHistory;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+package org.jenkinsci.plugins.pipelineConfigHistory;
 
 import hudson.XmlFile;
-import hudson.model.Run;
 import hudson.scm.ChangeLogParser;
-import hudson.scm.ChangeLogSet;
-import hudson.scm.RepositoryBrowser;
 import hudson.scm.SCM;
 import org.apache.commons.io.FileUtils;
 import org.jenkinsci.plugins.pipelineConfigHistory.model.PipelineItemHistoryDao;
-import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.junit.Rule;
@@ -41,7 +37,6 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -140,7 +135,6 @@ public class PluginUtilsTest {
 
 	@Test
 	public void getLibDir() {
-//		assertEquals(filePath + "/libs", PluginUtils.getLibDir(new File(filePath)).getPath());
 		assertEquals(
 				new File(filePath + "/libs"),
 				PluginUtils.getLibDir(new File(filePath))
@@ -149,7 +143,6 @@ public class PluginUtilsTest {
 
 	@Test
 	public void getBuildDotXml() {
-//		assertEquals(filePath + "/build.xml", PluginUtils.getBuildXml(new File(filePath)).getFile().getPath());
 		assertEquals(
 				new File(filePath + "/build.xml"),
 				PluginUtils.getBuildXml(new File(filePath)).getFile()
@@ -177,7 +170,7 @@ public class PluginUtilsTest {
 
 	@Test
 	public void getJenkinsRootDir() {
-		assertEquals(jenkinsRule.jenkins.getInstance().root.getPath(), PluginUtils.getJenkinsRootDir().getPath());
+		assertEquals(jenkinsRule.jenkins.get().root.getPath(), PluginUtils.getJenkinsRootDir().getPath());
 	}
 
 	@Test
