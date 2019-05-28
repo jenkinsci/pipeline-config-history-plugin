@@ -30,7 +30,9 @@ import org.apache.commons.io.FileUtils;
 import org.jenkinsci.plugins.pipelineConfigHistory.PipelineConfigHistoryConsts;
 import org.jenkinsci.plugins.pipelineConfigHistory.model.PipelineHistoryDescription;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
+import org.jenkinsci.plugins.workflow.cps.replay.ReplayAction;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
+import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,6 +44,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 public class PipelineConfigHistoryProjectActionTest {
@@ -301,7 +304,9 @@ public class PipelineConfigHistoryProjectActionTest {
 	@Test
 	public void isBuiltfromReplay() throws Exception {
 		createNewBuild(workflowJob, SCRIPT);
+		WorkflowRun workflowRun_SCRIPT = workflowJob.getLastBuild();
 		createNewBuild(workflowJob, SCRIPT_2);
+		workflowRun_SCRIPT.getAction(ReplayAction.class).run(SCRIPT, Collections.emptyMap()).get();
 
 		String timestamp1 = sut.getPipelineHistoryDescriptions().get(0).getTimestamp();
 		String timestamp2 = sut.getPipelineHistoryDescriptions().get(1).getTimestamp();
@@ -317,7 +322,9 @@ public class PipelineConfigHistoryProjectActionTest {
 	@Test
 	public void getOriginalNumberFromReplayBuild() throws Exception {
 		createNewBuild(workflowJob, SCRIPT);
+		WorkflowRun workflowRun_SCRIPT = workflowJob.getLastBuild();
 		createNewBuild(workflowJob, SCRIPT_2);
+		workflowRun_SCRIPT.getAction(ReplayAction.class).run(SCRIPT, Collections.emptyMap()).get();
 
 		String timestamp3 = sut.getPipelineHistoryDescriptions().get(2).getTimestamp();
 
@@ -327,7 +334,9 @@ public class PipelineConfigHistoryProjectActionTest {
 	@Test
 	public void getBuildNumber() throws Exception {
 		createNewBuild(workflowJob, SCRIPT);
+		WorkflowRun workflowRun_SCRIPT = workflowJob.getLastBuild();
 		createNewBuild(workflowJob, SCRIPT_2);
+		workflowRun_SCRIPT.getAction(ReplayAction.class).run(SCRIPT, Collections.emptyMap()).get();
 
 		String timestamp1 = sut.getPipelineHistoryDescriptions().get(0).getTimestamp();
 		String timestamp2 = sut.getPipelineHistoryDescriptions().get(1).getTimestamp();
@@ -353,7 +362,7 @@ public class PipelineConfigHistoryProjectActionTest {
 
 	private void createNewBuild(WorkflowJob workflowJob, String script) throws Exception {
 		workflowJob.setDefinition(new CpsFlowDefinition(script, false));
-
+		
 		QueueTaskFuture f = new ParameterizedJobMixIn() {
 			@Override protected Job asJob() {
 				return workflowJob;
