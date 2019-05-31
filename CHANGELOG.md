@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project are documented in this file.
 
-## [1.3] - tbd
+## [1.3] - 31.05.19
 * Add badge icon and diff link to build
 
 ## [1.2] - 27.05.19
