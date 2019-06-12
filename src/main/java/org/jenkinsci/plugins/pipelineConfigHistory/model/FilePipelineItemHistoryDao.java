@@ -66,10 +66,17 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
       Logger.getLogger(PipelineConfigHistoryItemListener.class.getName());
 
   private final File historyRootDir;
+  private final int maxHistoryEntries;
   private static final long CLASH_SLEEP_TIME = 500;
 
   public FilePipelineItemHistoryDao(final File historyRootDir) {
     this.historyRootDir = historyRootDir;
+    this.maxHistoryEntries = -1;
+  }
+
+  public FilePipelineItemHistoryDao(final File historyRootDir, int maxHistoryEntries) {
+    this.historyRootDir = historyRootDir;
+    this.maxHistoryEntries = maxHistoryEntries > 0 ? maxHistoryEntries : -1;
   }
 
   @Override
@@ -99,6 +106,7 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
     if (hasSomethingChanged) {
       writeUpdateToDisk(workflowJob, buildNumber);
     }
+
     LOG.log(Level.FINEST,
         hasSomethingChanged ? "Pipeline history was updated" : "Pipeline history was not updated.");
     
@@ -179,12 +187,14 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
 
   @Override
   public File getMostRecentRevision(WorkflowJob workflowJob) {
+
     List<File> currentEntriesSorted = getCurrentEntriesSorted(workflowJob);
     return currentEntriesSorted.get(currentEntriesSorted.size() - 1);
   }
 
   @Override
   public File getRevision(WorkflowJob workflowJob, String identifier) throws FileNotFoundException {
+
     List<File> currentEntriesSorted = getCurrentEntriesSorted(workflowJob);
     Optional<File> optionalFile = currentEntriesSorted.stream()
         .filter(entry -> entry.getName().equals(identifier))
@@ -346,6 +356,41 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
     //don't need nor want to map the filepath like in jobconfighistory,
     // so instead of folder1/jobs/folder2/jobX it's folder1/folder2/jobX.
     return getHistoryRootDirectory(workflowJob.getFullName());
+  }
+
+  private void purgeOldEntries(WorkflowJob worflowJob) {
+    File historyRootDirectory = getHistoryRootDirectory(worflowJob);
+    if (this.hasMaxHistoryEntries()) {
+      LOG.log(
+          Level.FINE,
+          "checking for history files to purge ({0} max allowed)",
+          this.maxHistoryEntries
+      );
+      final File[] configurationDirectories = historyRootDirectory.listFiles(PipelineHistoryFileFilter.getInstance());
+      if (configurationDirectories != null && configurationDirectories.length > this.maxHistoryEntries) {
+        Arrays.sort(configurationDirectories, Collections.reverseOrder());
+        for (int i = this.maxHistoryEntries; i < configurationDirectories.length; ++i) {
+          LOG.log(Level.FINE,
+              "purging old directory from history logs: {0}",
+              configurationDirectories[i]
+          );
+          try {
+            FileUtils.deleteDirectory(configurationDirectories[i]);
+          } catch (IOException e) {
+            LOG.log(
+                Level.WARNING,
+                "{0} could not be deleted: {1}",
+                new Object[]{configurationDirectories[i], e.getMessage()}
+            );
+          }
+        }
+      }
+    }
+
+  }
+
+  private boolean hasMaxHistoryEntries() {
+    return maxHistoryEntries > 0;
   }
 
   private final File getHistoryRootDirectory(String jobName) {
