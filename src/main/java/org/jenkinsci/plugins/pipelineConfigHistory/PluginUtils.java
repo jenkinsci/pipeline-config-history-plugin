@@ -187,6 +187,9 @@ public final class PluginUtils {
   }
 
   private static String getJenkinsfilePathFromFlowDefinition(CpsScmFlowDefinition flowDefinition) {
+
+    //TODO: Das hier kann man dazu nutzen, um das ""Jenkinsfile"" richtig zu benennen! dafür muss man es allerdings schon beim erstellen speichern (history.xml)
+    //TODO flowDefinition.getScriptPath()
     return flowDefinition.getScm().getKey();
   }
 
