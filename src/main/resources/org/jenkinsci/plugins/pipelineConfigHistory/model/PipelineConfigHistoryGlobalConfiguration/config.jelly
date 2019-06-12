@@ -1,0 +1,12 @@
+<?jelly escape-by-default='true'?>
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
+         xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:c="/lib/credentials">
+    <f:section title="${%title.configtitle}">
+        <f:entry title="${%Max number of history entries to keep}">
+            <f:textbox name="maxHistoryEntries" value="${it.maxHistoryEntries}" field="maxHistoryEntries"/>
+        </f:entry>
+        <f:entry title="${%Max number of days to keep history entries}">
+            <f:textbox name="maxDaysToKeepEntries" value="${it.maxDaysToKeepEntries}" field="maxDaysToKeepEntries"/>
+        </f:entry>
+    </f:section>
+</j:jelly>

@@ -111,4 +111,6 @@ public interface PipelineItemHistoryDao {
    * @return whether there are history entries present or not
    */
   boolean isHistoryPresent(WorkflowJob workflowJob);
+
+  void purgeEntriesByAge(int maxAge, WorkflowJob workflowJob);
 }

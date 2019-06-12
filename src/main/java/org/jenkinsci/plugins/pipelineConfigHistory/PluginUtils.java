@@ -29,6 +29,7 @@ import hudson.model.Item;
 import jenkins.model.Jenkins;
 import org.apache.commons.io.FileUtils;
 import org.jenkinsci.plugins.pipelineConfigHistory.model.FilePipelineItemHistoryDao;
+import org.jenkinsci.plugins.pipelineConfigHistory.model.PipelineConfigHistoryGlobalConfiguration;
 import org.jenkinsci.plugins.pipelineConfigHistory.model.PipelineItemHistoryDao;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition;
@@ -49,6 +50,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -64,9 +66,18 @@ public final class PluginUtils {
    * @return the currently used history dao.
    */
   public static PipelineItemHistoryDao getHistoryDao() {
-    return new FilePipelineItemHistoryDao(
-        new File(Jenkins.get().getRootDir(), PipelineConfigHistoryConsts.DEFAULT_HISTORY_DIR)
-    );
+    Optional<Integer> maxHistoryEntriesOptional = PipelineConfigHistoryGlobalConfiguration.get().getMaxHistoryEntriesOptional();
+    if (maxHistoryEntriesOptional.isPresent()) {
+      return new FilePipelineItemHistoryDao(
+          new File(Jenkins.get().getRootDir(), PipelineConfigHistoryConsts.DEFAULT_HISTORY_DIR),
+          maxHistoryEntriesOptional.get()
+      );
+    } else {
+      return new FilePipelineItemHistoryDao(
+          new File(Jenkins.get().getRootDir(), PipelineConfigHistoryConsts.DEFAULT_HISTORY_DIR)
+      );
+    }
+
   }
 
   /**

@@ -30,10 +30,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +54,10 @@ import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
 import org.xml.sax.SAXException;
+import sun.rmi.runtime.Log;
+
+import static java.util.logging.Level.FINEST;
+import static java.util.logging.Level.WARNING;
 
 /**
  * A PipelineItemHistoryDao-Implementation for storing the history directly in the file system
@@ -66,10 +72,18 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
       Logger.getLogger(PipelineConfigHistoryItemListener.class.getName());
 
   private final File historyRootDir;
+  private final int maxHistoryEntries;
   private static final long CLASH_SLEEP_TIME = 500;
 
   public FilePipelineItemHistoryDao(final File historyRootDir) {
     this.historyRootDir = historyRootDir;
+    this.maxHistoryEntries = -1;
+  }
+
+  public FilePipelineItemHistoryDao(final File historyRootDir, int maxHistoryEntries) {
+    this.historyRootDir = historyRootDir;
+    // 0+ is allowed
+    this.maxHistoryEntries = maxHistoryEntries >= 0 ? maxHistoryEntries : -1;
   }
 
   @Override
@@ -99,8 +113,13 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
     if (hasSomethingChanged) {
       writeUpdateToDisk(workflowJob, buildNumber);
     }
+
     LOG.log(Level.FINEST,
         hasSomethingChanged ? "Pipeline history was updated" : "Pipeline history was not updated.");
+
+    // delete old entries if there are too many.
+    // Calling this is only needed when incrementing the number of history entries.
+    purgeOldEntries(workflowJob);
     
     return hasSomethingChanged;
   }
@@ -179,12 +198,14 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
 
   @Override
   public File getMostRecentRevision(WorkflowJob workflowJob) {
+
     List<File> currentEntriesSorted = getCurrentEntriesSorted(workflowJob);
     return currentEntriesSorted.get(currentEntriesSorted.size() - 1);
   }
 
   @Override
   public File getRevision(WorkflowJob workflowJob, String identifier) throws FileNotFoundException {
+
     List<File> currentEntriesSorted = getCurrentEntriesSorted(workflowJob);
     Optional<File> optionalFile = currentEntriesSorted.stream()
         .filter(entry -> entry.getName().equals(identifier))
@@ -346,6 +367,106 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
     //don't need nor want to map the filepath like in jobconfighistory,
     // so instead of folder1/jobs/folder2/jobX it's folder1/folder2/jobX.
     return getHistoryRootDirectory(workflowJob.getFullName());
+  }
+
+  @Override
+  public void purgeEntriesByAge(int maxAge, WorkflowJob workflowJob) {
+    File historyRootDirectory = getHistoryRootDirectory(workflowJob);
+    final File[] configurationDirectories = historyRootDirectory.listFiles(PipelineHistoryFileFilter.getInstance());
+
+    Arrays.stream(configurationDirectories).forEach( timestampedHistoryDir ->  {
+      if (isTooOld(maxAge, timestampedHistoryDir)) {
+        LOG.log(
+            FINEST,
+            "Deleting: {0}",
+            timestampedHistoryDir);
+
+        try {
+          FileUtils.deleteDirectory(timestampedHistoryDir);
+        } catch (IOException e) {
+          LOG.log(WARNING, "Deleting {0} failed: {1}",
+              new Object[] {timestampedHistoryDir, e.getMessage()});
+        }
+      }
+    });
+
+  }
+
+  /**
+   * Checks if the history directory is too old by parsing its name as a date
+   * and comparing it to the current date minus the maximal allowed age in
+   * days.
+   *
+   * @param historyDir
+   *            The history directory, e.g. 2013-01-18_17-33-51
+   * @return True if it is too old.
+   */
+  boolean isTooOld(int maxAge, File historyDir) {
+    Date parsedDate = null;
+    final SimpleDateFormat dateParser = new SimpleDateFormat(
+        PipelineConfigHistoryConsts.ID_FORMATTER);
+    try {
+      parsedDate = dateParser.parse(historyDir.getName());
+    } catch (ParseException ex) {
+      LOG.log(WARNING, "Unable to parse Date: {0}", ex);
+    }
+    final Calendar historyDate = new GregorianCalendar();
+    if (parsedDate != null) {
+      historyDate.setTime(parsedDate);
+      final Calendar oldestAllowedDate = new GregorianCalendar();
+      oldestAllowedDate.add(Calendar.DAY_OF_YEAR, - maxAge);
+      if (historyDate.before(oldestAllowedDate)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private void purgeOldEntries(WorkflowJob workflowJob) {
+    File historyRootDirectory = getHistoryRootDirectory(workflowJob);
+    final File[] configurationDirectories = historyRootDirectory.listFiles(PipelineHistoryFileFilter.getInstance());
+    if (configurationDirectories == null) return;
+    int entryCount = configurationDirectories.length;
+    if (this.hasMaxHistoryEntries()) {
+      String purgingStr =
+          entryCount > maxHistoryEntries
+              ? ", purging " + (entryCount - maxHistoryEntries) + " entries."
+              : "";
+      LOG.log(
+          //Level.FINE,
+          Level.INFO,
+          "checking for history files to purge ({0} entries existing, {1} max allowed)"
+              + purgingStr,
+          new Object[]{configurationDirectories.length, this.maxHistoryEntries}
+          //this.maxHistoryEntries
+      );
+      if (configurationDirectories.length > this.maxHistoryEntries) {
+        Arrays.sort(configurationDirectories, Collections.reverseOrder());
+        for (int i = this.maxHistoryEntries; i < configurationDirectories.length; ++i) {
+          LOG.log(
+              //Level.FINE,
+              Level.INFO,
+              "purging old directory from history logs: {0}",
+              configurationDirectories[i]
+          );
+          try {
+            FileUtils.deleteDirectory(configurationDirectories[i]);
+          } catch (IOException e) {
+            LOG.log(
+                Level.WARNING,
+                "{0} could not be deleted: {1}",
+                new Object[]{configurationDirectories[i], e.getMessage()}
+            );
+          }
+        }
+      }
+    }
+
+  }
+
+  private boolean hasMaxHistoryEntries() {
+    //0 is allowed.
+    return maxHistoryEntries >= 0;
   }
 
   private final File getHistoryRootDirectory(String jobName) {
