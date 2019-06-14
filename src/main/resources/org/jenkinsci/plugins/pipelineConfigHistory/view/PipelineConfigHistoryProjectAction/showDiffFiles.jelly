@@ -75,7 +75,7 @@
                                             <td class="unequal">
                                                 <j:choose>
                                                     <j:when test="${match.getFile1().getName().equals(&quot;build.xml&quot;)}">
-                                                        Jenkinsfile
+                                                        <b>Root Script:</b> ${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()}
                                                         <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;displayType=Jenkinsfile" style="text-decoration:none">
                                                             &#128279;
                                                         </a>
@@ -91,7 +91,7 @@
                                             <td class="unequal">
                                                 <j:choose>
                                                     <j:when test="${match.getFile2().getName().equals(&quot;build.xml&quot;)}">
-                                                        Jenkinsfile
+                                                        <b>Root Script:</b> ${it.getPipelineHistoryDescription(timestamp2).getRootScriptName()}
                                                         <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;displayType=Jenkinsfile" style="text-decoration:none">
                                                             &#128279;
                                                         </a>

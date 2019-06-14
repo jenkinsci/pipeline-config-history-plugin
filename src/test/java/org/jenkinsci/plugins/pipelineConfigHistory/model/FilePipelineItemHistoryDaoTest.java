@@ -243,7 +243,7 @@ public class FilePipelineItemHistoryDaoTest {
 		assertEquals(
 				timestamp,
 				PluginUtils.getHistoryDao()
-						.getRevision(new PipelineHistoryDescription(timestamp, pipelineProject.getFullName(), 1))
+						.getRevision(new PipelineHistoryDescription(timestamp, pipelineProject.getFullName(), "", 1))
 						.getName()
 		);
 
@@ -253,7 +253,7 @@ public class FilePipelineItemHistoryDaoTest {
 		assertEquals(
 				timestamp,
 				PluginUtils.getHistoryDao()
-						.getRevision(new PipelineHistoryDescription(timestamp, pipelineProject.getFullName(), 1))
+						.getRevision(new PipelineHistoryDescription(timestamp, pipelineProject.getFullName(), "", 1))
 						.getName()
 		);
 	}

@@ -50,11 +50,12 @@ import org.apache.commons.io.FileUtils;
 import org.jenkinsci.plugins.pipelineConfigHistory.DirectoryUtils;
 import org.jenkinsci.plugins.pipelineConfigHistory.PipelineConfigHistoryConsts;
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;
+import org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition;
+import org.jenkinsci.plugins.workflow.flow.FlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.jenkinsci.plugins.workflow.job.WorkflowRun;
 
 import org.xml.sax.SAXException;
-import sun.rmi.runtime.Log;
 
 import static java.util.logging.Level.FINEST;
 import static java.util.logging.Level.WARNING;
@@ -183,7 +184,7 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
           try {
             savePipelineHistoryDescriptionToXmlFile(
                 new PipelineHistoryDescription(oldDescr.getTimestamp(),
-                    workflowJob.getFullName(), oldDescr.getBuildNumber()
+                    workflowJob.getFullName(), oldDescr.getRootScriptName(), oldDescr.getBuildNumber()
                 ),
                 historyXml
             );
@@ -307,11 +308,18 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
       copyRecursively(buildLibDir, new File(timestampedRootDir, "libs"));
     }
 
+    //get root script name
+    FlowDefinition flowDefinition = workflowJob.getDefinition();
+    String rootScriptName = (flowDefinition instanceof CpsScmFlowDefinition)
+        ? ((CpsScmFlowDefinition) flowDefinition).getScriptPath()
+        : "Jenkinsfile";
+
     //save history xml
     savePipelineHistoryDescriptionToXmlFile(
         new PipelineHistoryDescription(
             timestampedRootDir.getName(),
             workflowJob.getFullName(),
+            rootScriptName,
             buildNumber
         ),
         getHistoryXmlFile(timestampedRootDir)

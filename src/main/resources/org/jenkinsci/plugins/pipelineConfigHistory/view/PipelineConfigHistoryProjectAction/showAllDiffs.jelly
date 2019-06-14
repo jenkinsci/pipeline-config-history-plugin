@@ -89,7 +89,7 @@
                             <j:forEach var="match" items="${matches}">
                                 <j:choose>
                                     <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                        <j:set var="subCaption" value="Jenkinsfile"></j:set>
+                                        <j:set var="subCaption" value="Root Script"></j:set>
                                     </j:when>
                                     <j:otherwise>
                                         <j:set var="subCaption" value="${match.getFile1().toString().replaceFirst(cuttingString1, &quot;&quot;)}"/>
