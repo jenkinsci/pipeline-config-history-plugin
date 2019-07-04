@@ -60,7 +60,7 @@
             </j:choose>
             <h1>${%Pipeline Configuration History}</h1>
 
-            <table class="center diffTable" style="width:100%">
+            <table class="center pch" style="width:100%">
                 <caption>
                     ${caption}
                 </caption>

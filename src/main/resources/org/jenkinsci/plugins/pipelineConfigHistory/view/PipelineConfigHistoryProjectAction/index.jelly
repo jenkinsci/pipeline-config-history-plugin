@@ -40,7 +40,7 @@
                 <j:otherwise>
 
                     <form method="post" action="diffFiles" name="diffFiles">
-                        <table id="confighistory" class="pane sortable">
+                        <table id="confighistory" class="pane sortable pch">
                             <caption>${it.getProject().getFullName()}</caption>
                             <thead>
                                 <tr>
@@ -89,10 +89,10 @@
                                         <td>
                                             <j:choose>
                                                 <j:when test="${configNr == historyDescriptions.size()-1}">
-                                                    <input type="radio" name="timestamp1" value="${historyDescription.getTimestamp()}" checked="true"/>
+                                                    <input class="pch" type="radio" name="timestamp1" value="${historyDescription.getTimestamp()}" checked="true"/>
                                                 </j:when>
                                                 <j:otherwise>
-                                                    <input type="radio" name="timestamp1" value="${historyDescription.getTimestamp()}"/>
+                                                    <input class="pch" type="radio" name="timestamp1" value="${historyDescription.getTimestamp()}"/>
                                                 </j:otherwise>
                                             </j:choose>
                                         </td>
@@ -100,10 +100,10 @@
                                         <td>
                                             <j:choose>
                                                 <j:when test="${configNr == historyDescriptions.size()-2}">
-                                                    <input type="radio" name="timestamp2" value="${historyDescription.getTimestamp()}" checked="true"/>
+                                                    <input class="pch" type="radio" name="timestamp2" value="${historyDescription.getTimestamp()}" checked="true"/>
                                                 </j:when>
                                                 <j:otherwise>
-                                                    <input type="radio" name="timestamp2" value="${historyDescription.getTimestamp()}"/>
+                                                    <input class="pch" type="radio" name="timestamp2" value="${historyDescription.getTimestamp()}"/>
                                                 </j:otherwise>
                                             </j:choose>
                                         </td>
@@ -115,10 +115,10 @@
                         <j:if test="${historyDescriptions.size() > 1}">
                             <br/>
                             <div align="right">
-                                <input type="submit" name="showAllDiffs" class="standard-button" value="${%Show Diffs}"/>
+                                <input type="submit" name="showAllDiffs" class="pch standard-button" value="${%Show Diffs}"/>
                                 <span style="padding-left:5px;">
 
-                                    <input type="submit" name="showDiffsInOneSite" class="standard-button" value="${%Show Diffs in one site}"/>
+                                    <input type="submit" name="showDiffsInOneSite" class="pch standard-button" value="${%Show Diffs in one site}"/>
                                 </span>
                             </div>
                         </j:if>

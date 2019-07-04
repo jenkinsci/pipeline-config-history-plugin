@@ -57,7 +57,7 @@
                 <l:main-panel>
                     <h1>${%Pipeline Configuration History}</h1>
 
-                        <table style="width:100%" class="screenFillingTable">
+                        <table style="width:100%" class="screenFillingTable pch">
                             <caption>
                                 ${it.getProject().getFullName()}: Revision
                                 <span class="target">

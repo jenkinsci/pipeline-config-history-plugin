@@ -33,7 +33,7 @@
             <j:set var="timestamp" value="${request.getParameter(&quot;timestamp&quot;)}"/>
             <j:set var="rootDirectory" value="${it.getRevision(timestamp)}"/>
             <j:set var="allFiles" value="${it.getAllFilesExceptHistoryXmlFromDirectory(rootDirectory)}"/>
-            <table class="sortable" style="width:100%">
+            <table class="pane sortable pch" style="width:100%">
                 <caption>
                     ${it.getProject().getFullName()}: Revision
                     <span class="target">

@@ -47,7 +47,7 @@
             <j:set var="caption" value="${it.getProject().getFullName()}: All Diffs"></j:set>
             <j:choose>
                 <j:when test="${anyDiffExists}">
-                    <table class="center diffTable" style="width:100%">
+                    <table class="center pch" style="width:100%">
                         <caption>
                             ${caption}
                         </caption>
@@ -343,7 +343,7 @@
                 </j:when>
                 <j:otherwise>
                     <!--no diff existing-->
-                    <table><caption style="width:100%">${it.getProject().getFullName()}: Revisions are not different.</caption></table>
+                    <table class="pch"><caption style="width:100%">${it.getProject().getFullName()}: Revisions are not different.</caption></table>
                 </j:otherwise>
             </j:choose>
         </l:main-panel>

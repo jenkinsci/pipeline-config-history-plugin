@@ -21,53 +21,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-.diffLineWrapper-left {
-    border-right: 0px solid white !important;
-    border-left: 15px solid white !important;
-    border-bottom: 15px solid white !important;
-
-    margin-left: 15px;
-
-    height:100%;
-}
-
-.diffLineWrapper-right {
-    border-right: 15px solid white !important;
-    border-left: 0px solid white !important;
-    border-bottom: 15px solid white !important;
-
-    height:100%;
- }
-
-.diffLineTable {
-    width:100%;
-    height:100%;
-}
 
 
-pre {
-	margin: 0;
-	white-space: pre-wrap;
-
-	background-color: inherit !important;
-}
-
-table th.lineNum {
-    width: 1%;
-    min-width:1%;
-    min-height:1%;
-    height:1%;
-    white-space: nowrap;
-    padding: 0px;
-	padding-left: 3px;
-	padding-right: 3px;
-    border-bottom: 0px;
-    border-radius: 0px;
-
-    color: #3762a8 !important;
-    font-size: 14px;
-    background-color: #f7f7f7;
-}
+/*
+#####################################################################
+###                        diff classes                           ###
+#####################################################################
+*/
 
 td.skipping {
     //height:100%;
@@ -85,11 +45,17 @@ td.diff_revised {
 }
 
 
-table td {
-    padding:0px !important;
-    height:20px;
-    border-top: 0px !important;
-    text-align:left !important;
+/*
+#####################################################################
+###                        syntax hl                              ###
+#####################################################################
+*/
+
+pre {
+	margin: 0;
+	white-space: pre-wrap;
+
+	background-color: inherit !important;
 }
 
 code {
@@ -98,4 +64,90 @@ code {
 }
 
 
+/*
+#####################################################################
+###                        diffLineTable                          ###
+#####################################################################
+*/
 
+table.diffLineTable {
+    width:100%;
+    height:100%;
+}
+
+table.diffLineTable tr {
+    height:20px;
+}
+
+table.diffLineTable th {
+    height:20px;
+}
+
+table.diffLineTable th.lineNum {
+    width: 1%;
+    min-width:1%;
+    min-height:1%;
+    height:1%;
+    white-space: nowrap;
+    padding: 0px;
+	padding-left: 3px;
+	padding-right: 3px;
+    border-bottom: 0px;
+    border-radius: 0px;
+
+    color: #3762a8 !important;
+    font-size: 14px;
+    background-color: #f7f7f7;
+}
+
+table.diffLineTable td {
+    padding:0px !important;
+        height:20px;
+        border-top: 0px !important;
+        text-align:left !important;
+}
+
+
+/*
+#####################################################################
+###                       diffLineWrapper                         ###
+#####################################################################
+*/
+
+table.center.pch td.diffLineWrapper-left {
+    border-right: 0px solid white !important;
+    border-left: 15px solid white !important;
+    border-bottom: 15px solid white !important;
+
+    padding:0px !important;
+            border-top: 0px !important;
+            text-align:left !important;
+
+    margin-left: 15px;
+
+    height:100%;
+}
+
+table td.diffLineWrapper-right {
+    border-right: 15px solid white !important;
+    border-left: 0px solid white !important;
+    border-bottom: 15px solid white !important;
+
+    padding:0px !important;
+        height:20px;
+        border-top: 0px !important;
+        text-align:left !important;
+
+    height:100%;
+}
+
+/*
+#####################################################################
+###                        other stuff                            ###
+#####################################################################
+*/
+
+table.pch td.subcaption-wrap {
+    /*No space between subcaption wrapper and table content.*/
+    padding:0px;
+}
