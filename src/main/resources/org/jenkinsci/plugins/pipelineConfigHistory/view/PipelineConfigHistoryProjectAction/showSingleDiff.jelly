@@ -50,7 +50,7 @@
                     <j:set var="lines2" value="${it.getScriptFromXmlFile(timestamp2, fileHash2, false)}"/>
 
                     <j:set var="lines" value="${it.getLines(lines1, lines2)}"/>
-                    <j:set var="caption" value="Jenkinsfile-Diff"></j:set>
+                    <j:set var="caption" value="Root Script Diff"></j:set>
                 </j:when>
                 <j:otherwise>
 

@@ -42,12 +42,12 @@ public class PipelineHistoryDescriptionTest {
 
 	@Test
 	public void getTimestamp() {
-		assertEquals(timestamp, new PipelineHistoryDescription(timestamp, fullName, 1).getTimestamp());
+		assertEquals(timestamp, new PipelineHistoryDescription(timestamp, fullName, "", 1).getTimestamp());
 	}
 
 	@Test
 	public void getFullName() {
-		assertEquals(fullName, new PipelineHistoryDescription(timestamp, fullName, 1).getFullName());
+		assertEquals(fullName, new PipelineHistoryDescription(timestamp, fullName, "", 1).getFullName());
 	}
 
 	@Test
@@ -55,6 +55,6 @@ public class PipelineHistoryDescriptionTest {
 		WorkflowJob workflowJob = new WorkflowJob(jenkinsRule.jenkins, fullName);
 		jenkinsRule.jenkins.add(workflowJob, fullName);
 
-		assertEquals(workflowJob, new PipelineHistoryDescription(timestamp, fullName, 1).getWorkflowJob());
+		assertEquals(workflowJob, new PipelineHistoryDescription(timestamp, fullName, "", 1).getWorkflowJob());
 	}
 }

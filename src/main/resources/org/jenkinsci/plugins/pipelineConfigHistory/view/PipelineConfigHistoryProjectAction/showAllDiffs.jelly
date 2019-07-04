@@ -89,7 +89,7 @@
                             <j:forEach var="match" items="${matches}">
                                 <j:choose>
                                     <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                        <j:set var="subCaption" value="Jenkinsfile"></j:set>
+                                        <j:set var="subCaption" value="Root Script"></j:set>
                                     </j:when>
                                     <j:otherwise>
                                         <j:set var="subCaption" value="${match.getFile1().toString().replaceFirst(cuttingString1, &quot;&quot;)}"/>
@@ -108,12 +108,12 @@
                                                     ${subCaption}
                                                     <j:choose>
                                                         <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
                                                                 &#128279;
                                                             </a>
                                                         </j:when>
                                                         <j:otherwise>
-                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=embedded" style="text-decoration:none">
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
                                                                 &#128279;
                                                             </a>
                                                         </j:otherwise>
@@ -201,12 +201,12 @@
                                                     file removed: ${subCaption}
                                                     <j:choose>
                                                         <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
                                                                 &#128279;
                                                             </a>
                                                         </j:when>
                                                         <j:otherwise>
-                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=embedded" style="text-decoration:none">
+                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
                                                                 &#128279;
                                                             </a>
                                                         </j:otherwise>
@@ -271,12 +271,12 @@
                                                     file added: ${subCaption}
                                                     <j:choose>
                                                         <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
                                                                 &#128279;
                                                             </a>
                                                         </j:when>
                                                         <j:otherwise>
-                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=embedded" style="text-decoration:none">
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
                                                                 &#128279;
                                                             </a>
                                                         </j:otherwise>

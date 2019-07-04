@@ -26,6 +26,7 @@ package org.jenkinsci.plugins.pipelineConfigHistory.model;
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class PipelineHistoryDescription {
@@ -36,16 +37,19 @@ public class PipelineHistoryDescription {
 
   private final int buildNumber;
 
+  private final String rootScriptName;
+
   /**
    * Get a PipelineHistoryDescription encapsulating the given information.
    * @param timestamp the config revision identifier
    * @param fullName the pipeline's full Name (jenkins convention)
    * @param buildNumber the build number associated to this config revision
    */
-  public PipelineHistoryDescription(String timestamp, String fullName, int buildNumber) {
+  public PipelineHistoryDescription(String timestamp, String fullName, String rootScript, int buildNumber) {
     this.timestamp = timestamp;
     this.fullName = fullName;
     this.buildNumber = buildNumber;
+    this.rootScriptName = rootScript;
   }
 
   public int getBuildNumber() {
@@ -58,6 +62,22 @@ public class PipelineHistoryDescription {
 
   public String getFullName() {
     return fullName;
+  }
+
+  public String getRootScriptName() {
+    return rootScriptName != null ? rootScriptName : "Jenkinsfile";
+  }
+
+  /**
+   * Get the root script filename
+   * @return the filename only (not the relative path)
+   */
+  public String getRootScriptSimpleName() {
+    return (rootScriptName != null)
+        ? Arrays.stream(rootScriptName.split("/"))
+            .reduce((first, second) -> second)
+            .orElse(rootScriptName)
+        : "Jenkinsfile";
   }
 
   public WorkflowJob getWorkflowJob() {
