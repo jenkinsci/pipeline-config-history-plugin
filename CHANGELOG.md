@@ -7,7 +7,9 @@ All notable changes to this project are documented in this file.
   + can limit the age of history entries for pipeline jobs.
 * Fixed: every root build file is called Jenkinsfile.
 * Fixed: missing name in "file view" links in diff overview page.
-
+* Fixed: plugin layout affected the Jenkins layout.
+* Fixed: some layout problems concerning diffs
+* Change diff layout to equally sized columns.
 
 ## [1.3] - 31.05.19
 * Add badge icon and diff link to build
