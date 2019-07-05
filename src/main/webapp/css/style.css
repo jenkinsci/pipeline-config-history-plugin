@@ -181,6 +181,10 @@ a.download-arrow.big {
     font-size:30px;
 }
 
+.downloadArrowWrapper {
+    padding-top: 15px;
+}
+
 a.download-arrow.small {
     padding-left:14px;
     padding-right:14px;
