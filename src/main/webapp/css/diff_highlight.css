@@ -96,9 +96,13 @@ table.diffLineTable th.lineNum {
     border-bottom: 0px;
     border-radius: 0px;
 
+
+    /*X-periment*/
+    border-bottom: 1px solid #e8e8e8;
+
     color: #3762a8 !important;
     font-size: 14px;
-    background-color: #f7f7f7;
+    background-color: #f5f5f5;
 }
 
 table.diffLineTable td {
@@ -106,7 +110,7 @@ table.diffLineTable td {
         height:20px;
         border-top: 0px !important;
         text-align:left !important;
-        width:100%
+        width:100%;
 }
 
 

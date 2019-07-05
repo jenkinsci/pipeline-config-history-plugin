@@ -86,6 +86,7 @@
                             </tr>
                         </thead>
                         <tbody id="tbody_versionDiffsShown" style="background-color:#fcfcfc">
+                            <j:set var="currentMatchNumber" value="0"/>
                             <j:forEach var="match" items="${matches}">
                                 <j:choose>
                                     <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
@@ -106,19 +107,24 @@
                                         <tr>
                                             <td colspan="4" class="subcaption-wrap">
                                                 <div class="subcaption">
+                                                    <div class="collapseButtonWrapper">
+                                                        <button class="collapseButton" id="collapseButton_${currentMatchNumber}"> COLLAPS!</button>
+                                                    </div>
+                                                    <div>
                                                     ${subCaption}
-                                                    <j:choose>
-                                                        <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
-                                                                &#128279;
-                                                            </a>
-                                                        </j:when>
-                                                        <j:otherwise>
-                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
-                                                                &#128279;
-                                                            </a>
-                                                        </j:otherwise>
-                                                    </j:choose>
+                                                        <j:choose>
+                                                            <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
+                                                                <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                                    &#128279;
+                                                                </a>
+                                                            </j:when>
+                                                            <j:otherwise>
+                                                                <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
+                                                                    &#128279;
+                                                                </a>
+                                                            </j:otherwise>
+                                                        </j:choose>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
@@ -126,6 +132,88 @@
 
                                         <tr>
                                             <td colspan="2" class="diffLineWrapper">
+                                                <div class="collapseableContent" id="collapseableContent_${currentMatchNumber}">
+                                                    <table class="center pch diffLineTable" style="width:100%">
+                                                        <tbody id="tbody_versionDiffsShown">
+                                                            <j:choose>
+                                                                <j:when test="${lines.size() == 0}">
+                                                                    <tr>
+                                                                        <td colspan="4">
+                                                                            <p>${%No lines changed}</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </j:when>
+                                                                <j:otherwise>
+
+                                                                    <j:forEach items="${lines}" var="line">
+                                                                        <tr>
+                                                                            <j:choose>
+                                                                                <j:when test="${line.skipping}">
+                                                                                    <th class="lineNum">...</th>
+                                                                                    <td class="skipping"></td>
+                                                                                    <th class="lineNum">...</th>
+                                                                                    <td class="skipping"></td>
+                                                                                </j:when>
+                                                                                <j:otherwise>
+                                                                                    <th class="lineNum">${line.left.lineNumber}</th>
+                                                                                    <td class="${line.left.cssClass}">
+                                                                                        <pre>
+                                                                                            <code>
+                                                                                                ${line.left.text}
+                                                                                            </code>
+                                                                                        </pre>
+                                                                                    </td>
+                                                                                    <th class="lineNum">${line.right.lineNumber}</th>
+                                                                                    <td class="${line.right.cssClass}">
+                                                                                        <pre>
+                                                                                            <code>
+                                                                                                ${line.right.text}
+                                                                                            </code>
+                                                                                        </pre>
+                                                                                    </td>
+                                                                                </j:otherwise>
+                                                                            </j:choose>
+                                                                        </tr>
+                                                                    </j:forEach>
+                                                                </j:otherwise>
+                                                            </j:choose>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    </j:when>
+                                    <j:when test="${match.getKind().equals(match.SINGLE_1)}">
+                                        <tr>
+                                            <td colspan="4" class="subcaption-wrap">
+                                                <div class="subcaption">
+                                                    <div class="collapseButtonWrapper">
+                                                        <button class="collapseButton" id="collapseButton_${currentMatchNumber}"> COLLAPS!</button>
+                                                    </div>
+                                                    <div>
+                                                    file removed: ${subCaption}
+                                                        <j:choose>
+                                                            <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
+                                                                <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                                    &#128279;
+                                                                </a>
+                                                            </j:when>
+                                                            <j:otherwise>
+                                                                <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
+                                                                    &#128279;
+                                                                </a>
+                                                            </j:otherwise>
+                                                        </j:choose>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" class="diffLineWrapper">
+                                            <div class="collapseableContent" id="collapseableContent_${currentMatchNumber}">
+
+
                                                 <table class="center pch diffLineTable" style="width:100%">
                                                     <tbody id="tbody_versionDiffsShown">
                                                         <j:choose>
@@ -139,11 +227,13 @@
                                                             <j:otherwise>
 
                                                                 <j:forEach items="${lines}" var="line">
+                                                                    <j:set var="text" value="${line.left.text}"/>
+                                                                    <j:if test="${text == null}">
+                                                                        <j:set var="text" value=""/>
+                                                                    </j:if>
                                                                     <tr>
                                                                         <j:choose>
                                                                             <j:when test="${line.skipping}">
-                                                                                <th class="lineNum">...</th>
-                                                                                <td class="skipping"></td>
                                                                                 <th class="lineNum">...</th>
                                                                                 <td class="skipping"></td>
                                                                             </j:when>
@@ -152,166 +242,176 @@
                                                                                 <td class="${line.left.cssClass}">
                                                                                     <pre>
                                                                                         <code>
-                                                                                            ${line.left.text}
-                                                                                        </code>
-                                                                                    </pre>
-                                                                                </td>
-                                                                                <th class="lineNum">${line.right.lineNumber}</th>
-                                                                                <td class="${line.right.cssClass}">
-                                                                                    <pre>
-                                                                                        <code>
-                                                                                            ${line.right.text}
+                                                                                            ${text}
                                                                                         </code>
                                                                                     </pre>
                                                                                 </td>
                                                                             </j:otherwise>
                                                                         </j:choose>
+                                                                        <th class="lineNum"></th>
+                                                                        <td class="${line.right.cssClass}"></td>
                                                                     </tr>
                                                                 </j:forEach>
                                                             </j:otherwise>
                                                         </j:choose>
                                                     </tbody>
                                                 </table>
-                                            </td>
-                                        </tr>
-
-                                    </j:when>
-                                    <j:when test="${match.getKind().equals(match.SINGLE_1)}">
-                                        <tr>
-                                            <td colspan="4" class="subcaption-wrap">
-                                                <div class="subcaption">
-                                                    file removed: ${subCaption}
-                                                    <j:choose>
-                                                        <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
-                                                                &#128279;
-                                                            </a>
-                                                        </j:when>
-                                                        <j:otherwise>
-                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
-                                                                &#128279;
-                                                            </a>
-                                                        </j:otherwise>
-                                                    </j:choose>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="diffLineWrapper-left">
-                                                <table class="diffLineTable" name="left-table">
-                                                    <thead>
-
-                                                    </thead>
-                                                    <tbody>
-                                                        <!--TODO-->
-                                                        <j:forEach items="${lines}" var="line">
-                                                            <j:set var="text" value="${line.left.text}"/>
-                                                            <j:if test="${text == null}">
-                                                                <j:set var="text" value=""/>
-                                                            </j:if>
-                                                            <tr>
-                                                                <j:choose>
-                                                                    <j:when test="${line.skipping}">
-                                                                        <th class="lineNum">...</th>
-                                                                        <td class="skipping"></td>
-                                                                    </j:when>
-                                                                    <j:otherwise>
-                                                                        <th class="lineNum">${line.left.lineNumber}</th>
-                                                                        <td class="${line.left.cssClass}">
-                                                                            <pre>
-                                                                                <code>
-                                                                                    ${text}
-                                                                                </code>
-                                                                                <!--j:out value="${line.left.text}"/-->
-                                                                            </pre>
-                                                                        </td>
-                                                                    </j:otherwise>
-                                                                </j:choose>
-                                                            </tr>
-                                                        </j:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                            <td class="diffLineWrapper-right">
-                                                <table class="diffLineTable" name="right-table">
-                                                    <thead>
-
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr><td class="${line.right.cssClass}"></td></tr>
-                                                    </tbody>
-                                                </table>
+                                            </div>
                                             </td>
                                         </tr>
 
                                     </j:when>
                                     <j:when test="${match.getKind().equals(match.SINGLE_2)}">
-                                        <j:set var="subCaption" value="${match.getFile2().toString().replaceFirst(cuttingString2, &quot;&quot;)}"/>
                                         <tr>
                                             <td colspan="4" class="subcaption-wrap">
                                                 <div class="subcaption">
-                                                    file added: ${subCaption}
-                                                    <j:choose>
-                                                        <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
-                                                                &#128279;
-                                                            </a>
-                                                        </j:when>
-                                                        <j:otherwise>
-                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
-                                                                &#128279;
-                                                            </a>
-                                                        </j:otherwise>
-                                                    </j:choose>
+                                                    <div class="collapseButtonWrapper">
+                                                        <button class="collapseButton" id="collapseButton_${currentMatchNumber}"> COLLAPS!</button>
+                                                    </div>
+                                                    <div>
+                                                        file added: ${subCaption}
+                                                        <j:choose>
+                                                            <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
+                                                                <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                                    &#128279;
+                                                                </a>
+                                                            </j:when>
+                                                            <j:otherwise>
+                                                                <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
+                                                                    &#128279;
+                                                                </a>
+                                                            </j:otherwise>
+                                                        </j:choose>
+                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="diffLineWrapper-left">
-                                                <table class="diffLineTable" name="left-table">
-                                                    <thead>
+                                            <td colspan="3" class="diffLineWrapper">
+                                                <div class="collapseableContent" id="collapseableContent_${currentMatchNumber}">
 
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr><td class="${line.left.cssClass}"></td></tr>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                            <td class="diffLineWrapper-right">
-                                                <table class="diffLineTable" name="right-table">
-                                                    <thead>
 
-                                                    </thead>
-                                                    <tbody>
-                                                        <j:forEach items="${lines}" var="line">
-                                                            <j:set var="text" value="${line.right.text}"/>
-                                                            <j:if test="${text == null}">
-                                                                <j:set var="text" value=""/>
-                                                            </j:if>
-                                                            <tr>
-                                                                <j:choose>
-                                                                    <j:when test="${line.skipping}">
-                                                                        <th class="lineNum">...</th>
-                                                                        <td class="skipping"></td>
-                                                                    </j:when>
-                                                                    <j:otherwise>
-                                                                        <th class="lineNum">${line.right.lineNumber}</th>
-                                                                        <td class="${line.right.cssClass}">
-                                                                            <pre>
-                                                                                <code>
-                                                                                    ${text}
-                                                                                </code>
-                                                                            </pre>
+                                                    <table class="center pch diffLineTable" style="width:100%">
+                                                        <tbody id="tbody_versionDiffsShown">
+                                                            <j:choose>
+                                                                <j:when test="${lines.size() == 0}">
+                                                                    <tr>
+                                                                        <td colspan="4">
+                                                                            <p>${%No lines changed}</p>
                                                                         </td>
-                                                                    </j:otherwise>
-                                                                </j:choose>
-                                                            </tr>
-                                                        </j:forEach>
-                                                    </tbody>
-                                                </table>
+                                                                    </tr>
+                                                                </j:when>
+                                                                <j:otherwise>
+
+                                                                    <j:forEach items="${lines}" var="line">
+                                                                        <j:set var="text" value="${line.right.text}"/>
+                                                                        <j:if test="${text == null}">
+                                                                            <j:set var="text" value=""/>
+                                                                        </j:if>
+                                                                        <tr>
+                                                                            <th class="lineNum"></th>
+                                                                            <td class="${line.left.cssClass}"></td>
+                                                                            <j:choose>
+                                                                                <j:when test="${line.skipping}">
+                                                                                    <th class="lineNum">...</th>
+                                                                                    <td class="skipping"></td>
+                                                                                </j:when>
+                                                                                <j:otherwise>
+                                                                                    <th class="lineNum">${line.right.lineNumber}</th>
+                                                                                    <td class="${line.right.cssClass}">
+                                                                                        <pre>
+                                                                                            <code>
+                                                                                                ${text}
+                                                                                            </code>
+                                                                                        </pre>
+                                                                                    </td>
+                                                                                </j:otherwise>
+                                                                            </j:choose>
+                                                                        </tr>
+                                                                    </j:forEach>
+                                                                </j:otherwise>
+                                                            </j:choose>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </td>
                                         </tr>
+
                                     </j:when>
+                                    <!--j:when test="${match.getKind().equals(match.SINGLE_2)}">
+                                        <j:set var="subCaption" value="${match.getFile2().toString().replaceFirst(cuttingString2, &quot;&quot;)}"/>
+                                        <tr>
+                                            <td colspan="4" class="subcaption-wrap">
+                                                <div class="subcaption">
+                                                    <div class="collapseButtonWrapper">
+                                                        <button class="collapseButton" id="collapseButton_${currentMatchNumber}"> COLLAPS!</button>
+                                                    </div>
+                                                    <div>
+                                                    file added: ${subCaption}
+                                                        <j:choose>
+                                                            <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
+                                                                <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
+                                                                    &#128279;
+                                                                </a>
+                                                            </j:when>
+                                                            <j:otherwise>
+                                                                <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
+                                                                    &#128279;
+                                                                </a>
+                                                            </j:otherwise>
+                                                        </j:choose>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <div class="collapseableContent" id="collapseableContent_${currentMatchNumber}">
+                                                <td class="diffLineWrapper-left">
+                                                    <table class="diffLineTable" name="left-table">
+                                                        <thead>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr><td class="${line.left.cssClass}"></td></tr>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                                <td class="diffLineWrapper-right">
+                                                    <table class="diffLineTable" name="right-table">
+                                                        <thead>
+
+                                                        </thead>
+                                                        <tbody>
+                                                            <j:forEach items="${lines}" var="line">
+                                                                <j:set var="text" value="${line.right.text}"/>
+                                                                <j:if test="${text == null}">
+                                                                    <j:set var="text" value=""/>
+                                                                </j:if>
+                                                                <tr>
+                                                                    <j:choose>
+                                                                        <j:when test="${line.skipping}">
+                                                                            <th class="lineNum">...</th>
+                                                                            <td class="skipping"></td>
+                                                                        </j:when>
+                                                                        <j:otherwise>
+                                                                            <th class="lineNum">${line.right.lineNumber}</th>
+                                                                            <td class="${line.right.cssClass}">
+                                                                                <pre>
+                                                                                    <code>
+                                                                                        ${text}
+                                                                                    </code>
+                                                                                </pre>
+                                                                            </td>
+                                                                        </j:otherwise>
+                                                                    </j:choose>
+                                                                </tr>
+                                                            </j:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </div>
+                                        </tr>
+                                    </j:when-->
                                     <j:otherwise>
                                         <!--equal,dont wanna show that.-->
                                     </j:otherwise>
@@ -319,6 +419,7 @@
                                 <j:if test="${lines.size() != 0}">
 
                                 </j:if>
+                                <j:set var="currentMatchNumber" value="${currentMatchNumber+1}"/>
                             </j:forEach>
                         </tbody>
                     </table>
@@ -328,6 +429,9 @@
                     <table class="pch"><caption style="width:100%">${it.getProject().getFullName()}: Revisions are not different.</caption></table>
                 </j:otherwise>
             </j:choose>
+
+
+            <script src="${rootURL}/plugin/pipeline-config-history/collapseDiv.js"></script>
         </l:main-panel>
     </l:layout>
 </j:jelly>

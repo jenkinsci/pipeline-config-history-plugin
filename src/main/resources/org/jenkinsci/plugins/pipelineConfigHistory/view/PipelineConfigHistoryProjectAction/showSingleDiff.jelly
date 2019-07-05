@@ -105,70 +105,78 @@
                     <tr>
                         <td colspan="4" class="subcaption-wrap">
                             <div class="subcaption">
-                                <j:set var="subCaption" value="${file1.getName()}"/>
+                                <div class="collapseButtonWrapper">
+                                <button class="collapseButton" id="collapseButton_0"> &#x2B6B;</button>
+                                </div>
+                                <div>
+                                    <j:set var="subCaption" value="${file1.getName()}"/>
 
-                                <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
-                                    &#128279;
-                                </a>
+                                    <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
+                                        &#128279;
+                                    </a>
 
-                                ${subCaption}
+                                    ${subCaption}
 
 
-                                <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
-                                    &#128279;
-                                </a>
+                                    <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
+                                        &#128279;
+                                    </a>
+                                </div>
                             </div>
                         </td>
                     </tr>
 
                     <tr>
                         <td colspan="4" class="diffLineWrapper">
-                            <table class="center pch diffLineTable" style="width:100%">
-                                <tbody id="tbody_versionDiffsShown">
-                                    <j:choose>
-                                        <j:when test="${lines.size() == 0}">
-                                            <tr>
-                                                <td colspan="4">
-                                                    <p>${%No lines changed}</p>
-                                                </td>
-                                            </tr>
-                                        </j:when>
-                                        <j:otherwise>
 
-                                            <j:forEach items="${lines}" var="line">
+                            <div class="collapseableContent" id="collapseableContent_0">
+                                <table class="center pch diffLineTable" style="width:100%">
+                                    <tbody id="tbody_versionDiffsShown">
+                                        <j:choose>
+                                            <j:when test="${lines.size() == 0}">
                                                 <tr>
-                                                    <j:choose>
-                                                        <j:when test="${line.skipping}">
-                                                            <th class="lineNum">...</th>
-                                                            <td class="skipping"></td>
-                                                            <th class="lineNum">...</th>
-                                                            <td class="skipping"></td>
-                                                        </j:when>
-                                                        <j:otherwise>
-                                                            <th class="lineNum">${line.left.lineNumber}</th>
-                                                            <td class="${line.left.cssClass}">
-                                                                <pre>
-                                                                    <code>
-                                                                        ${line.left.text}
-                                                                    </code>
-                                                                </pre>
-                                                            </td>
-                                                            <th class="lineNum">${line.right.lineNumber}</th>
-                                                            <td class="${line.right.cssClass}">
-                                                                <pre>
-                                                                    <code>
-                                                                        ${line.right.text}
-                                                                    </code>
-                                                                </pre>
-                                                            </td>
-                                                        </j:otherwise>
-                                                    </j:choose>
+                                                    <td colspan="4">
+                                                        <p>${%No lines changed}</p>
+                                                    </td>
                                                 </tr>
-                                            </j:forEach>
-                                        </j:otherwise>
-                                    </j:choose>
-                                </tbody>
-                            </table>
+                                            </j:when>
+                                            <j:otherwise>
+
+                                                <j:forEach items="${lines}" var="line">
+                                                    <tr>
+                                                        <j:choose>
+                                                            <j:when test="${line.skipping}">
+                                                                <th class="lineNum">...</th>
+                                                                <td class="skipping"></td>
+                                                                <th class="lineNum">...</th>
+                                                                <td class="skipping"></td>
+                                                            </j:when>
+                                                            <j:otherwise>
+                                                                <th class="lineNum">${line.left.lineNumber}</th>
+                                                                <td class="${line.left.cssClass}">
+                                                                    <pre>
+                                                                        <code>
+                                                                            ${line.left.text}
+                                                                        </code>
+                                                                    </pre>
+                                                                </td>
+                                                                <th class="lineNum">${line.right.lineNumber}</th>
+                                                                <td class="${line.right.cssClass}">
+                                                                    <pre>
+                                                                        <code>
+                                                                            ${line.right.text}
+                                                                        </code>
+                                                                    </pre>
+                                                                </td>
+                                                            </j:otherwise>
+                                                        </j:choose>
+                                                    </tr>
+                                                </j:forEach>
+                                            </j:otherwise>
+                                        </j:choose>
+                                    </tbody>
+                                </table>
+                            </div>
                         </td>
                     </tr>
 
@@ -218,6 +226,7 @@
                 </tbody>
             </table>
 
+            <script src="${rootURL}/plugin/pipeline-config-history/collapseDiv.js"></script>
 
         </l:main-panel>
     </l:layout>

@@ -240,13 +240,56 @@ td.subcaption2 {
 
 /*
 #####################################################################
-###                        other stuff                            ###
+###                      resize and collapse                      ###
 #####################################################################
 */
 
 .resizeWrapper {
     resize: vertical;
     overflow: auto;
+}
+
+.collapseButton {
+  background-color:#488cf9;
+  border:1px solid #488cf9;
+  border-radius: 4px;
+  height:25px;
+  width:25px;
+  padding:0px;
+
+  display: table-cell;
+  vertical-align: middle;
+
+  color:white;
+  font-weight:bold;
+  text-align:center;
+  float:right;
+  font-size: 20px;
+}
+
+.collapseButtonWrapper {
+    padding-bottom: 8px;
+}
+
+.collapseButton:hover {
+  background-color:#4870f9;
+  border:1px solid #4870f9;
+}
+
+/*No ugly frame around the text*/
+.collapseButton {
+   outline:none;
+}
+.collapseButton::-moz-focus-inner {
+   border: 0;
+}
+
+.collapseableContent {
+  padding: 0 0px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.15s ease-out;
 }
 
 
