@@ -43,6 +43,8 @@
             <j:set var="file1" value="${it.getFileByHashCode(timestamp1, fileHash1)}"/>
             <j:set var="file2" value="${it.getFileByHashCode(timestamp2, fileHash2)}"/>
 
+            <j:set var="caption" value="${it.getProject().getFullName()}: Single Diff"></j:set>
+
             <!--get Lines-->
             <j:choose>
                 <j:when test="${buildXmlDisplayType.equals(&quot;Jenkinsfile&quot;)}">
@@ -50,12 +52,12 @@
                     <j:set var="lines2" value="${it.getScriptFromXmlFile(timestamp2, fileHash2, false)}"/>
 
                     <j:set var="lines" value="${it.getLines(lines1, lines2)}"/>
-                    <j:set var="caption" value="Root Script Diff"></j:set>
+                    <j:set var="subCaption" value="Root Script"></j:set>
                 </j:when>
                 <j:otherwise>
 
                     <j:set var="lines" value="${it.getLines(file1, file2)}"/>
-                    <j:set var="caption" value="${file1.getName()}-Diff"></j:set>
+                    <j:set var="subCaption" value="${file1.getName()}"></j:set>
                 </j:otherwise>
             </j:choose>
             <h1>${%Pipeline Configuration History}</h1>
@@ -77,6 +79,9 @@
                                     </i>
                                 </j:if>
                             </font>
+                            <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
+                                &#128279;
+                            </a>
                         </th>
                         <th colspan="2">
                             <font size="3">
@@ -89,11 +94,86 @@
                                     </i>
                                 </j:if>
                             </font>
+                            <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none">
+                                &#128279;
+                            </a>
                         </th>
                     </tr>
                 </thead>
                 <tbody id="tbody_versionDiffsShown">
-                    <j:choose>
+
+                    <tr>
+                        <td colspan="4" class="subcaption-wrap">
+                            <div class="subcaption">
+                                <j:set var="subCaption" value="${file1.getName()}"/>
+
+                                <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
+                                    &#128279;
+                                </a>
+
+                                ${subCaption}
+
+
+                                <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
+                                    &#128279;
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4" class="diffLineWrapper">
+                            <table class="center pch diffLineTable" style="width:100%">
+                                <tbody id="tbody_versionDiffsShown">
+                                    <j:choose>
+                                        <j:when test="${lines.size() == 0}">
+                                            <tr>
+                                                <td colspan="4">
+                                                    <p>${%No lines changed}</p>
+                                                </td>
+                                            </tr>
+                                        </j:when>
+                                        <j:otherwise>
+
+                                            <j:forEach items="${lines}" var="line">
+                                                <tr>
+                                                    <j:choose>
+                                                        <j:when test="${line.skipping}">
+                                                            <th class="lineNum">...</th>
+                                                            <td class="skipping"></td>
+                                                            <th class="lineNum">...</th>
+                                                            <td class="skipping"></td>
+                                                        </j:when>
+                                                        <j:otherwise>
+                                                            <th class="lineNum">${line.left.lineNumber}</th>
+                                                            <td class="${line.left.cssClass}">
+                                                                <pre>
+                                                                    <code>
+                                                                        ${line.left.text}
+                                                                    </code>
+                                                                </pre>
+                                                            </td>
+                                                            <th class="lineNum">${line.right.lineNumber}</th>
+                                                            <td class="${line.right.cssClass}">
+                                                                <pre>
+                                                                    <code>
+                                                                        ${line.right.text}
+                                                                    </code>
+                                                                </pre>
+                                                            </td>
+                                                        </j:otherwise>
+                                                    </j:choose>
+                                                </tr>
+                                            </j:forEach>
+                                        </j:otherwise>
+                                    </j:choose>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+
+                    <!--j:choose>
                         <j:when test="${lines.size() == 0}">
                             <tr>
                                 <td colspan="4">
@@ -134,9 +214,11 @@
                                 </tr>
                             </j:forEach>
                         </j:otherwise>
-                    </j:choose>
+                    </j:choose-->
                 </tbody>
             </table>
+
+
         </l:main-panel>
     </l:layout>
 </j:jelly>

@@ -100,6 +100,7 @@
 
                                 <!--One single table for all 4 cases. Much duplicated code, look out.-->
                                 <j:choose>
+
                                     <j:when test="${(match.getKind().equals(match.UNEQUAL))}">
                                         <!--subcaption-->
                                         <tr>
@@ -122,72 +123,53 @@
                                             </td>
                                         </tr>
 
+
                                         <tr>
-                                            <td class="diffLineWrapper-left">
-                                                <table class="diffLineTable" name="left-table">
-                                                    <thead>
+                                            <td colspan="2" class="diffLineWrapper">
+                                                <table class="center pch diffLineTable" style="width:100%">
+                                                    <tbody id="tbody_versionDiffsShown">
+                                                        <j:choose>
+                                                            <j:when test="${lines.size() == 0}">
+                                                                <tr>
+                                                                    <td colspan="4">
+                                                                        <p>${%No lines changed}</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </j:when>
+                                                            <j:otherwise>
 
-                                                    </thead>
-                                                    <tbody>
-                                                        <j:forEach items="${lines}" var="line">
-                                                            <j:set var="text" value="${line.left.text}"/>
-                                                            <j:if test="${text == null}">
-                                                                <j:set var="text" value=""/>
-                                                            </j:if>
-
-                                                            <tr>
-                                                                <j:choose>
-                                                                    <j:when test="${line.skipping}">
-                                                                        <th class="lineNum">...</th>
-                                                                        <td class="skipping"></td>
-                                                                    </j:when>
-                                                                    <j:otherwise>
-                                                                        <th class="lineNum">${line.left.lineNumber}</th>
-                                                                        <td class="${line.left.cssClass}">
-                                                                            <pre>
-                                                                                <code>
-                                                                                    ${text}
-                                                                                </code>
-                                                                            </pre>
-                                                                        </td>
-                                                                    </j:otherwise>
-                                                                </j:choose>
-                                                            </tr>
-                                                        </j:forEach>
-                                                    </tbody>
-                                                </table>
-                                            </td>
-                                            <td class="diffLineWrapper-right">
-                                                <table class="diffLineTable" name="right-table">
-                                                    <thead>
-
-                                                    </thead>
-                                                    <tbody>
-                                                        <j:forEach items="${lines}" var="line">
-                                                            <j:set var="text" value="${line.right.text}"/>
-                                                            <j:if test="${text == null}">
-                                                                <j:set var="text" value=""/>
-                                                            </j:if>
-
-                                                            <tr>
-                                                                <j:choose>
-                                                                    <j:when test="${line.skipping}">
-                                                                        <th class="lineNum">...</th>
-                                                                        <td class="skipping"></td>
-                                                                    </j:when>
-                                                                    <j:otherwise>
-                                                                        <th class="lineNum">${line.right.lineNumber}</th>
-                                                                        <td class="${line.right.cssClass}">
-                                                                            <pre>
-                                                                                <code>
-                                                                                    ${text}
-                                                                                </code>
-                                                                            </pre>
-                                                                        </td>
-                                                                    </j:otherwise>
-                                                                </j:choose>
-                                                            </tr>
-                                                        </j:forEach>
+                                                                <j:forEach items="${lines}" var="line">
+                                                                    <tr>
+                                                                        <j:choose>
+                                                                            <j:when test="${line.skipping}">
+                                                                                <th class="lineNum">...</th>
+                                                                                <td class="skipping"></td>
+                                                                                <th class="lineNum">...</th>
+                                                                                <td class="skipping"></td>
+                                                                            </j:when>
+                                                                            <j:otherwise>
+                                                                                <th class="lineNum">${line.left.lineNumber}</th>
+                                                                                <td class="${line.left.cssClass}">
+                                                                                    <pre>
+                                                                                        <code>
+                                                                                            ${line.left.text}
+                                                                                        </code>
+                                                                                    </pre>
+                                                                                </td>
+                                                                                <th class="lineNum">${line.right.lineNumber}</th>
+                                                                                <td class="${line.right.cssClass}">
+                                                                                    <pre>
+                                                                                        <code>
+                                                                                            ${line.right.text}
+                                                                                        </code>
+                                                                                    </pre>
+                                                                                </td>
+                                                                            </j:otherwise>
+                                                                        </j:choose>
+                                                                    </tr>
+                                                                </j:forEach>
+                                                            </j:otherwise>
+                                                        </j:choose>
                                                     </tbody>
                                                 </table>
                                             </td>

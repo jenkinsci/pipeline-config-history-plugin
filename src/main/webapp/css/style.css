@@ -53,12 +53,20 @@ table {
 table.center {
     margin-left:auto;
     margin-right:auto;
+
+    /*experiment*/
+    table-layout:fixed;
+    width:100% !important;
+}
+
+table.center th {
+    width:100%;
 }
 
 table.center td {
     padding:0px;
+    width:100%
 }
-
 
 /*
 #####################################################################
