@@ -237,6 +237,19 @@ td.subcaption2 {
 	border-top: 1px solid #ddd !important;
 }
 
+
+/*
+#####################################################################
+###                        other stuff                            ###
+#####################################################################
+*/
+
+.resizeWrapper {
+    resize: vertical;
+    overflow: auto;
+}
+
+
 /*
 #####################################################################
 ###                        other stuff                            ###
@@ -244,7 +257,9 @@ td.subcaption2 {
 */
 
 .screenFillingDiv {
-    max-height: 70vh; /* For 100% screen height */
+    /*max-height: 70vh; /* For 100% screen height */
+    height: 70vh;
+    width:100%;
 }
 
 .sortheader {
@@ -278,3 +293,4 @@ td.subcaption2 {
     background-color: #e8e8e8;
     color: #383838;
 }
+
