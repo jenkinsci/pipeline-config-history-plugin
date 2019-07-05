@@ -132,7 +132,7 @@
 
                                         <tr>
                                             <td colspan="2" class="diffLineWrapper">
-                                                <div class="collapseableContent" id="collapseableContent_${currentMatchNumber}">
+                                                <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_${currentMatchNumber}">
                                                     <table class="center pch diffLineTable" style="width:100%">
                                                         <tbody id="tbody_versionDiffsShown">
                                                             <j:choose>
@@ -211,7 +211,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="4" class="diffLineWrapper">
-                                            <div class="collapseableContent" id="collapseableContent_${currentMatchNumber}">
+                                            <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_${currentMatchNumber}">
 
 
                                                 <table class="center pch diffLineTable" style="width:100%">
@@ -262,6 +262,7 @@
 
                                     </j:when>
                                     <j:when test="${match.getKind().equals(match.SINGLE_2)}">
+                                        <j:set var="subCaption" value="${match.getFile2().toString().replaceFirst(cuttingString2, &quot;&quot;)}"/>
                                         <tr>
                                             <td colspan="4" class="subcaption-wrap">
                                                 <div class="subcaption">
@@ -288,7 +289,7 @@
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="diffLineWrapper">
-                                                <div class="collapseableContent" id="collapseableContent_${currentMatchNumber}">
+                                                <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_${currentMatchNumber}">
 
 
                                                     <table class="center pch diffLineTable" style="width:100%">
