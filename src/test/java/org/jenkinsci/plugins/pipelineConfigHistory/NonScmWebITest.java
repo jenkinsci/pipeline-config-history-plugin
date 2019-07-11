@@ -33,7 +33,6 @@ import hudson.model.Job;
 import hudson.model.queue.QueueTaskFuture;
 import jenkins.model.ParameterizedJobMixIn;
 import org.apache.commons.lang.SystemUtils;
-import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.junit.Assert;
@@ -62,7 +61,7 @@ import static org.junit.Assert.*;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 //TODO handle all these exceptions spamming the console...
-public class NonScmWebTest {
+public class NonScmWebITest {
 
   @Rule
   public JenkinsRule jenkinsRule = new JenkinsRule();

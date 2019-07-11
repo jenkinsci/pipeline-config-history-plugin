@@ -1,3 +1,26 @@
+/*
+ * The MIT License
+ *
+ * Copyright (c) 2019, Robin Schulz
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 package org.jenkinsci.plugins.pipelineConfigHistory.model;
 
 import com.gargoylesoftware.htmlunit.html.DomElement;
@@ -5,7 +28,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import hudson.util.FormValidation;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
@@ -17,9 +39,11 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 /**
- * This is an integration test...
+ * This partially is an integration test in so far as the configuration is done via the web interface.
+ * Nevertheless, assertions are done via classes, not the web interface.
+ * Also, the global config's actual effects on the running system are not tested.
  */
-public class PipelineConfigHistoryGlobalConfigurationTest {
+public class PipelineConfigHistoryGlobalConfigurationITest {
 
   @Rule
   public JenkinsRule jenkinsRule = new JenkinsRule();
@@ -111,10 +135,8 @@ public class PipelineConfigHistoryGlobalConfigurationTest {
 
   public void setUpGlobalConfig(String maxHistoryEntries, String maxDaysToKeepEntries) throws IOException, SAXException {
     HtmlPage configPage = jenkinsRule.createWebClient().goTo("configure");
-    //System.out.println("+++CONFIGPAGE+++\n\n" + configPage.asText());
 
     HtmlForm configForm = configPage.getFormByName("config");
-    //System.out.println("+++CONFIGFORM+++\n\n" + configForm.asXml());
 
     configForm.getInputByName("maxHistoryEntries").setValueAttribute(maxHistoryEntries != null ? maxHistoryEntries : "");
     configForm.getInputByName("maxDaysToKeepEntries").setValueAttribute(maxDaysToKeepEntries != null ? maxDaysToKeepEntries : "");
