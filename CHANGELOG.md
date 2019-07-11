@@ -5,7 +5,8 @@ All notable changes to this project are documented in this file.
 * New feature: Make this plugin configurable in so far as that you
   + can limit the number of history entries created per pipeline job.
   + can limit the age of history entries for pipeline jobs.
-* New feature: Make the single file view resizeable.
+* New feature: Make the file and diff views resizable.
+* New feature make each diff view in the "show all diffs view" hideable.
 * Fixed: every root build file is called Jenkinsfile.
 * Fixed: missing name in "file view" links in diff overview page.
 * Fixed: plugin layout affected the Jenkins layout.
