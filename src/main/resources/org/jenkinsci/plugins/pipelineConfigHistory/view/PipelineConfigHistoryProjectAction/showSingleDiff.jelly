@@ -109,7 +109,14 @@
                                 <button class="collapseButton" id="collapseButton_0"> &#x2B6B;</button>
                                 </div>
                                 <div>
-                                    <j:set var="subCaption" value="${file1.getName()}"/>
+                                    <j:choose>
+                                        <j:when test="${file1.getName().equals(&quot;build.xml&quot;)}">
+                                            <j:set var="subCaption" value="${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()} (Root Script)"></j:set>
+                                        </j:when>
+                                        <j:otherwise>
+                                            <j:set var="subCaption" value="${file1.getName()}"/>
+                                    </j:otherwise>
+                                    </j:choose>
 
                                     <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
                                         &#128279;
