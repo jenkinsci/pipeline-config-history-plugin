@@ -28,7 +28,6 @@ import com.gargoylesoftware.htmlunit.html.HtmlButton;
 import com.gargoylesoftware.htmlunit.html.HtmlForm;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import hudson.util.FormValidation;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
@@ -40,9 +39,11 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 /**
- * This is an integration test...
+ * This partially is an integration test in so far as the configuration is done via the web interface.
+ * Nevertheless, assertions are done via classes, not the web interface.
+ * Also, the global config's actual effects on the running system are not tested.
  */
-public class PipelineConfigHistoryGlobalConfigurationTest {
+public class PipelineConfigHistoryGlobalConfigurationITest {
 
   @Rule
   public JenkinsRule jenkinsRule = new JenkinsRule();
