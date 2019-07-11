@@ -135,10 +135,8 @@ public class PipelineConfigHistoryGlobalConfigurationITest {
 
   public void setUpGlobalConfig(String maxHistoryEntries, String maxDaysToKeepEntries) throws IOException, SAXException {
     HtmlPage configPage = jenkinsRule.createWebClient().goTo("configure");
-    //System.out.println("+++CONFIGPAGE+++\n\n" + configPage.asText());
 
     HtmlForm configForm = configPage.getFormByName("config");
-    //System.out.println("+++CONFIGFORM+++\n\n" + configForm.asXml());
 
     configForm.getInputByName("maxHistoryEntries").setValueAttribute(maxHistoryEntries != null ? maxHistoryEntries : "");
     configForm.getInputByName("maxDaysToKeepEntries").setValueAttribute(maxDaysToKeepEntries != null ? maxDaysToKeepEntries : "");
