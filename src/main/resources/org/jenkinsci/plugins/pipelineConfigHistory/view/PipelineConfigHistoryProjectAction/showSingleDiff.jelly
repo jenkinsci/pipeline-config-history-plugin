@@ -100,7 +100,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody id="tbody_versionDiffsShown">
+                <tbody>
 
                     <tr>
                         <td colspan="4" class="subcaption-wrap">

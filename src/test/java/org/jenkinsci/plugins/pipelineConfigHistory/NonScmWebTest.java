@@ -292,7 +292,17 @@ public class NonScmWebTest {
       // go to showAllDiffs
       refresh();
 
-      DomElement leftTable = currentPage.getElementByName("left-table");
+
+      //TODO: REMOVE THIS TESZT
+      System.out.println("TESTING");
+      //Thread.sleep(5000000);
+
+
+      DomElement tbody = currentPage.getElementById("tbody_versionDiffsShown");
+
+      evaluateTableWithScripts(tbody, SCRIPT, SCRIPT_2);
+
+      /*DomElement leftTable = currentPage.getElementByName("left-table");
       DomElement rightTable = currentPage.getElementByName("right-table");
 
       double levenshteinPercentage = 1 -
@@ -304,7 +314,7 @@ public class NonScmWebTest {
         //this will not work on windows.
         assertEquals(leftTable.asText(), getIndexedScript(SCRIPT));
         assertEquals(rightTable.asText(), getIndexedScript(SCRIPT_2));
-      }
+      }*/
     }
   }
 
@@ -376,31 +386,41 @@ public class NonScmWebTest {
 
       System.out.println(currentPageAsText);
       DomElement tbody = currentPage.getElementById("tbody_versionDiffsShown");
-      Iterable<DomElement> tableRowsIterable = tbody.getChildElements();
-      ArrayList<DomElement> tableRowsList = new ArrayList<>(1);
-      tableRowsIterable.forEach(tableRow -> tableRowsList.add(tableRowsList.size(), tableRow));
 
-      String[] scriptAsArray = SCRIPT.split("\n");
-      String[] script2AsArray = SCRIPT_2.split("\n");
-
-
-      for (int i=0; i < tableRowsList.size(); ++i) {
-        DomElement tr = tableRowsList.get(i);
-        System.out.println("ROW: ");
-
-
-        DomElement[] tdArray = new DomElement[2];
-        int j = 0;
-        for (DomElement trChild : tr.getChildElements()) {
-          if (trChild.getTagName().equals("td")) {
-            tdArray[j++] = trChild;
-          }
-        }
-        assertEquals(scriptAsArray[i], tdArray[0].asText());
-        assertEquals(script2AsArray[i], tdArray[1].asText());
-      }
+      evaluateTableWithScripts(tbody, SCRIPT, SCRIPT_2);
     }
 
+  }
+
+  /**
+   * compare a table's rows to the given scripts' rows' lines.
+   * assertion is done twice for each line (one for older and one for newer change)
+   *
+   * @param tbody the website's given tbody
+   * @param script1 the older change
+   * @param script2 the newer change
+   */
+  private void evaluateTableWithScripts(DomElement tbody, String script1, String script2) {
+    Iterable<DomElement> tableRowsIterable = tbody.getChildElements();
+    ArrayList<DomElement> tableRowsList = new ArrayList<>(1);
+    tableRowsIterable.forEach(tableRow -> tableRowsList.add(tableRowsList.size(), tableRow));
+
+    String[] scriptAsArray = script1.split("\n");
+    String[] script2AsArray = script2.split("\n");
+
+    for (int i=0; i < tableRowsList.size(); ++i) {
+      DomElement tr = tableRowsList.get(i);
+      // current row's (ideally two) td cells (older and newer change)
+      DomElement[] tdArray = new DomElement[2];
+      int j = 0;
+      for (DomElement trChild : tr.getChildElements()) {
+        if (trChild.getTagName().equals("td")) {
+          tdArray[j++] = trChild;
+        }
+      }
+      assertEquals(scriptAsArray[i], tdArray[0].asText());
+      assertEquals(script2AsArray[i], tdArray[1].asText());
+    }
   }
 
   private String getIndexedScript(String script) {
