@@ -57,7 +57,7 @@
                 <l:main-panel>
                     <h1>${%Pipeline Configuration History}</h1>
 
-                        <table style="width:100%" class="screenFillingTable">
+                        <table style="width:100%" class="screenFillingTable pch">
                             <caption>
                                 ${it.getProject().getFullName()}: Revision
                                 <span class="target">
@@ -91,7 +91,7 @@
                             <tbody>
                                 <tr>
                                     <td style="text-align:left">
-                                        <div id="" class="screenFillingDiv" style="overflow-y:scroll;">
+                                        <div id="" class="screenFillingDiv resizeWrapper" style="overflow-y:scroll;">
                                             <j:choose>
                                                 <j:when test="${displayType.equals(&quot;Jenkinsfile&quot;)}">
                                                     <j:out value="${it.getScriptFromXmlFile(timestamp, fileHash, true)}"/>
@@ -108,14 +108,14 @@
 
                     <j:choose>
                         <j:when test="${realFile.getName().equals(&quot;build.xml&quot;)}">
-                            <div align="right">
+                            <div align="right" class="downloadArrowWrapper">
                                 <a class="download-arrow big" href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile-raw" download="${it.getPipelineHistoryDescription(timestamp).getRootScriptSimpleName()}">
                                     &#11015;
                                 </a>
                             </div>
                         </j:when>
                         <j:otherwise>
-                            <div align="right">
+                            <div align="right" class="downloadArrowWrapper">
                                 <a class="download-arrow big" href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=download" download="${realFile.getName()}">
                                     &#11015;
                                 </a>
