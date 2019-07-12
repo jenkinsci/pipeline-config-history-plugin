@@ -5,7 +5,7 @@
  *
  * The MIT License
  *
- * Copyright 2013 Mirko Friedenhagen, Kojima Takanori
+ * Copyright 2019 Robin Schulz
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
