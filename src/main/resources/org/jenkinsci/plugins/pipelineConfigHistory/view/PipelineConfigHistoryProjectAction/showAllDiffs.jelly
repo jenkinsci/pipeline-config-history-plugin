@@ -76,7 +76,9 @@
                                                 </j:if>
                                             </span>
                                         </a>
+
                                         To
+
                                         <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
                                             <span class="describedElement">
                                                 <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp2)}:</span>
@@ -106,7 +108,7 @@
                                                 <j:set var="subCaption" value="${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()} (Root Script)"></j:set>
                                             </j:when>
                                             <j:otherwise>
-                                                <j:set var="subCaption" value="${match.getFile1().toString().replaceFirst(cuttingString1, &quot;&quot;)}"/>
+                                                <j:set var="subCaption" value="${match.getFileName().replaceFirst(cuttingString1, &quot;&quot;)}"/>
                                             </j:otherwise>
                                         </j:choose>
 
@@ -118,22 +120,10 @@
                                                         <button class="collapseButton" id="collapseButton_SL${currentMatchNumber}"> &#x2B6B;</button>
                                                     </div>
                                                     <div>
-                                                        <j:choose>
-                                                            <j:when test="${file1.getName().equals(&quot;build.xml&quot;)}">
-                                                                <j:set var="subCaption" value="${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()} (Root Script)"></j:set>
-                                                            </j:when>
-                                                            <j:otherwise>
-                                                                <j:set var="subCaption" value="${file1.getName()}"/>
-                                                            </j:otherwise>
-                                                        </j:choose>
-
                                                         <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
                                                             &#128279;
                                                         </a>
-
                                                         ${subCaption}
-
-
                                                         <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
                                                             &#128279;
                                                         </a>
@@ -148,10 +138,8 @@
                                                 <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_SL${currentMatchNumber}">
                                                     <table class="center pch diffLineTable" style="width:100%">
 
-                                                        <!--TODO remove this header (unnecessary)-->
                                                         <tbody>
                                                             <j:forEach items="${linesForSingleLineView}" var="line">
-                                                                <!--TODO here plays the music-->
                                                                 <j:choose>
                                                                     <j:when test="${line.kind.equals(line.SKIPPING)}">
                                                                         <tr>
