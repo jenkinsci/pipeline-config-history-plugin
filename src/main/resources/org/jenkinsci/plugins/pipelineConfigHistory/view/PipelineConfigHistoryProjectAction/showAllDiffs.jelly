@@ -48,9 +48,6 @@
             <j:choose>
                 <j:when test="${anyDiffExists}">
 
-
-
-                    <!--TODO TEST AREA-->
                     <div class="collapseButtonWrapper">
                         <button id="toggleView" name="toggleView" class="pch standard-button" style="align:right" onclick="toggleSideBySide_SingleLine()">
                             Show side-by-side view
@@ -222,43 +219,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <!--TODO TEST AREA END-->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     <div id="content_sideBySideView" style="display:none">
                         <table class="center pch" style="width:100%">
