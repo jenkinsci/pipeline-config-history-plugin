@@ -289,7 +289,6 @@ td.subcaption2 {
   background-color: white;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.15s ease-out;
 }
 
 
