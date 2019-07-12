@@ -103,9 +103,11 @@
                                         <j:choose>
                                             <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
                                                 <j:set var="subCaption" value="${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()} (Root Script)"></j:set>
+                                                <j:set var="displayType" value="Jenkinsfile"/>
                                             </j:when>
                                             <j:otherwise>
-                                                <j:set var="subCaption" value="${match.getFileName().replaceFirst(cuttingString1, &quot;&quot;)}"/>
+                                                <j:set var="subCaption" value="${match.getFullFileName()}"/>
+                                                <j:set var="displayType" value="embedded"/>
                                             </j:otherwise>
                                         </j:choose>
 
@@ -114,16 +116,21 @@
                                             <td colspan="4" class="subcaption-wrap">
                                                 <div class="subcaption">
                                                     <div class="collapseButtonWrapper">
-                                                        <button class="collapseButton" id="collapseButton_SL${currentMatchNumber}">+</button>
+                                                        <button class="collapseButton" id="collapseButton_SL${currentMatchNumber}">&#x25b6;</button>
                                                     </div>
                                                     <div>
-                                                        <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
-                                                            &#128279;
-                                                        </a>
+                                                        <j:if test="${!match.getKind().equals(match.SINGLE_2)}">
+                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show older change">
+                                                                &#128279;
+                                                            </a>
+                                                        </j:if>
                                                         ${subCaption}
-                                                        <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
-                                                            &#128279;
-                                                        </a>
+
+                                                        <j:if test="${!match.getKind().equals(match.SINGLE_1)}">
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show newer change">
+                                                                &#128279;
+                                                            </a>
+                                                        </j:if>
                                                     </div>
                                                 </div>
                                             </td>
@@ -265,9 +272,11 @@
                                     <j:choose>
                                         <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
                                             <j:set var="subCaption" value="${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()} (Root Script)"></j:set>
+                                            <j:set var="displayType" value="Jenkinsfile"/>
                                         </j:when>
                                         <j:otherwise>
-                                            <j:set var="subCaption" value="${match.getFile1().toString().replaceFirst(cuttingString1, &quot;&quot;)}"/>
+                                            <j:set var="subCaption" value="${match.getFullFileName()}"/>
+                                            <j:set var="displayType" value="embedded"/>
                                         </j:otherwise>
                                     </j:choose>
 
@@ -281,22 +290,17 @@
                                                 <td colspan="4" class="subcaption-wrap">
                                                     <div class="subcaption">
                                                         <div class="collapseButtonWrapper">
-                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">+</button>
+                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">&#x25b6;</button>
                                                         </div>
                                                         <div>
-                                                        ${subCaption}
-                                                            <j:choose>
-                                                                <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                                                    <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
-                                                                        &#128279;
-                                                                    </a>
-                                                                </j:when>
-                                                                <j:otherwise>
-                                                                    <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
-                                                                        &#128279;
-                                                                    </a>
-                                                                </j:otherwise>
-                                                            </j:choose>
+                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show older change">
+                                                                &#128279;
+                                                            </a>
+                                                            ${subCaption}
+
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show newer change">
+                                                                &#128279;
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -358,22 +362,13 @@
                                                 <td colspan="4" class="subcaption-wrap">
                                                     <div class="subcaption">
                                                         <div class="collapseButtonWrapper">
-                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">+</button>
+                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">&#x25b6;</button>
                                                         </div>
                                                         <div>
-                                                        file removed: ${subCaption}
-                                                            <j:choose>
-                                                                <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                                                    <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
-                                                                        &#128279;
-                                                                    </a>
-                                                                </j:when>
-                                                                <j:otherwise>
-                                                                    <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
-                                                                        &#128279;
-                                                                    </a>
-                                                                </j:otherwise>
-                                                            </j:choose>
+                                                            <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show older change">
+                                                                &#128279;
+                                                            </a>
+                                                            file removed: ${subCaption}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -432,22 +427,13 @@
                                                 <td colspan="4" class="subcaption-wrap">
                                                     <div class="subcaption">
                                                         <div class="collapseButtonWrapper">
-                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">+</button>
+                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">&#x25b6;</button>
                                                         </div>
                                                         <div>
                                                             file added: ${subCaption}
-                                                            <j:choose>
-                                                                <j:when test="${match.getFileName().equals(&quot;build.xml&quot;)}">
-                                                                    <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=Jenkinsfile" style="text-decoration:none">
-                                                                        &#128279;
-                                                                    </a>
-                                                                </j:when>
-                                                                <j:otherwise>
-                                                                    <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=embedded" style="text-decoration:none">
-                                                                        &#128279;
-                                                                    </a>
-                                                                </j:otherwise>
-                                                            </j:choose>
+                                                            <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none">
+                                                                &#128279;
+                                                            </a>
                                                         </div>
                                                     </div>
                                                 </td>
