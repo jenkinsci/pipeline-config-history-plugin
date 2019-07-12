@@ -45,6 +45,53 @@ td.diff_revised {
 }
 
 
+
+
+
+td.diff_skipping {
+    //height:100%;
+	background-color: #EAF2F5 !important;
+}
+
+
+td.diff_delete {
+    //height:100%;
+	background-color: #FF8C8C !important;
+}
+
+td.diff_insert {
+    //height:100%;
+	background-color: #CCCCFF !important;
+}
+
+td.diff_equal {
+
+}
+
+table.diffLineTable th.singleLineView.lineNum {
+    background-color:rgb(250, 250, 250) !important;
+    width 80px !important;
+    padding-left:10px !important;
+    padding-right:5px !important;
+
+    border-color:rgb(240,240,240);
+}
+
+
+div.diffLine_Modifier.plus_style {
+
+}
+
+div.diffLine_Modifier.minus_style {
+
+}
+
+div.diffLine_Modifier {
+/*TODO morgen hier weiter!
+*/
+}
+
+
 /*
 #####################################################################
 ###                        syntax hl                              ###
