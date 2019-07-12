@@ -114,7 +114,7 @@
                                             <td colspan="4" class="subcaption-wrap">
                                                 <div class="subcaption">
                                                     <div class="collapseButtonWrapper">
-                                                        <button class="collapseButton" id="collapseButton_SL${currentMatchNumber}"> &#x2B6B;</button>
+                                                        <button class="collapseButton" id="collapseButton_SL${currentMatchNumber}">+</button>
                                                     </div>
                                                     <div>
                                                         <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
@@ -281,7 +281,7 @@
                                                 <td colspan="4" class="subcaption-wrap">
                                                     <div class="subcaption">
                                                         <div class="collapseButtonWrapper">
-                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}"> COLLAPS!</button>
+                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">+</button>
                                                         </div>
                                                         <div>
                                                         ${subCaption}
@@ -358,7 +358,7 @@
                                                 <td colspan="4" class="subcaption-wrap">
                                                     <div class="subcaption">
                                                         <div class="collapseButtonWrapper">
-                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}"> COLLAPS!</button>
+                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">+</button>
                                                         </div>
                                                         <div>
                                                         file removed: ${subCaption}
@@ -432,7 +432,7 @@
                                                 <td colspan="4" class="subcaption-wrap">
                                                     <div class="subcaption">
                                                         <div class="collapseButtonWrapper">
-                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}"> COLLAPS!</button>
+                                                            <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">+</button>
                                                         </div>
                                                         <div>
                                                             file added: ${subCaption}
@@ -524,21 +524,21 @@
             <script src="${rootURL}/plugin/pipeline-config-history/collapseDiv.js"></script>
             <script>
                 function toggleSideBySide_SingleLine() {
-                sideBySide = document.getElementById("content_sideBySideView");
-                singleLine = document.getElementById("content_singleLineView");
-                button = document.getElementById("toggleView");
+                    sideBySide = document.getElementById("content_sideBySideView");
+                    singleLine = document.getElementById("content_singleLineView");
+                    button = document.getElementById("toggleView");
 
-                if (sideBySide.style.display == "block"){
-                sideBySide.style.display = "none";
-                singleLine.style.display = "block";
+                    if (sideBySide.style.display == "block"){
+                        sideBySide.style.display = "none";
+                        singleLine.style.display = "block";
 
-                button.innerHTML = "Show side-by-side view"
-                } else {
-                sideBySide.style.display = "block";
-                singleLine.style.display = "none";
+                        button.innerHTML = "Show side-by-side view"
+                    } else {
+                        sideBySide.style.display = "block";
+                        singleLine.style.display = "none";
 
-                button.innerHTML = "Show single-line view"
-                }
+                        button.innerHTML = "Show single-line view"
+                    }
                 }
             </script>
         </l:main-panel>

@@ -22,6 +22,8 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 
-  //initially click every element one time to open them
-  coll[i].click();
+
 }
+
+//initially click first element one time to open it
+  coll[0].click();
