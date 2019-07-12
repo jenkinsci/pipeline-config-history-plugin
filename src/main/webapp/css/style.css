@@ -255,8 +255,11 @@ td.subcaption2 {
 }
 
 .collapseButton {
-  background-color:#488cf9;
-  border:1px solid #488cf9;
+  /*background-color:#488cf9;
+  border:1px solid #488cf9;*/
+    background-color: rgba(56, 56, 56, 0.6);
+    border:1px rgba(56, 56, 56, 0.6);
+
   border-radius: 3px;
   height:25px;
   width:25px;
@@ -277,8 +280,9 @@ td.subcaption2 {
 }
 
 .collapseButton:hover {
-  background-color:#4870f9;
-  border:1px solid #4870f9;
+  /*background-color:#4870f9;
+  border:1px solid #4870f9;*/
+  color: rgba(255,255,255,0.5);
 }
 
 /*No ugly frame around the text*/
