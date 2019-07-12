@@ -522,15 +522,6 @@ public class PipelineConfigHistoryProjectAction implements Action {
     List<SingleLineView.Line> currentInsertBuffer = new LinkedList<>();
     List<SingleLineView.Line> currentDeleteBuffer = new LinkedList<>();
 
-    boolean collect = false;
-    for (SideBySideView.Line line : unsortedLines) {
-      //TODO currently testing:
-
-      System.out.println(line.getTag() + ":    " + line.getLeft().getText() + line.getRight().getText());
-
-
-      //MAP ALL CHANGE to INSERT AND DELETE
-    }
     ListIterator<SideBySideView.Line> iterator = unsortedLines.listIterator();
     if (!iterator.hasNext()) {
       return sortedLines;
