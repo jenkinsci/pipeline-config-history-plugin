@@ -159,15 +159,15 @@
             <timezone>+1</timezone>
         </developer>
         <developer>
-            <id>stefanbrausch</id>
-            <name>Stefan Brausch</name>
-            <email>stefan.brausch@1und1.de</email>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
             <id>jochenafuerbacher</id>
             <name>Jochen A. Fuerbacher</name>
             <email>jochen.fuerbacher@1und1.de</email>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>stefanbrausch</id>
+            <name>Stefan Brausch</name>
+            <email>stefan.brausch@1und1.de</email>
             <timezone>+1</timezone>
         </developer>
     </developers>
