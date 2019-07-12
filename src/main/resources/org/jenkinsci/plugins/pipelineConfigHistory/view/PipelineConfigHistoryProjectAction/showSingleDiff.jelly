@@ -52,6 +52,7 @@
                     <j:set var="lines2" value="${it.getScriptFromXmlFile(timestamp2, fileHash2, false)}"/>
 
                     <j:set var="lines" value="${it.getLines(lines1, lines2)}"/>
+
                     <j:set var="subCaption" value="Root Script"></j:set>
                 </j:when>
                 <j:otherwise>
@@ -61,6 +62,121 @@
                 </j:otherwise>
             </j:choose>
             <h1>${%Pipeline Configuration History}</h1>
+
+            <!--TODO TEST AREA-->
+            <j:set var="linesForSingleLineView" value="${it.getSingleLineViewLines(lines1, lines2)}"/>
+
+            <button name="toggleView" class="pch standard-button" style="align:right">
+                Toggle side-by-side/ modern view
+            </button>
+
+            <table class="center pch diffLineTable" style="width:100%">
+                <caption>
+                    ${caption}
+                </caption>
+                <!--TODO remove this header (unnecessary)-->
+                <!--thead>
+                    <tr>
+                        <th style="width:30px">
+                            l1
+                        </th>
+                        <th style="width:30px">
+                            l2
+                        </th>
+                        <th>
+                            lines
+                        </th>
+                    </tr>
+                </thead-->
+                <tbody>
+                    <j:forEach items="${linesForSingleLineView}" var="line">
+                        <!--TODO here plays the music-->
+                        <j:choose>
+                            <j:when test="${line.kind.equals(line.SKIPPING)}">
+                                <tr>
+                                    <th class="singleLineView lineNum">...</th>
+                                    <th class="singleLineView lineNum">...</th>
+                                    <td class="skipping"></td>
+                                </tr>
+                            </j:when>
+                            <j:when test="${line.kind.equals(line.EQUAL)}">
+                                <!--Invariant: line.left.text EQUALS line.right.text-->
+                                <tr>
+                                <th class="singleLineView lineNum">${line.lineNumLeft}</th>
+                                <th class="singleLineView lineNum">${line.lineNumRight}</th>
+                                <td class="${line.cssClass}">
+
+                                    <div>
+                                        <pre style="padding-left:14px">
+                                            <code>
+                                                ${line.content}
+                                            </code>
+                                        </pre>
+                                    </div>
+                                </td>
+                                </tr>
+                            </j:when>
+                            <j:when test="${line.kind.equals(line.INSERT)}">
+                                <!--Invariant: line.left.text EQUALS line.right.text-->
+                                <tr>
+                                    <th class="singleLineView lineNum"></th>
+                                    <th class="singleLineView lineNum">${line.lineNumRight}</th>
+                                    <td class="${line.cssClass}">
+                                        <div style="float:left; width:14px; text-align:center"><B>+</B></div>
+                                        <div>
+                                            <pre>
+                                                <code>
+                                                    ${line.content}
+                                                </code>
+                                            </pre>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </j:when>
+                            <j:when test="${line.kind.equals(line.DELETE)}">
+                                <!--Invariant: line.left.text EQUALS line.right.text-->
+                                <tr>
+                                    <th class="singleLineView lineNum">${line.lineNumLeft}</th>
+                                    <th class="singleLineView lineNum"></th>
+                                    <td class="${line.cssClass}">
+                                        <div style="float:left; width:14px; text-align:center"><B>-</B></div>
+                                        <div>
+                                            <pre>
+                                                <code>
+                                                    ${line.content}
+                                                </code>
+                                            </pre>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </j:when>
+                            <j:otherwise>
+                                <tr>
+                                    <th class="singleLineView lineNum">${line.left.lineNumber}</th>
+                                    <th class="singleLineView lineNum">${line.right.lineNumber}</th>
+                                    <td class="${line.cssClass}">
+                                        <pre>
+                                            <code>
+                                                UNMÖGLICH !!!11!: line.kind:  ${line.kind} line.content: ${line.content}
+                                            </code>
+                                        </pre>
+                                    </td>
+                                </tr>
+                            </j:otherwise>
+                        </j:choose>
+
+
+
+
+                    </j:forEach>
+                </tbody>
+
+            </table>
+            <!--TODO TEST AREA END-->
+
+
+
+
 
             <table class="center pch" style="width:100%">
                 <caption>

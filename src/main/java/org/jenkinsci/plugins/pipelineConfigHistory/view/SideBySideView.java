@@ -141,6 +141,22 @@ public class SideBySideView {
       return skipping;
     }
 
+    public boolean isEqual() {
+      return tag.equals(DiffRow.Tag.EQUAL);
+    }
+
+    public boolean isInsert() {
+      return tag.equals(DiffRow.Tag.INSERT);
+    }
+
+    public boolean isChange() {
+      return tag.equals(DiffRow.Tag.CHANGE);
+    }
+
+    public boolean isDelete() {
+      return tag.equals(DiffRow.Tag.DELETE);
+    }
+
     /**
      * Sets skipping.
      *
