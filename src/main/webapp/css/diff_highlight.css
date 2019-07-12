@@ -66,7 +66,11 @@ td.singleLineView.diff_revised {
 }
 
 
-
+/*
+#####################################################################
+###                        line nums                              ###
+#####################################################################
+*/
 table.diffLineTable th.singleLineView.lineNum.diff_equal {
 
 }
@@ -83,15 +87,23 @@ table.diffLineTable th.singleLineView.lineNum.diff_revised {
     color:rgb(155, 176, 161) !important;
 }
 
-table.diffLineTable th.singleLineView.lineNum {
+/*table.diffLineTable th.singleLineView.lineNum {*/
+table.diffLineTable th.lineNum {
     width: 50px !important;
     padding-left:0px;
     padding-right:0px;
 
-    border-bottom:0px;
 
     background-color:rgb(250, 250, 250) !important;
     border-color:rgb(232, 232, 232) !important;
+    color: rgba(0, 0, 0, 0.3) !important;
+
+    font-size:12.6px;
+    font-weight: normal;
+}
+
+table.diffLineTable th.singleLineView.lineNum {
+    border-bottom:0px;
     color: rgba(0, 0, 0, 0.3) !important;
 
     font-size:12.6px;
@@ -182,13 +194,12 @@ table.diffLineTable th.lineNum {
     border-bottom: 0px;
     border-radius: 0px;
 
-
-    /*X-periment*/
     border-bottom: 1px solid #e8e8e8;
+    font-size:12.6px;
+    font-weight: normal;
 
-    color: #3762a8 !important;
+    color: rgba(0, 0, 0, 0.5) !important;
     font-family: "Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
-    font-size: 14px;
     background-color: #f5f5f5;
 }
 
