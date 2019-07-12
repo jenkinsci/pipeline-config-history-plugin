@@ -512,9 +512,11 @@ public class PipelineConfigHistoryProjectAction implements Action {
     }
   }
 
-  public final List<SingleLineView.Line> getSingleLineViewLines(String file1Str, String file2Str) {
-    List<SideBySideView.Line> unsortedLines = getLines(file1Str, file2Str);
+  public final List<SingleLineView.Line> getSingleLineViewLines(Match match) {
+    return getSingleLineViewLines(getLines(match));
+  }
 
+  public final List<SingleLineView.Line> getSingleLineViewLines(List<SideBySideView.Line> unsortedLines) {
     List<SingleLineView.Line> sortedLines = new LinkedList<>();
 
     List<SingleLineView.Line> currentInsertBuffer = new LinkedList<>();
@@ -611,6 +613,11 @@ public class PipelineConfigHistoryProjectAction implements Action {
 
 
     return sortedLines;
+  }
+
+  public final List<SingleLineView.Line> getSingleLineViewLines(String file1Str, String file2Str) {
+    List<SideBySideView.Line> unsortedLines = getLines(file1Str, file2Str);
+      return getSingleLineViewLines(unsortedLines);
   }
 
   /**
