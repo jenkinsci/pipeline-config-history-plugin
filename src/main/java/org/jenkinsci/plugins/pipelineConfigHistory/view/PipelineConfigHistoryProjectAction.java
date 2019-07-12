@@ -503,6 +503,15 @@ public class PipelineConfigHistoryProjectAction implements Action {
     return new DiffLineGenerator(file1Str, file2Str).getLines();
   }
 
+  public final List<SingleLineView.Line> getSingleLineViewLines(File file1, File file2) {
+    try {
+      return getSingleLineViewLines(PluginUtils.fileToString(file1), PluginUtils.fileToString(file2));
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "File could not be read: {0}", e.getMessage());
+      return Collections.emptyList();
+    }
+  }
+
   public final List<SingleLineView.Line> getSingleLineViewLines(String file1Str, String file2Str) {
     List<SideBySideView.Line> unsortedLines = getLines(file1Str, file2Str);
 

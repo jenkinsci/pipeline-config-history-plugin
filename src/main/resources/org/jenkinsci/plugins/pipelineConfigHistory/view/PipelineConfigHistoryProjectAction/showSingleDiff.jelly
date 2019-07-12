@@ -51,12 +51,16 @@
                     <j:set var="lines1" value="${it.getScriptFromXmlFile(timestamp1, fileHash1, false)}"/>
                     <j:set var="lines2" value="${it.getScriptFromXmlFile(timestamp2, fileHash2, false)}"/>
 
+
                     <j:set var="lines" value="${it.getLines(lines1, lines2)}"/>
+                    <j:set var="linesForSingleLineView" value="${it.getSingleLineViewLines(lines1, lines2)}"/>
 
                     <j:set var="subCaption" value="Root Script"></j:set>
                 </j:when>
                 <j:otherwise>
 
+
+                    <j:set var="linesForSingleLineView" value="${it.getSingleLineViewLines(file1, file2)}"/>
                     <j:set var="lines" value="${it.getLines(file1, file2)}"/>
                     <j:set var="subCaption" value="${file1.getName()}"></j:set>
                 </j:otherwise>
@@ -64,293 +68,328 @@
             <h1>${%Pipeline Configuration History}</h1>
 
             <!--TODO TEST AREA-->
-            <j:set var="linesForSingleLineView" value="${it.getSingleLineViewLines(lines1, lines2)}"/>
 
-            <button name="toggleView" class="pch standard-button" style="align:right">
-                Toggle side-by-side/ modern view
-            </button>
+            <div class="collapseButtonWrapper">
+                <button id="toggleView" name="toggleView" class="pch standard-button" style="align:right" onclick="toggleSideBySide_SingleLine()">
+                    Show side-by-side view
+                </button>
+            </div>
 
-            <table class="center pch diffLineTable" style="width:100%">
-                <caption>
-                    ${caption}
-                </caption>
-                <!--TODO remove this header (unnecessary)-->
-                <!--thead>
-                    <tr>
-                        <th style="width:30px">
-                            l1
-                        </th>
-                        <th style="width:30px">
-                            l2
-                        </th>
-                        <th>
-                            lines
-                        </th>
-                    </tr>
-                </thead-->
-                <tbody>
-                    <j:forEach items="${linesForSingleLineView}" var="line">
-                        <!--TODO here plays the music-->
-                        <j:choose>
-                            <j:when test="${line.kind.equals(line.SKIPPING)}">
-                                <tr>
-                                    <th class="singleLineView lineNum">...</th>
-                                    <th class="singleLineView lineNum">...</th>
-                                    <td class="skipping"></td>
-                                </tr>
-                            </j:when>
-                            <j:when test="${line.kind.equals(line.EQUAL)}">
-                                <!--Invariant: line.left.text EQUALS line.right.text-->
-                                <tr>
-                                <th class="singleLineView lineNum">${line.lineNumLeft}</th>
-                                <th class="singleLineView lineNum">${line.lineNumRight}</th>
-                                <td class="${line.cssClass}">
 
-                                    <div>
-                                        <pre style="padding-left:14px">
-                                            <code>
-                                                ${line.content}
-                                            </code>
-                                        </pre>
+            <div id="content_singleLineView">
+                <table id="singleLineView" class="center pch diffLineTable" style="width:100%">
+                    <thead>
+                        <caption>
+                            <div style="float:top">${caption}</div>
+                            <div style="float:bottom" class="singleLineView description">
+                                From
+                                <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
+                                    <span class="describedElement">
+                                        <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp1)}:</span>
+                                        ${it.getTimestampWellFormatted(timestamp1)}
+                                        <j:if test="${it.isBuiltfromReplay(timestamp1)}">
+                                            <i>
+                                                (Replay from build
+                                                ${it.getOriginalNumberFromReplayBuild(timestamp1)})
+                                            </i>
+                                        </j:if>
+                                    </span>
+                                </a>
+                                To
+                                <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
+                                    <span class="describedElement">
+                                        <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp2)}:</span>
+                                        ${it.getTimestampWellFormatted(timestamp2)}
+                                        <j:if test="${it.isBuiltfromReplay(timestamp2)}">
+                                            <i>
+                                                (Replay from build
+                                                ${it.getOriginalNumberFromReplayBuild(timestamp2)})
+                                            </i>
+                                        </j:if>
+                                    </span>
+                                </a>
+                            </div>
+
+                        </caption>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td colspan="4" class="subcaption-wrap">
+                                <div class="subcaption">
+                                    <div class="collapseButtonWrapper">
+                                        <button class="collapseButton" id="collapseButton_0"> &#x2B6B;</button>
                                     </div>
-                                </td>
-                                </tr>
-                            </j:when>
-                            <j:when test="${line.kind.equals(line.INSERT)}">
-                                <!--Invariant: line.left.text EQUALS line.right.text-->
-                                <tr>
-                                    <th class="singleLineView lineNum"></th>
-                                    <th class="singleLineView lineNum">${line.lineNumRight}</th>
-                                    <td class="${line.cssClass}">
-                                        <div style="float:left; width:14px; text-align:center"><B>+</B></div>
-                                        <div>
-                                            <pre>
-                                                <code>
-                                                    ${line.content}
-                                                </code>
-                                            </pre>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </j:when>
-                            <j:when test="${line.kind.equals(line.DELETE)}">
-                                <!--Invariant: line.left.text EQUALS line.right.text-->
-                                <tr>
-                                    <th class="singleLineView lineNum">${line.lineNumLeft}</th>
-                                    <th class="singleLineView lineNum"></th>
-                                    <td class="${line.cssClass}">
-                                        <div style="float:left; width:14px; text-align:center"><B>-</B></div>
-                                        <div>
-                                            <pre>
-                                                <code>
-                                                    ${line.content}
-                                                </code>
-                                            </pre>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </j:when>
-                            <j:otherwise>
-                                <tr>
-                                    <th class="singleLineView lineNum">${line.left.lineNumber}</th>
-                                    <th class="singleLineView lineNum">${line.right.lineNumber}</th>
-                                    <td class="${line.cssClass}">
-                                        <pre>
-                                            <code>
-                                                UNMÖGLICH !!!11!: line.kind:  ${line.kind} line.content: ${line.content}
-                                            </code>
-                                        </pre>
-                                    </td>
-                                </tr>
-                            </j:otherwise>
-                        </j:choose>
+                                    <div>
+                                        <j:choose>
+                                            <j:when test="${file1.getName().equals(&quot;build.xml&quot;)}">
+                                                <j:set var="subCaption" value="${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()} (Root Script)"></j:set>
+                                            </j:when>
+                                            <j:otherwise>
+                                                <j:set var="subCaption" value="${file1.getName()}"/>
+                                            </j:otherwise>
+                                        </j:choose>
+
+                                        <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
+                                            &#128279;
+                                        </a>
+
+                                        ${subCaption}
 
 
+                                        <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
+                                            &#128279;
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
 
 
-                    </j:forEach>
-                </tbody>
+                        <tr>
+                            <td colspan="4" class="diffLineWrapper">
+                                <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_0">
+                                    <table class="center pch diffLineTable" style="width:100%">
 
-            </table>
+                                        <!--TODO remove this header (unnecessary)-->
+                                        <tbody>
+                                            <j:forEach items="${linesForSingleLineView}" var="line">
+                                                <!--TODO here plays the music-->
+                                                <j:choose>
+                                                    <j:when test="${line.kind.equals(line.SKIPPING)}">
+                                                        <tr>
+                                                            <th class="singleLineView lineNum ${line.cssClass}">...</th>
+                                                            <th class="singleLineView lineNum ${line.cssClass}">...</th>
+                                                            <td class="singleLineView skipping ${line.cssClass}"></td>
+                                                        </tr>
+                                                    </j:when>
+                                                    <j:when test="${line.kind.equals(line.EQUAL)}">
+                                                        <!--Invariant: line.left.text EQUALS line.right.text-->
+                                                        <tr>
+                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.lineNumLeft}</th>
+                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.lineNumRight}</th>
+                                                            <td class="singleLineView ${line.cssClass}">
+                                                                <pre style="padding-left:18px">
+                                                                    <code>
+                                                                        ${line.content}
+                                                                    </code>
+                                                                </pre>
+                                                            </td>
+                                                        </tr>
+                                                    </j:when>
+                                                    <j:when test="${line.kind.equals(line.INSERT)}">
+                                                        <!--Invariant: line.left.text EQUALS line.right.text-->
+                                                        <tr>
+                                                            <th class="singleLineView lineNum ${line.cssClass}"></th>
+                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.lineNumRight}</th>
+                                                            <td class="singleLineView ${line.cssClass}">
+                                                                <div class="diffLine_Modifier plus_style">+</div>
+                                                                <div>
+                                                                    <pre>
+                                                                        <code>
+                                                                            ${line.content}
+                                                                        </code>
+                                                                    </pre>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </j:when>
+                                                    <j:when test="${line.kind.equals(line.DELETE)}">
+                                                        <!--Invariant: line.left.text EQUALS line.right.text-->
+                                                        <tr>
+                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.lineNumLeft}</th>
+                                                            <th class="singleLineView lineNum ${line.cssClass}"></th>
+                                                            <td class="singleLineView ${line.cssClass}">
+                                                                <div class="diffLine_Modifier minus_style">-</div>
+                                                                <div>
+                                                                    <pre>
+                                                                        <code>
+                                                                            ${line.content}
+                                                                        </code>
+                                                                    </pre>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </j:when>
+                                                    <j:otherwise>
+                                                        <tr>
+                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.left.lineNumber}</th>
+                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.right.lineNumber}</th>
+                                                            <td class="singleLineView ${line.cssClass}">
+                                                                <pre>
+                                                                    <code>
+                                                                        UNMÖGLICH !!!11!: line.kind:  ${line.kind} line.content: ${line.content}
+                                                                    </code>
+                                                                </pre>
+                                                            </td>
+                                                        </tr>
+                                                    </j:otherwise>
+                                                </j:choose>
+                                            </j:forEach>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+            </div>
             <!--TODO TEST AREA END-->
 
 
 
 
+            <div id="content_sideBySideView" style="display:none">
+                <table class="center pch" style="width:100%">
+                    <caption>
+                        ${caption}
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th colspan="2">
+                                <font size="3">
+                                    Older Change (${it.getTimestampWellFormatted(timestamp1)})
+                                    <j:if test="${it.isBuiltfromReplay(timestamp1)}">
+                                        <br/>
+                                        <i>
+                                            Replay from build
+                                            ${it.getOriginalNumberFromReplayBuild(timestamp1)}
+                                        </i>
+                                    </j:if>
+                                </font>
+                                <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
+                                    &#128279;
+                                </a>
+                            </th>
+                            <th colspan="2">
+                                <font size="3">
+                                    Newer Change (${it.getTimestampWellFormatted(timestamp2)})
+                                    <j:if test="${it.isBuiltfromReplay(timestamp2)}">
+                                        <br/>
+                                        <i>
+                                            Replay from build
+                                            ${it.getOriginalNumberFromReplayBuild(timestamp2)}
+                                        </i>
+                                    </j:if>
+                                </font>
+                                <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none">
+                                    &#128279;
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-            <table class="center pch" style="width:100%">
-                <caption>
-                    ${caption}
-                </caption>
-                <thead>
-                    <tr>
-                        <th colspan="2">
-                            <font size="3">
-                                Older Change (${it.getTimestampWellFormatted(timestamp1)})
-                                <j:if test="${it.isBuiltfromReplay(timestamp1)}">
-                                    <br/>
-                                    <i>
-                                        Replay from build
-                                        ${it.getOriginalNumberFromReplayBuild(timestamp1)}
-                                    </i>
-                                </j:if>
-                            </font>
-                            <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
-                                &#128279;
-                            </a>
-                        </th>
-                        <th colspan="2">
-                            <font size="3">
-                                Newer Change (${it.getTimestampWellFormatted(timestamp2)})
-                                <j:if test="${it.isBuiltfromReplay(timestamp2)}">
-                                    <br/>
-                                    <i>
-                                        Replay from build
-                                        ${it.getOriginalNumberFromReplayBuild(timestamp2)}
-                                    </i>
-                                </j:if>
-                            </font>
-                            <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none">
-                                &#128279;
-                            </a>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    <tr>
-                        <td colspan="4" class="subcaption-wrap">
-                            <div class="subcaption">
-                                <div class="collapseButtonWrapper">
-                                <button class="collapseButton" id="collapseButton_0"> &#x2B6B;</button>
-                                </div>
-                                <div>
-                                    <j:choose>
-                                        <j:when test="${file1.getName().equals(&quot;build.xml&quot;)}">
-                                            <j:set var="subCaption" value="${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()} (Root Script)"></j:set>
-                                        </j:when>
-                                        <j:otherwise>
-                                            <j:set var="subCaption" value="${file1.getName()}"/>
-                                    </j:otherwise>
-                                    </j:choose>
-
-                                    <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
-                                        &#128279;
-                                    </a>
-
-                                    ${subCaption}
-
-
-                                    <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
-                                        &#128279;
-                                    </a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="4" class="diffLineWrapper">
-
-                            <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_0">
-                                <table class="center pch diffLineTable" style="width:100%">
-                                    <tbody id="tbody_versionDiffsShown">
+                        <tr>
+                            <td colspan="4" class="subcaption-wrap">
+                                <div class="subcaption">
+                                    <div class="collapseButtonWrapper">
+                                    <button class="collapseButton" id="collapseButton_1"> &#x2B6B;</button>
+                                    </div>
+                                    <div>
                                         <j:choose>
-                                            <j:when test="${lines.size() == 0}">
-                                                <tr>
-                                                    <td colspan="4">
-                                                        <p>${%No lines changed}</p>
-                                                    </td>
-                                                </tr>
+                                            <j:when test="${file1.getName().equals(&quot;build.xml&quot;)}">
+                                                <j:set var="subCaption" value="${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()} (Root Script)"></j:set>
                                             </j:when>
                                             <j:otherwise>
-
-                                                <j:forEach items="${lines}" var="line">
-                                                    <tr>
-                                                        <j:choose>
-                                                            <j:when test="${line.skipping}">
-                                                                <th class="lineNum">...</th>
-                                                                <td class="skipping"></td>
-                                                                <th class="lineNum">...</th>
-                                                                <td class="skipping"></td>
-                                                            </j:when>
-                                                            <j:otherwise>
-                                                                <th class="lineNum">${line.left.lineNumber}</th>
-                                                                <td class="${line.left.cssClass}">
-                                                                    <pre>
-                                                                        <code>
-                                                                            ${line.left.text}
-                                                                        </code>
-                                                                    </pre>
-                                                                </td>
-                                                                <th class="lineNum">${line.right.lineNumber}</th>
-                                                                <td class="${line.right.cssClass}">
-                                                                    <pre>
-                                                                        <code>
-                                                                            ${line.right.text}
-                                                                        </code>
-                                                                    </pre>
-                                                                </td>
-                                                            </j:otherwise>
-                                                        </j:choose>
-                                                    </tr>
-                                                </j:forEach>
-                                            </j:otherwise>
-                                        </j:choose>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-
-
-                    <!--j:choose>
-                        <j:when test="${lines.size() == 0}">
-                            <tr>
-                                <td colspan="4">
-                                    <p>${%No lines changed}</p>
-                                </td>
-                            </tr>
-                        </j:when>
-                        <j:otherwise>
-
-                            <j:forEach items="${lines}" var="line">
-                                <tr>
-                                    <j:choose>
-                                        <j:when test="${line.skipping}">
-                                            <th class="lineNum">...</th>
-                                            <td class="skipping"></td>
-                                            <th class="lineNum">...</th>
-                                            <td class="skipping"></td>
-                                        </j:when>
-                                        <j:otherwise>
-                                            <th class="lineNum">${line.left.lineNumber}</th>
-                                            <td class="${line.left.cssClass}">
-                                                <pre>
-                                                    <code>
-                                                        ${line.left.text}
-                                                    </code>
-                                                </pre>
-                                            </td>
-                                            <th class="lineNum">${line.right.lineNumber}</th>
-                                            <td class="${line.right.cssClass}">
-                                                <pre>
-                                                    <code>
-                                                        ${line.right.text}
-                                                    </code>
-                                                </pre>
-                                            </td>
+                                                <j:set var="subCaption" value="${file1.getName()}"/>
                                         </j:otherwise>
-                                    </j:choose>
-                                </tr>
-                            </j:forEach>
-                        </j:otherwise>
-                    </j:choose-->
-                </tbody>
-            </table>
+                                        </j:choose>
+
+                                        <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
+                                            &#128279;
+                                        </a>
+
+                                        ${subCaption}
+
+
+                                        <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
+                                            &#128279;
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="4" class="diffLineWrapper">
+
+                                <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_1">
+                                    <table class="center pch diffLineTable" style="width:100%">
+                                        <tbody id="tbody_versionDiffsShown">
+                                            <j:choose>
+                                                <j:when test="${lines.size() == 0}">
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <p>${%No lines changed}</p>
+                                                        </td>
+                                                    </tr>
+                                                </j:when>
+                                                <j:otherwise>
+
+                                                    <j:forEach items="${lines}" var="line">
+                                                        <tr>
+                                                            <j:choose>
+                                                                <j:when test="${line.skipping}">
+                                                                    <th class="lineNum">...</th>
+                                                                    <td class="skipping"></td>
+                                                                    <th class="lineNum">...</th>
+                                                                    <td class="skipping"></td>
+                                                                </j:when>
+                                                                <j:otherwise>
+                                                                    <th class="lineNum">${line.left.lineNumber}</th>
+                                                                    <td class="${line.left.cssClass}">
+                                                                        <pre>
+                                                                            <code>
+                                                                                ${line.left.text}
+                                                                            </code>
+                                                                        </pre>
+                                                                    </td>
+                                                                    <th class="lineNum">${line.right.lineNumber}</th>
+                                                                    <td class="${line.right.cssClass}">
+                                                                        <pre>
+                                                                            <code>
+                                                                                ${line.right.text}
+                                                                            </code>
+                                                                        </pre>
+                                                                    </td>
+                                                                </j:otherwise>
+                                                            </j:choose>
+                                                        </tr>
+                                                    </j:forEach>
+                                                </j:otherwise>
+                                            </j:choose>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <script src="${rootURL}/plugin/pipeline-config-history/collapseDiv.js"></script>
+            <script>
+                function toggleSideBySide_SingleLine() {
+                    sideBySide = document.getElementById("content_sideBySideView");
+                    singleLine = document.getElementById("content_singleLineView");
+                    button = document.getElementById("toggleView");
 
+                    if (sideBySide.style.display == "block"){
+                        sideBySide.style.display = "none";
+                        singleLine.style.display = "block";
+
+                        button.innerHTML = "Show side-by-side view"
+                    } else {
+                        sideBySide.style.display = "block";
+                        singleLine.style.display = "none";
+
+                        button.innerHTML = "Show single-line view"
+                    }
+                }
+            </script>
         </l:main-panel>
     </l:layout>
 </j:jelly>

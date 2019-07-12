@@ -40,16 +40,16 @@ public class SingleLineView {
 
       switch (kind) {
         case DELETE:
-          this.cssClass = "diff_delete";
+          this.cssClass = "diff_original";
           break;
         case INSERT:
-          this.cssClass = "diff_insert";
+          this.cssClass = "diff_revised";
           break;
         case EQUAL:
           this.cssClass = "diff_equal";
           break;
         case SKIPPING:
-          this.cssClass = "diff_skipping";
+          this.cssClass = "skipping";
           break;
         default:
           this.cssClass = "";
