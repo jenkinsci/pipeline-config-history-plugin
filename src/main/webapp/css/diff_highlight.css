@@ -31,7 +31,7 @@
 
 td.skipping {
     //height:100%;
-	background-color: #EAF2F5 !important;
+    background-color:rgb(250, 250, 250) !important;
 }
 
 td.diff_original {
@@ -50,7 +50,6 @@ td.diff_revised {
 
 td.singleLineView.skipping {
     //height:100%;
-    background-color: white !important;
     background-color:rgb(250, 250, 250) !important;
 }
 
