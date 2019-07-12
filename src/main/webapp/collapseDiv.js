@@ -15,10 +15,10 @@ for (i = 0; i < coll.length; i++) {
     //hide/show the div and switch the button's description
     if (collapseableContent.style.maxHeight){
       collapseableContent.style.maxHeight = null;
-      this.innerHTML="&plus;"
+      this.innerHTML="&#x25b6;"
     } else {
       collapseableContent.style.maxHeight = collapseableContent.scrollHeight + "px";
-      this.innerHTML="&minus;"
+      this.innerHTML="&#x25bc;"
     }
   });
 
