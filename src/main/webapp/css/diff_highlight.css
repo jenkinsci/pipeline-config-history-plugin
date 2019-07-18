@@ -34,11 +34,13 @@ td.skipping {
 }
 
 td.diff_original {
-	background-color: #FF8C8C;
+	/*background-color: #FF8C8C;*/
+	background-color: rgb(251, 233, 235);
 }
 
 td.diff_revised {
-	background-color: #CCCCFF;
+	/*background-color: #CCCCFF;*/
+	background-color: rgb(236, 253, 240);
 }
 
 td.singleLineView.skipping {
@@ -83,7 +85,7 @@ table.diffLineTable th.lineNum {
     font-size:12.6px;
     font-weight: normal;
 
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.3);
     background-color:rgb(250, 250, 250);
 
     font-family: "Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
@@ -92,7 +94,6 @@ table.diffLineTable th.lineNum {
 table.diffLineTable th.singleLineView.lineNum {
     width: 50px;
     border-bottom:0px;
-    color: rgba(0, 0, 0, 0.3);
 }
 
 /*lines where something happens*/
@@ -100,13 +101,13 @@ table.diffLineTable th.singleLineView.lineNum.diff_equal {
 
 }
 
-table.diffLineTable th.singleLineView.lineNum.diff_original {
+table.diffLineTable th.lineNum.diff_original {
     background-color: rgb(249, 215, 220);
     border-color: rgb(250, 197, 205);
     color:rgb(174, 151, 154);
 }
 
-table.diffLineTable th.singleLineView.lineNum.diff_revised {
+table.diffLineTable th.lineNum.diff_revised {
     background-color: rgb(221, 251, 230);
     border-color: rgb(189, 240, 203);
     color:rgb(155, 176, 161);

@@ -339,7 +339,7 @@
                                                                                         <td class="skipping"></td>
                                                                                     </j:when>
                                                                                     <j:otherwise>
-                                                                                        <th class="lineNum">${line.left.lineNumber}</th>
+                                                                                        <th class="lineNum ${line.left.cssClass}">${line.left.lineNumber}</th>
                                                                                         <td class="${line.left.cssClass}">
                                                                                             <pre>
                                                                                                 <code>
@@ -347,7 +347,7 @@
                                                                                                 </code>
                                                                                             </pre>
                                                                                         </td>
-                                                                                        <th class="lineNum">${line.right.lineNumber}</th>
+                                                                                        <th class="lineNum ${line.right.cssClass}">${line.right.lineNumber}</th>
                                                                                         <td class="${line.right.cssClass}">
                                                                                             <pre>
                                                                                                 <code>
@@ -409,7 +409,7 @@
                                                                                         <td class="skipping"></td>
                                                                                     </j:when>
                                                                                     <j:otherwise>
-                                                                                        <th class="lineNum">${line.left.lineNumber}</th>
+                                                                                        <th class="lineNum ${line.left.cssClass}">${line.left.lineNumber}</th>
                                                                                         <td class="${line.left.cssClass}">
                                                                                             <pre>
                                                                                                 <code>
@@ -419,7 +419,7 @@
                                                                                         </td>
                                                                                     </j:otherwise>
                                                                                 </j:choose>
-                                                                                <th class="lineNum"></th>
+                                                                                <th class="lineNum ${line.right.cssClass}"></th>
                                                                                 <td class="${line.right.cssClass}"></td>
                                                                             </tr>
                                                                         </j:forEach>
@@ -469,7 +469,7 @@
                                                                                 <j:set var="text" value=""/>
                                                                             </j:if>
                                                                             <tr>
-                                                                                <th class="lineNum"></th>
+                                                                                <th class="lineNum ${line.left.cssClass}"></th>
                                                                                 <td class="${line.left.cssClass}"></td>
                                                                                 <j:choose>
                                                                                     <j:when test="${line.skipping}">
@@ -477,7 +477,7 @@
                                                                                         <td class="skipping"></td>
                                                                                     </j:when>
                                                                                     <j:otherwise>
-                                                                                        <th class="lineNum">${line.right.lineNumber}</th>
+                                                                                        <th class="lineNum ${line.right.cssClass}">${line.right.lineNumber}</th>
                                                                                         <td class="${line.right.cssClass}">
                                                                                             <pre>
                                                                                                 <code>
