@@ -119,7 +119,7 @@
                             <td colspan="4" class="subcaption-wrap">
                                 <div class="subcaption">
                                     <div class="collapseButtonWrapper">
-                                        <button class="collapseButton" id="collapseButton_0"> &#x2B6B;</button>
+                                        <button class="collapseButton" id="collapseButton_0"> &#x25b6;</button>
                                     </div>
                                     <div>
                                         <j:choose>
@@ -287,7 +287,7 @@
                             <td colspan="4" class="subcaption-wrap">
                                 <div class="subcaption">
                                     <div class="collapseButtonWrapper">
-                                    <button class="collapseButton" id="collapseButton_1"> &#x2B6B;</button>
+                                    <button class="collapseButton" id="collapseButton_1"> &#x25b6;</button>
                                     </div>
                                     <div>
                                         <j:choose>
