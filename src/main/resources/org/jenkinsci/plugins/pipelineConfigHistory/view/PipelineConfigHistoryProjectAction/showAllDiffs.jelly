@@ -74,7 +74,7 @@
                                             </span>
                                         </a>
 
-                                        To
+                                        <span style="padding:3px">To</span>
 
                                         <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
                                             <span class="describedElement">
@@ -124,6 +124,14 @@
                                                                 &#128279;
                                                             </a>
                                                         </j:if>
+                                                        <j:choose>
+                                                            <j:when test="${match.getKind().equals(match.SINGLE_1)}">
+                                                                <span class="file_removed">file removed</span>:
+                                                            </j:when>
+                                                            <j:when test="${match.getKind().equals(match.SINGLE_2)}">
+                                                                <span class="file_added">file added</span>:
+                                                            </j:when>
+                                                        </j:choose>
                                                         ${subCaption}
 
                                                         <j:if test="${!match.getKind().equals(match.SINGLE_1)}">
@@ -368,7 +376,7 @@
                                                             <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show older change">
                                                                 &#128279;
                                                             </a>
-                                                            file removed: ${subCaption}
+                                                            <span class="file_removed">file removed</span>: ${subCaption}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -422,7 +430,7 @@
                                             </tr>
                                         </j:when>
                                         <j:when test="${match.getKind().equals(match.SINGLE_2)}">
-                                            <j:set var="subCaption" value="${match.getFile2().toString().replaceFirst(cuttingString2, &quot;&quot;)}"/>
+                                            <j:set var="subCaption" value="${match.getFullFileName()}"/>
                                             <tr>
                                                 <td colspan="4" class="subcaption-wrap">
                                                     <div class="subcaption">
@@ -430,7 +438,7 @@
                                                             <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">&#x25b6;</button>
                                                         </div>
                                                         <div>
-                                                            file added: ${subCaption}
+                                                            <span class="file_added">file added</span>: ${subCaption}
                                                             <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none">
                                                                 &#128279;
                                                             </a>
