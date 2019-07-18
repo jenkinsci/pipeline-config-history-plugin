@@ -30,38 +30,28 @@
 */
 
 td.skipping {
-    //height:100%;
-    background-color:rgb(250, 250, 250) !important;
+    background-color:rgb(250, 250, 250);
 }
 
 td.diff_original {
-    //height:100%;
-	background-color: #FF8C8C !important;
+	background-color: #FF8C8C;
 }
 
 td.diff_revised {
-    //height:100%;
-	background-color: #CCCCFF !important;
+	background-color: #CCCCFF;
 }
 
-
-
-
-
 td.singleLineView.skipping {
-    //height:100%;
-    background-color:rgb(250, 250, 250) !important;
+    background-color:rgb(250, 250, 250);
 }
 
 
 td.singleLineView.diff_original {
-    //height:100%;
-	background-color: rgb(251, 233, 235) !important;
+	background-color: rgb(251, 233, 235);
 }
 
 td.singleLineView.diff_revised {
-    //height:100%;
-	background-color: rgb(236, 253, 240) !important;
+	background-color: rgb(236, 253, 240);
 }
 
 
@@ -70,45 +60,65 @@ td.singleLineView.diff_revised {
 ###                        line nums                              ###
 #####################################################################
 */
+/*General*/
+
+table.diffLineTable th.lineNum {
+    width: 40px;
+    min-width:1%;
+    min-height:1%;
+    max-width:100%;
+    height:1%;
+
+    white-space: nowrap;
+
+    padding: 0px;
+	padding-left: 3px;
+	padding-right: 3px;
+
+    border-bottom: 0px;
+    border-radius: 0px;
+    border-bottom: 1px solid #e8e8e8;
+    border-color:rgb(232, 232, 232);
+
+    font-size:12.6px;
+    font-weight: normal;
+
+    color: rgba(0, 0, 0, 0.5);
+    background-color:rgb(250, 250, 250);
+
+    font-family: "Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
+}
+
+table.diffLineTable th.singleLineView.lineNum {
+    width: 50px;
+    border-bottom:0px;
+    color: rgba(0, 0, 0, 0.3);
+}
+
+/*lines where something happens*/
 table.diffLineTable th.singleLineView.lineNum.diff_equal {
 
 }
 
 table.diffLineTable th.singleLineView.lineNum.diff_original {
-    background-color: rgb(249, 215, 220) !important;
-    border-color: rgb(250, 197, 205) !important;
-    color:rgb(174, 151, 154) !important;
+    background-color: rgb(249, 215, 220);
+    border-color: rgb(250, 197, 205);
+    color:rgb(174, 151, 154);
 }
 
 table.diffLineTable th.singleLineView.lineNum.diff_revised {
-    background-color: rgb(221, 251, 230) !important;
-    border-color: rgb(189, 240, 203) !important;
-    color:rgb(155, 176, 161) !important;
+    background-color: rgb(221, 251, 230);
+    border-color: rgb(189, 240, 203);
+    color:rgb(155, 176, 161);
 }
 
-/*table.diffLineTable th.singleLineView.lineNum {*/
-table.diffLineTable th.lineNum {
-    width: 50px !important;
-    padding-left:0px;
-    padding-right:0px;
+/*
+#####################################################################
+###                      line modifiers                           ###
+#####################################################################
+*/
 
-
-    background-color:rgb(250, 250, 250) !important;
-    border-color:rgb(232, 232, 232) !important;
-    color: rgba(0, 0, 0, 0.3) !important;
-
-    font-size:12.6px;
-    font-weight: normal;
-}
-
-table.diffLineTable th.singleLineView.lineNum {
-    border-bottom:0px;
-    color: rgba(0, 0, 0, 0.3) !important;
-
-    font-size:12.6px;
-    font-weight: normal;
-}
-
+/*- or + for original or revised lines. */
 div.diffLine_Modifier {
     font-weight: normal;
     float:left;
@@ -124,8 +134,16 @@ div.diffLine_Modifier.minus_style {
     color: rgba(0, 0, 0, 0.3);
 }
 
+/*
+#####################################################################
+###                      description:                             ###
+###                   info about the diff                         ###
+#####################################################################
+*/
+/*sort of a "second subcaption"*/
+
 div.singleLineView.description {
-    font-size:13px !important;
+    font-size:13px;
     padding-top:8px;
     color:rgba(255,255,255,0.2);
 }
@@ -151,13 +169,11 @@ div.singleLineView.description {
 pre {
 	margin: 0;
 	white-space: pre-wrap;
-
-	background-color: inherit !important;
 }
 
-code {
-    padding:0px !important;
-	background-color: inherit !important;
+code.hljs {
+	background-color: inherit;
+    padding:0px;
 }
 
 
@@ -180,34 +196,14 @@ table.diffLineTable th {
     height:20px;
 }
 
-table.diffLineTable th.lineNum {
-    width: 6%;
-    min-width:1%;
-    min-height:1%;
-    max-width:100%;
-    height:1%;
-    white-space: nowrap;
-    padding: 0px;
-	padding-left: 3px;
-	padding-right: 3px;
-    border-bottom: 0px;
-    border-radius: 0px;
 
-    border-bottom: 1px solid #e8e8e8;
-    font-size:12.6px;
-    font-weight: normal;
 
-    color: rgba(0, 0, 0, 0.5) !important;
-    font-family: "Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
-    background-color: #f5f5f5;
-}
-
-table.diffLineTable td {
-    padding:0px !important;
-        height:20px;
-        border-top: 0px !important;
-        text-align:left !important;
-        width:100%;
+table.pch.diffLineTable td {
+    padding:0px;
+    height:20px;
+    border-top: 0px;
+    text-align:left;
+    width:100%;
 }
 
 
@@ -221,37 +217,12 @@ table.center.pch td.diffLineWrapper {
 
     border-left: 15px solid white;
     border-right: 15px solid white;
-    border-bottom: 15px solid white !important;
+    border-bottom: 15px solid white;
     border-top: 0px;
     width:100%;
     padding:0px;
 }
 
-table.center.pch td.diffLineWrapper-left {
-    border-right: 0px solid white;
-    border-left: 15px solid white;
-    border-bottom: 15px solid white !important;
-
-    padding:0px;
-            border-top: 0px;
-            text-align:left;
-
-    margin-left: 15px;
-
-    height:100%;
-}
-
-table.center.pch td.diffLineWrapper-right {
-    border-right: 15px solid white;
-    border-left: 0px solid white;
-    border-bottom: 15px solid white !important;
-
-    padding:0px;
-    border-top: 0px;
-    text-align:left;
-
-    height:100%;
-}
 
 /*
 #####################################################################
