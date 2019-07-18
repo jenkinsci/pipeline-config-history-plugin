@@ -321,3 +321,33 @@ table.sortable.pch a.sortheader {
     color: #383838;
 }
 
+.small-button {
+    background-color: rgb(250,250,250);
+    color: rgba(0, 0, 0, 0.7);
+
+    border: 1px solid rgba(56, 56, 56, 0.05);
+    border-radius: 2px;
+
+    padding: 6px;
+
+    font-size: 12px;
+    font-weight:bold;
+
+    outline:none;
+}
+
+.small-button::-moz-focus-inner {
+    border: 0;
+}
+
+.small-button:hover{
+    background-color: rgb(200, 200, 200);
+    color: #383838;
+}
+
+.small-button-wrapper {
+    padding: 2px;
+    background-color: rgb(250,250,250);
+    border: 1px solid rgb(232, 232, 232);
+    border-radius:2px;
+}

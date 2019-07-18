@@ -48,11 +48,13 @@
             <j:choose>
                 <j:when test="${anyDiffExists}">
 
-                    <div class="collapseButtonWrapper">
-                        <button id="toggleView" name="toggleView" class="pch standard-button" style="align:right" onclick="toggleSideBySide_SingleLine()">
+                    <div class="small-button-wrapper">
+                        <button id="toggleView" name="toggleView" class="pch small-button" style="align:right" onclick="toggleSideBySide_SingleLine()">
                             Show side-by-side view
                         </button>
+
                     </div>
+                    <div style="padding:2px;"/>
 
                     <div id="content_singleLineView">
                         <table class="center pch" style="width:100%">
