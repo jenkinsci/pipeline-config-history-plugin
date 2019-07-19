@@ -152,7 +152,7 @@
                                                 <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_SL${currentMatchNumber}">
                                                     <table class="center pch diffLineTable" style="width:100%">
 
-                                                        <tbody>
+                                                        <tbody id="diffLineTable-tbody-SL">
                                                             <j:forEach items="${linesForSingleLineView}" var="line">
                                                                 <j:choose>
                                                                     <j:when test="${line.kind.equals(line.SKIPPING)}">
@@ -319,7 +319,7 @@
                                                 <td colspan="2" class="diffLineWrapper">
                                                     <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_SBS${currentMatchNumber}">
                                                         <table class="center pch diffLineTable" style="width:100%">
-                                                            <tbody id="tbody_versionDiffsShown">
+                                                            <tbody id="diffLineTable-tbody-SBS">
                                                                 <j:choose>
                                                                     <j:when test="${lines.size() == 0}">
                                                                         <tr>
@@ -387,7 +387,7 @@
                                                 <td colspan="4" class="diffLineWrapper">
                                                     <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_SBS${currentMatchNumber}">
                                                         <table class="center pch diffLineTable" style="width:100%">
-                                                            <tbody id="tbody_versionDiffsShown">
+                                                            <tbody id="diffLineTable-tbody-SBS">
                                                                 <j:choose>
                                                                     <j:when test="${lines.size() == 0}">
                                                                         <tr>
@@ -452,7 +452,7 @@
                                                 <td colspan="3" class="diffLineWrapper">
                                                     <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_SBS${currentMatchNumber}">
                                                         <table class="center pch diffLineTable" style="width:100%">
-                                                            <tbody id="tbody_versionDiffsShown">
+                                                            <tbody id="diffLineTable-tbody-SBS">
                                                                 <j:choose>
                                                                     <j:when test="${lines.size() == 0}">
                                                                         <tr>
