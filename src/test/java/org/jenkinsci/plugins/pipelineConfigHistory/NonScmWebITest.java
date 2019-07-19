@@ -74,6 +74,15 @@ public class NonScmWebITest {
       "node {\n" +
           "//nothing2\n" +
           "}";
+   public static final String[] SCRIPT_SCRIPT_SL_DIFFLINES = new String[] {
+       "node {",
+       "-\n" +
+         "//nothing",
+       "+\n" +
+           "//nothing2",
+       "}"
+
+   };
 
   public WorkflowJob workflowJob;
   private HtmlPage currentPage;
@@ -294,26 +303,13 @@ public class NonScmWebITest {
 
       //TODO: REMOVE THIS TESZT
       System.out.println("TESTING");
-      //Thread.sleep(5000000);
 
 
-      DomElement tbody = currentPage.getElementById("tbody_versionDiffsShown");
+      DomElement tbody = currentPage.getElementById("diffLineTable-tbody-SL");
+      System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++TOBIDY AS TEXT: \n\n" + tbody.asText());
 
-      evaluateTableWithScripts(tbody, SCRIPT, SCRIPT_2);
-
-      /*DomElement leftTable = currentPage.getElementByName("left-table");
-      DomElement rightTable = currentPage.getElementByName("right-table");
-
-      double levenshteinPercentage = 1 -
-          ( (double) new LevenshteinDistance().apply(leftTable.asText(), getIndexedScript(SCRIPT)) / leftTable.asText().length());
-      //this is an os fix. It also hides the uglyness of getIndexedScript(..)
-      assertTrue(levenshteinPercentage >= 0.8);
-
-      if (SystemUtils.IS_OS_UNIX) {
-        //this will not work on windows.
-        assertEquals(leftTable.asText(), getIndexedScript(SCRIPT));
-        assertEquals(rightTable.asText(), getIndexedScript(SCRIPT_2));
-      }*/
+      //evaluateSideBySideTableWithScripts(tbody, SCRIPT, SCRIPT_2);
+      evaluateSingleLineTableWithLines(tbody, SCRIPT_SCRIPT_SL_DIFFLINES);
     }
   }
 
@@ -384,9 +380,10 @@ public class NonScmWebITest {
       refresh();
 
       System.out.println(currentPageAsText);
-      DomElement tbody = currentPage.getElementById("tbody_versionDiffsShown");
+      DomElement tbody = currentPage.getElementById("diffLineTable-tbody-SL");
 
-      evaluateTableWithScripts(tbody, SCRIPT, SCRIPT_2);
+      //evaluateSideBySideTableWithScripts(tbody, SCRIPT, SCRIPT_2);
+      evaluateSingleLineTableWithLines(tbody, SCRIPT_SCRIPT_SL_DIFFLINES);
     }
 
   }
@@ -399,7 +396,7 @@ public class NonScmWebITest {
    * @param script1 the older change
    * @param script2 the newer change
    */
-  private void evaluateTableWithScripts(DomElement tbody, String script1, String script2) {
+  private void evaluateSideBySideTableWithScripts(DomElement tbody, String script1, String script2) {
     Iterable<DomElement> tableRowsIterable = tbody.getChildElements();
     ArrayList<DomElement> tableRowsList = new ArrayList<>(1);
     tableRowsIterable.forEach(tableRow -> tableRowsList.add(tableRowsList.size(), tableRow));
@@ -420,6 +417,27 @@ public class NonScmWebITest {
       assertEquals(scriptAsArray[i], tdArray[0].asText());
       assertEquals(script2AsArray[i], tdArray[1].asText());
     }
+  }
+
+  private void evaluateSingleLineTableWithLines(DomElement tbody, String[] lines) {
+    Iterable<DomElement> tableRowsIterable = tbody.getChildElements();
+    ArrayList<DomElement> tableRowsList = new ArrayList<>(1);
+    tableRowsIterable.forEach(tableRow -> tableRowsList.add(tableRowsList.size(), tableRow));
+
+    for (int i=0; i < tableRowsList.size(); ++i) {
+      DomElement tr = tableRowsList.get(i);
+      // current row's (ideally two) td cells (older and newer change)
+      DomElement td = null;
+      int j = 0;
+      for (DomElement trChild : tr.getChildElements()) {
+        if (trChild.getTagName().equals("td")) {
+          td = trChild;
+        }
+      }
+      assertNotEquals(null, td);
+      assertEquals(lines[i], td.asText());
+    }
+
   }
 
   private String getIndexedScript(String script) {

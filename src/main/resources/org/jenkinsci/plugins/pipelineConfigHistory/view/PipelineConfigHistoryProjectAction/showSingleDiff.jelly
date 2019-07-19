@@ -153,7 +153,7 @@
                                     <table class="center pch diffLineTable" style="width:100%">
 
                                         <!--TODO remove this header (unnecessary)-->
-                                        <tbody>
+                                        <tbody id="diffLineTable-tbody-SL">
                                             <j:forEach items="${linesForSingleLineView}" var="line">
                                                 <!--TODO here plays the music-->
                                                 <j:choose>
@@ -319,7 +319,7 @@
 
                                 <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_1">
                                     <table class="center pch diffLineTable" style="width:100%">
-                                        <tbody id="tbody_versionDiffsShown">
+                                        <tbody id="diffLineTable-tbody-SBS">
                                             <j:choose>
                                                 <j:when test="${lines.size() == 0}">
                                                     <tr>
