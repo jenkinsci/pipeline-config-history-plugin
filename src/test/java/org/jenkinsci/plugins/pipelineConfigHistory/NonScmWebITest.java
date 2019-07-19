@@ -102,8 +102,6 @@ public class NonScmWebITest {
       // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
       WebClientUtil.waitForJSExec(webClient);
 
-
-      System.out.println("#################URL: " + indexUrl());
       currentPage = webClient.getPage(indexUrl());
       Assert.assertEquals(PipelineConfigHistoryConsts.DISPLAY_NAME + " [Jenkins]", currentPage.getTitleText());
       refresh();
@@ -204,8 +202,6 @@ public class NonScmWebITest {
           .collect(Collectors.toCollection(LinkedList::new)).getFirst()
           .click(new Event(), true);
       refresh();
-      System.out.println("DOWNLOADTEXTCONTENT:\n" + currentPageAsText);
-      System.out.println("DOWNLOADXMLCONTENT:\n" + currentPageAsXml);
 
       assertEquals(
           SCRIPT,
@@ -300,15 +296,7 @@ public class NonScmWebITest {
       // go to showAllDiffs
       refresh();
 
-
-      //TODO: REMOVE THIS TESZT
-      System.out.println("TESTING");
-
-
       DomElement tbody = currentPage.getElementById("diffLineTable-tbody-SL");
-      System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++TOBIDY AS TEXT: \n\n" + tbody.asText());
-
-      //evaluateSideBySideTableWithScripts(tbody, SCRIPT, SCRIPT_2);
       evaluateSingleLineTableWithLines(tbody, SCRIPT_SCRIPT_SL_DIFFLINES);
     }
   }
@@ -382,7 +370,6 @@ public class NonScmWebITest {
       System.out.println(currentPageAsText);
       DomElement tbody = currentPage.getElementById("diffLineTable-tbody-SL");
 
-      //evaluateSideBySideTableWithScripts(tbody, SCRIPT, SCRIPT_2);
       evaluateSingleLineTableWithLines(tbody, SCRIPT_SCRIPT_SL_DIFFLINES);
     }
 

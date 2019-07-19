@@ -146,7 +146,6 @@
                                             </td>
                                         </tr>
 
-
                                         <tr>
                                             <td colspan="4" class="diffLineWrapper">
                                                 <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_SL${currentMatchNumber}">
@@ -210,19 +209,6 @@
                                                                             </td>
                                                                         </tr>
                                                                     </j:when>
-                                                                    <j:otherwise>
-                                                                        <tr>
-                                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.left.lineNumber}</th>
-                                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.right.lineNumber}</th>
-                                                                            <td class="singleLineView ${line.cssClass}">
-                                                                                <pre>
-                                                                                    <code>
-                                                                                        UNMÖGLICH !!!11!: line.kind:  ${line.kind} line.content: ${line.content}
-                                                                                    </code>
-                                                                                </pre>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </j:otherwise>
                                                                 </j:choose>
                                                             </j:forEach>
                                                         </tbody>

@@ -39,10 +39,8 @@
             <j:set var="fileHash1" value="${request.getParameter(&quot;fileHash1&quot;)}"/>
             <j:set var="fileHash2" value="${request.getParameter(&quot;fileHash2&quot;)}"/>
             <j:set var="buildXmlDisplayType" value="${request.getParameter(&quot;buildXmlDisplayType&quot;)}"/>
-
             <j:set var="file1" value="${it.getFileByHashCode(timestamp1, fileHash1)}"/>
             <j:set var="file2" value="${it.getFileByHashCode(timestamp2, fileHash2)}"/>
-
             <j:set var="caption" value="${it.getProject().getFullName()}: Single Diff"></j:set>
 
             <!--get Lines-->
@@ -50,33 +48,23 @@
                 <j:when test="${buildXmlDisplayType.equals(&quot;Jenkinsfile&quot;)}">
                     <j:set var="lines1" value="${it.getScriptFromXmlFile(timestamp1, fileHash1, false)}"/>
                     <j:set var="lines2" value="${it.getScriptFromXmlFile(timestamp2, fileHash2, false)}"/>
-
-
                     <j:set var="lines" value="${it.getLines(lines1, lines2)}"/>
                     <j:set var="linesForSingleLineView" value="${it.getSingleLineViewLines(lines1, lines2)}"/>
-
                     <j:set var="subCaption" value="Root Script"></j:set>
                 </j:when>
                 <j:otherwise>
-
-
                     <j:set var="linesForSingleLineView" value="${it.getSingleLineViewLines(file1, file2)}"/>
                     <j:set var="lines" value="${it.getLines(file1, file2)}"/>
                     <j:set var="subCaption" value="${file1.getName()}"></j:set>
                 </j:otherwise>
             </j:choose>
             <h1>${%Pipeline Configuration History}</h1>
-
-            <!--TODO TEST AREA-->
-
             <div class="small-button-wrapper">
                 <button id="toggleView" name="toggleView" class="pch small-button" style="align:right" onclick="toggleSideBySide_SingleLine()">
                     Show side-by-side view
                 </button>
             </div>
             <div style="padding:2px"/>
-
-
             <div id="content_singleLineView">
                 <table id="singleLineView" class="center pch diffLineTable" style="width:100%">
                     <thead>
@@ -110,11 +98,9 @@
                                     </span>
                                 </a>
                             </div>
-
                         </caption>
                     </thead>
                     <tbody>
-
                         <tr>
                             <td colspan="4" class="subcaption-wrap">
                                 <div class="subcaption">
@@ -130,14 +116,10 @@
                                                 <j:set var="subCaption" value="${file1.getName()}"/>
                                             </j:otherwise>
                                         </j:choose>
-
                                         <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
                                             &#128279;
                                         </a>
-
                                         ${subCaption}
-
-
                                         <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
                                             &#128279;
                                         </a>
@@ -145,17 +127,12 @@
                                 </div>
                             </td>
                         </tr>
-
-
                         <tr>
                             <td colspan="4" class="diffLineWrapper">
                                 <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_0">
                                     <table class="center pch diffLineTable" style="width:100%">
-
-                                        <!--TODO remove this header (unnecessary)-->
                                         <tbody id="diffLineTable-tbody-SL">
                                             <j:forEach items="${linesForSingleLineView}" var="line">
-                                                <!--TODO here plays the music-->
                                                 <j:choose>
                                                     <j:when test="${line.kind.equals(line.SKIPPING)}">
                                                         <tr>
@@ -212,19 +189,6 @@
                                                             </td>
                                                         </tr>
                                                     </j:when>
-                                                    <j:otherwise>
-                                                        <tr>
-                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.left.lineNumber}</th>
-                                                            <th class="singleLineView lineNum ${line.cssClass}">${line.right.lineNumber}</th>
-                                                            <td class="singleLineView ${line.cssClass}">
-                                                                <pre>
-                                                                    <code>
-                                                                        UNMÖGLICH !!!11!: line.kind:  ${line.kind} line.content: ${line.content}
-                                                                    </code>
-                                                                </pre>
-                                                            </td>
-                                                        </tr>
-                                                    </j:otherwise>
                                                 </j:choose>
                                             </j:forEach>
                                         </tbody>
@@ -232,16 +196,9 @@
                                 </div>
                             </td>
                         </tr>
-
                     </tbody>
-
                 </table>
             </div>
-            <!--TODO TEST AREA END-->
-
-
-
-
             <div id="content_sideBySideView" style="display:none">
                 <table class="center pch" style="width:100%">
                     <caption>
@@ -282,7 +239,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         <tr>
                             <td colspan="4" class="subcaption-wrap">
                                 <div class="subcaption">
@@ -298,14 +254,10 @@
                                                 <j:set var="subCaption" value="${file1.getName()}"/>
                                         </j:otherwise>
                                         </j:choose>
-
                                         <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${fileHash1}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show older change">
                                             &#128279;
                                         </a>
-
                                         ${subCaption}
-
-
                                         <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${fileHash2}&amp;fileName=${subCaption}&amp;displayType=${buildXmlDisplayType}" style="text-decoration:none" title="show newer change">
                                             &#128279;
                                         </a>
@@ -313,10 +265,8 @@
                                 </div>
                             </td>
                         </tr>
-
                         <tr>
                             <td colspan="4" class="diffLineWrapper">
-
                                 <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_1">
                                     <table class="center pch diffLineTable" style="width:100%">
                                         <tbody id="diffLineTable-tbody-SBS">
@@ -329,7 +279,6 @@
                                                     </tr>
                                                 </j:when>
                                                 <j:otherwise>
-
                                                     <j:forEach items="${lines}" var="line">
                                                         <tr>
                                                             <j:choose>
