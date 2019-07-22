@@ -38,7 +38,7 @@ public class PipelineConfigHistoryGlobalConfiguration extends GlobalConfiguratio
     maxDaysToKeepEntries = formData.getString("maxDaysToKeepEntries").trim();
 
     save();
-    return false;
+    return true;
   }
 
   public String getMaxHistoryEntries() { return maxHistoryEntries;}
