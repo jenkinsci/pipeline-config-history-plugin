@@ -49,7 +49,7 @@ public class BadgeAction implements BuildBadgeAction, RunAction2 {
 
   @Override
   public String getDisplayName() {
-    return null;
+    return PipelineConfigHistoryConsts.DISPLAY_NAME;
   }
 
   @Override
