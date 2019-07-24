@@ -35,7 +35,7 @@
 
     <artifactId>pipeline-config-history</artifactId>
     <packaging>hpi</packaging>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4</version>
     <name>Pipeline Configuration History Plugin</name>
     <description>Saves a copy of a pipeline's configuration on each pipeline config change.</description>
     <url>https://wiki.jenkins.io/display/JENKINS/Pipeline+Configuration+History</url>
@@ -48,7 +48,7 @@
         <connection>scm:git:ssh://github.com/jenkinsci/pipeline-config-history-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/jenkinsci/pipeline-config-history-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/pipeline-config-history-plugin</url>
-        <tag>HEAD</tag>
+        <tag>pipeline-config-history-1.4</tag>
     </scm>
     
     <issueManagement>
