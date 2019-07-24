@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project are documented in this file.
 
-## [1.4] - tbd
+## [1.4] - 24.07.19
 * New feature: Make this plugin configurable in so far as that you
   + can limit the number of history entries created per pipeline job.
   + can limit the age of history entries for pipeline jobs.
