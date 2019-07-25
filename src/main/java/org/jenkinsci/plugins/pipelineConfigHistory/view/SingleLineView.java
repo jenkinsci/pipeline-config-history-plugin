@@ -49,15 +49,15 @@ public class SingleLineView {
     @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
     public final Kind SKIPPING = Kind.SKIPPING;
 
-    public Kind kind;
+    private Kind kind;
 
-    public String content;
+    private String content;
 
-    public String lineNumLeft;
+    private String lineNumLeft;
 
-    public String lineNumRight;
+    private String lineNumRight;
 
-    public String cssClass;
+    private String cssClass;
 
     public Line(Kind kind, String content, String lineNumLeft, String lineNumRight) {
       this.kind = kind;
@@ -82,6 +82,26 @@ public class SingleLineView {
           this.cssClass = "";
           break;
       }
+    }
+
+    public Kind getKind() {
+      return kind;
+    }
+
+    public String getContent() {
+      return content;
+    }
+
+    public String getLineNumLeft() {
+      return lineNumLeft;
+    }
+
+    public String getLineNumRight() {
+      return lineNumRight;
+    }
+
+    public String getCssClass() {
+      return cssClass;
     }
 
   }
