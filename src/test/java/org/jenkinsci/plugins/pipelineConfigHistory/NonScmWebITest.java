@@ -36,6 +36,8 @@ import org.apache.commons.lang.SystemUtils;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -92,6 +94,11 @@ public class NonScmWebITest {
   private final String configSingleFileString = "configSingleFile";
   private final String showSingleDiff = "showSingleDiff";
 
+
+  @Before
+  public void skipOnWindows() {
+    Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
+  }
 
   @Test
   public void test_0_indexTest() throws Exception {
