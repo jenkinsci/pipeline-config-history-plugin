@@ -29,7 +29,12 @@
         <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipeline-config-history/css/style.css"></link>
 
         <link rel="stylesheet" type="text/css" href="${rootURL}/plugin/pipeline-config-history/highlight.js/styles/xcode.css"/>
-        <script src="${rootURL}/plugin/pipeline-config-history/highlight.js/highlight.pack.js"></script>
+        <!--use only for the packed version-->
+        <!--script src="${rootURL}/plugin/pipeline-config-history/highlight.js/highlight.pack.js"></script-->
+        <script src="${rootURL}/plugin/pipeline-config-history/highlight.js/highlight.js"></script>
+        <script src="${rootURL}/plugin/pipeline-config-history/highlight.js/highlight.min.js"></script>
+
+
         <script>hljs.initHighlightingOnLoad();</script>
 
         <st:include it="${it.project}" page="sidepanel.jelly" />
@@ -43,7 +48,7 @@
             <j:set var="cuttingString2" value="${it.getRevision(timestamp2).toString()}"/>
 
             <h1>${%Pipeline Configuration History}</h1>
-
+            <h2>test16:11</h2>
             <j:set var="caption" value="${it.getProject().getFullName()}: All Diffs"></j:set>
             <j:choose>
                 <j:when test="${anyDiffExists}">

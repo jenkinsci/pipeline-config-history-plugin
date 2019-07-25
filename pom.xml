@@ -107,6 +107,83 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!--TODO this currently is a test!!!1-->
+
+
+            <!--For the highlight.js package to be include in the hpi, it is first extracted (maven-dependency-plugin)-->
+            <!--Sencond it is copied (since we don't have access to META-INF folders and don't want cryptic structure (maven-dependency-plugin)-->
+            <!--At last, the extracted stuff is deleted.-->
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>highlightjs</artifactId>
+                                    <version>9.15.8</version>
+                                    <type>jar</type>
+                                    <outputDirectory>${project.build.directory}/${project.artifactId}/user_temp</outputDirectory>
+                                    <excludes>META-INF/maven/</excludes>
+                                </artifactItem>
+                            </artifactItems>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <!-- here the phase you need -->
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${project.artifactId}/highlight.js</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <!--TODO un-hardcode the version!!-->
+                                    <directory>${project.build.directory}/${project.artifactId}/user_temp/META-INF/resources/webjars/highlightjs/9.15.8</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.5</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <directory>${project.build.directory}/${project.artifactId}/user_temp</directory>
+                                </fileset>
+                            </filesets>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -128,6 +205,14 @@
             <groupId>com.googlecode.java-diff-utils</groupId>
             <artifactId>diffutils</artifactId>
             <version>1.2.1</version>
+        </dependency>
+
+        <!--If you change this you need to change the stuff in the dependency plugin's unpack config, also! TODO define variables to avoid this-->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>highlightjs</artifactId>
+            <version>9.15.8</version>
+
         </dependency>
 
         <!--test dependencies-->
