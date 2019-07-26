@@ -78,10 +78,8 @@ public class NonScmWebITest {
           "}";
    public static final String[] SCRIPT_SCRIPT_SL_DIFFLINES = new String[] {
        "node {",
-       "-\n" +
-         "//nothing",
-       "+\n" +
-           "//nothing2",
+       "-" + System.lineSeparator() + "//nothing",
+       "+" + System.lineSeparator() + "//nothing2",
        "}"
 
    };
@@ -93,12 +91,6 @@ public class NonScmWebITest {
   private final String configOverviewString = "configOverview";
   private final String configSingleFileString = "configSingleFile";
   private final String showSingleDiff = "showSingleDiff";
-
-
-  @Before
-  public void skipOnWindows() {
-    Assume.assumeFalse(SystemUtils.IS_OS_WINDOWS);
-  }
 
   @Test
   public void test_0_indexTest() throws Exception {
