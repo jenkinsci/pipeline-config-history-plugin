@@ -14,3 +14,9 @@ Make hpi:run work with shared libraries
 ---------------------------------------
 * install shared library plugin (if not installed already)
 * install git (if you want to use the shared library plugin with git)
+
+Notes
+---------------------------------------
+* This plugin uses highlight.js for syntax highlighting (code and diffs). See
+    + [github](https://github.com/highlightjs/highlight.js/)
+    + [homepage](https://highlightjs.org/)
