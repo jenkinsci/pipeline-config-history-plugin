@@ -201,42 +201,44 @@
             </div>
             <div id="content_sideBySideView">
                 <table class="center pch" style="width:100%">
-                    <caption>
-                        ${caption}
-                    </caption>
                     <thead>
-                        <tr>
-                            <th colspan="2">
-                                <font size="3">
-                                    Older Change (${it.getTimestampWellFormatted(timestamp1)})
-                                    <j:if test="${it.isBuiltfromReplay(timestamp1)}">
-                                        <br/>
-                                        <i>
-                                            Replay from build
-                                            ${it.getOriginalNumberFromReplayBuild(timestamp1)}
-                                        </i>
-                                    </j:if>
-                                </font>
-                                <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
-                                    &#128279;
-                                </a>
-                            </th>
-                            <th colspan="2">
-                                <font size="3">
-                                    Newer Change (${it.getTimestampWellFormatted(timestamp2)})
-                                    <j:if test="${it.isBuiltfromReplay(timestamp2)}">
-                                        <br/>
-                                        <i>
-                                            Replay from build
-                                            ${it.getOriginalNumberFromReplayBuild(timestamp2)}
-                                        </i>
-                                    </j:if>
-                                </font>
-                                <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none">
-                                    &#128279;
-                                </a>
-                            </th>
-                        </tr>
+                        <caption>
+                            <div style="float:top">
+                                ${caption}
+                            </div>
+                            <div style="float:bottom" class="singleLineView description">
+                                <div class="center">
+                                    Older Change:
+                                    <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
+                                        <span class="describedElement">
+                                            <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp1)}:</span>
+                                            ${it.getTimestampWellFormatted(timestamp1)}
+                                            <j:if test="${it.isBuiltfromReplay(timestamp1)}">
+                                                <i>
+                                                    (Replay from build
+                                                    ${it.getOriginalNumberFromReplayBuild(timestamp1)})
+                                                </i>
+                                            </j:if>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="center">
+                                    Newer Change:
+                                    <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none">
+                                        <span class="describedElement">
+                                            <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp2)}:</span>
+                                            ${it.getTimestampWellFormatted(timestamp2)}
+                                            <j:if test="${it.isBuiltfromReplay(timestamp2)}">
+                                                <i>
+                                                    (Replay from build
+                                                    ${it.getOriginalNumberFromReplayBuild(timestamp2)})
+                                                </i>
+                                            </j:if>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </caption>
                     </thead>
                     <tbody>
                         <tr>

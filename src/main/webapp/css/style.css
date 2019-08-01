@@ -42,7 +42,6 @@ table.pch {
     border-bottom-right-radius: 3px;
 }
 
-
 /*
 #####################################################################
 ###                        center class                           ###
@@ -65,6 +64,12 @@ table.center th {
 table.center td {
     padding:0px;
     width:100%
+}
+
+div.center {
+    width:50%;
+    float: left;
+    text-align: center;
 }
 
 /*
