@@ -60,26 +60,16 @@ function initCollapseDiv() {
             myNumber = getNumberFromCollapseButton(this);
             toggleCollapseContent(getCollapseButtonByNumber(myNumber), getCollapseableContentByNumber(myNumber));
 
-            //TODO imlement: do the same for the other element
             if (myNumber.startsWith("SBS") || myNumber.startsWith("SL")) {
                 //toggle the other element, too
 
                 myOtherNumber = getTheOtherNumber(myNumber);
-                console.log("this number: " + myNumber + ", other number: " + myOtherNumber);
                 toggleCollapseContent(getCollapseButtonByNumber(myOtherNumber), getCollapseableContentByNumber(myOtherNumber))
             }
         });
     }
 
     // Initially click both first elements one time to open the contents.
-    for (i = 0; i < coll.length; i++) {
-        myNumber = coll[i].id.replace('collapseButton_', '');
-        console.log("mynumber: " + myNumber);
-        if (myNumber === "SBS0") {
-        //if (myNumber === "SBS0" || myNumber === "SL0") {
-            console.log("found case:: " + myNumber);
-            coll[i].click();
-        }
-    }
+    coll[0].click();
 }
 
