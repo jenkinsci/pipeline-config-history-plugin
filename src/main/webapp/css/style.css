@@ -27,7 +27,6 @@
 #####################################################################
 ###                     general modification                      ###
 #####################################################################
-###   TODO: cleanse this document of this abomination!
 */
 
 h1 {
@@ -35,7 +34,7 @@ h1 {
     font-size:28px;
 }
 
-table {
+table.pch {
     margin-top: 0px;
     border-spacing: 0;
     border: 1px solid #ddd;
