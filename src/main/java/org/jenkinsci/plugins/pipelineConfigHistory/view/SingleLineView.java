@@ -31,9 +31,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class SingleLineView {
 
-
-
-
   public static class Line {
     public enum Kind {
       EQUAL, INSERT, DELETE, SKIPPING
