@@ -78,7 +78,7 @@
 
                                         <span style="padding:3px">To</span>
 
-                                        <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
+                                        <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none">
                                             <span class="describedElement">
                                                 <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp2)}:</span>
                                                 ${it.getTimestampWellFormatted(timestamp2)}
