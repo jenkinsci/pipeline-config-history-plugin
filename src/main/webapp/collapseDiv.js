@@ -7,7 +7,7 @@
 
         Also, the buttons need to be of class "collapseButton" and the contents of class "collapseableContent".
 
-        TODO: implement the following: Call initCollapseDiv() once to open the first contents.
+        Call initCollapseDiv() once to open the first contents.
 */
 
 var coll = document.getElementsByClassName("collapseButton");
@@ -50,33 +50,36 @@ function getNumberFromCollapseButton(collapseButton) {
 ###                          Startup                          ####
 ##################################################################
 */
-//TODO wrap this in an init()-function...
-// Add the click listeners.
-for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function() {
-        this.classList.toggle("active");
 
-        myNumber = getNumberFromCollapseButton(this);
-        toggleCollapseContent(getCollapseButtonByNumber(myNumber), getCollapseableContentByNumber(myNumber));
+function initCollapseDiv() {
+    // Add the click listeners.
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
 
-        //TODO imlement: do the same for the other element
-        if (myNumber.startsWith("SBS") || myNumber.startsWith("SL")) {
-            //toggle the other element, too
+            myNumber = getNumberFromCollapseButton(this);
+            toggleCollapseContent(getCollapseButtonByNumber(myNumber), getCollapseableContentByNumber(myNumber));
 
-            myOtherNumber = getTheOtherNumber(myNumber);
-            console.log("this number: " + myNumber + ", other number: " + myOtherNumber);
-            toggleCollapseContent(getCollapseButtonByNumber(myOtherNumber), getCollapseableContentByNumber(myOtherNumber))
+            //TODO imlement: do the same for the other element
+            if (myNumber.startsWith("SBS") || myNumber.startsWith("SL")) {
+                //toggle the other element, too
+
+                myOtherNumber = getTheOtherNumber(myNumber);
+                console.log("this number: " + myNumber + ", other number: " + myOtherNumber);
+                toggleCollapseContent(getCollapseButtonByNumber(myOtherNumber), getCollapseableContentByNumber(myOtherNumber))
+            }
+        });
+    }
+
+    // Initially click both first elements one time to open the contents.
+    for (i = 0; i < coll.length; i++) {
+        myNumber = coll[i].id.replace('collapseButton_', '');
+        console.log("mynumber: " + myNumber);
+        if (myNumber === "SBS0") {
+        //if (myNumber === "SBS0" || myNumber === "SL0") {
+            console.log("found case:: " + myNumber);
+            coll[i].click();
         }
-    });
-}
-
-// Initially click both first elements one time to open the contents.
-for (i = 0; i < coll.length; i++) {
-    myNumber = coll[i].id.replace('collapseButton_', '');
-    console.log("mynumber: " + myNumber);
-    if (myNumber === "SBS0") {
-    //if (myNumber === "SBS0" || myNumber === "SL0") {
-        console.log("found case:: " + myNumber);
-        coll[i].click();
     }
 }
+

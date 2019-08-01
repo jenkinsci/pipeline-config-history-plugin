@@ -502,9 +502,13 @@
                 </j:otherwise>
             </j:choose>
 
-
             <script src="${rootURL}/plugin/pipeline-config-history/collapseDiv.js"></script>
             <script src="${rootURL}/plugin/pipeline-config-history/switchSideBySideAndSingleLine.js"/>
+
+            <script>
+                initCollapseDiv();
+                init_sideBySide_singleLine_views();
+            </script>
         </l:main-panel>
     </l:layout>
 </j:jelly>

@@ -1,4 +1,8 @@
-
+/*
+    Doc:
+        For this to work, the elements's ids must be "content_sideBySideView" and "content_singleLineView"
+        Also, this adds/ overwrites the global variables sideBySide and singleLine!
+*/
 var sideBySide = document.getElementById("content_sideBySideView");
 var singleLine = document.getElementById("content_singleLineView");
 
@@ -7,7 +11,9 @@ var singleLine = document.getElementById("content_singleLineView");
 
 //hide the side-by-side view at startup and show the other view.
 //this must be done here since the collapseDiv script must be run before the sbs view is hidden.
-hideElement(sideBySide);
+function init_sideBySide_singleLine_views() {
+    hideElement(sideBySide);
+}
 
 function hideElement(element) {
     element.style.position = "absolute";
