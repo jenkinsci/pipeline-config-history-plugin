@@ -223,7 +223,7 @@
                         </table>
                     </div>
 
-                    <div id="content_sideBySideView" style="display:none">
+                    <div id="content_sideBySideView">
                         <table class="center pch" style="width:100%">
                             <caption>
                                 ${caption}
@@ -504,25 +504,7 @@
 
 
             <script src="${rootURL}/plugin/pipeline-config-history/collapseDiv.js"></script>
-            <script>
-                function toggleSideBySide_SingleLine() {
-                    sideBySide = document.getElementById("content_sideBySideView");
-                    singleLine = document.getElementById("content_singleLineView");
-                    button = document.getElementById("toggleView");
-
-                    if (sideBySide.style.display == "block"){
-                        sideBySide.style.display = "none";
-                        singleLine.style.display = "block";
-
-                        button.innerHTML = "Show side-by-side view"
-                    } else {
-                        sideBySide.style.display = "block";
-                        singleLine.style.display = "none";
-
-                        button.innerHTML = "Show single-line view"
-                    }
-                }
-            </script>
+            <script src="${rootURL}/plugin/pipeline-config-history/switchSideBySideAndSingleLine.js"/>
         </l:main-panel>
     </l:layout>
 </j:jelly>

@@ -105,7 +105,7 @@
                             <td colspan="4" class="subcaption-wrap">
                                 <div class="subcaption">
                                     <div class="collapseButtonWrapper">
-                                        <button class="collapseButton" id="collapseButton_0"> &#x25b6;</button>
+                                        <button class="collapseButton" id="collapseButton_SL0"> &#x25b6;</button>
                                     </div>
                                     <div>
                                         <j:choose>
@@ -129,7 +129,7 @@
                         </tr>
                         <tr>
                             <td colspan="4" class="diffLineWrapper">
-                                <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_0">
+                                <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_SL0">
                                     <table class="center pch diffLineTable" style="width:100%">
                                         <tbody id="diffLineTable-tbody-SL">
                                             <j:forEach items="${linesForSingleLineView}" var="line">
@@ -199,7 +199,7 @@
                     </tbody>
                 </table>
             </div>
-            <div id="content_sideBySideView" style="display:none">
+            <div id="content_sideBySideView">
                 <table class="center pch" style="width:100%">
                     <caption>
                         ${caption}
@@ -243,7 +243,7 @@
                             <td colspan="4" class="subcaption-wrap">
                                 <div class="subcaption">
                                     <div class="collapseButtonWrapper">
-                                    <button class="collapseButton" id="collapseButton_1"> &#x25b6;</button>
+                                    <button class="collapseButton" id="collapseButton_SBS0"> &#x25b6;</button>
                                     </div>
                                     <div>
                                         <j:choose>
@@ -267,7 +267,7 @@
                         </tr>
                         <tr>
                             <td colspan="4" class="diffLineWrapper">
-                                <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_1">
+                                <div class="collapseableContent resizeWrapper" style="overflow-y:scroll;" id="collapseableContent_SBS0">
                                     <table class="center pch diffLineTable" style="width:100%">
                                         <tbody id="diffLineTable-tbody-SBS">
                                             <j:choose>
@@ -321,25 +321,7 @@
             </div>
 
             <script src="${rootURL}/plugin/pipeline-config-history/collapseDiv.js"></script>
-            <script>
-                function toggleSideBySide_SingleLine() {
-                    sideBySide = document.getElementById("content_sideBySideView");
-                    singleLine = document.getElementById("content_singleLineView");
-                    button = document.getElementById("toggleView");
-
-                    if (sideBySide.style.display == "block"){
-                        sideBySide.style.display = "none";
-                        singleLine.style.display = "block";
-
-                        button.innerHTML = "Show side-by-side view"
-                    } else {
-                        sideBySide.style.display = "block";
-                        singleLine.style.display = "none";
-
-                        button.innerHTML = "Show single-line view"
-                    }
-                }
-            </script>
+            <script src="${rootURL}/plugin/pipeline-config-history/switchSideBySideAndSingleLine.js"/>
         </l:main-panel>
     </l:layout>
 </j:jelly>
