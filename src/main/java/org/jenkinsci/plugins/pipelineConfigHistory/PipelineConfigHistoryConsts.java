@@ -79,6 +79,6 @@ public final class PipelineConfigHistoryConsts {
    */
   static final String[] REQUIRED_PLUGINS_SHORT_NAMES = {"workflow-aggregator"};
 
-  public static final String LINK_SYMBOL = "&#128279;";
+  public static final String LINK_SYMBOL = "\ud83d\udd17";
 
 }
