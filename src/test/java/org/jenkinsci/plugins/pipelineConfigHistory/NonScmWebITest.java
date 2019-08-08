@@ -420,7 +420,7 @@ public class NonScmWebITest {
           td = trChild;
         }
       }
-      assertNotEquals(null, td);
+      assertNotNull(td);
       assertEquals(lines[i], td.asText());
     }
 

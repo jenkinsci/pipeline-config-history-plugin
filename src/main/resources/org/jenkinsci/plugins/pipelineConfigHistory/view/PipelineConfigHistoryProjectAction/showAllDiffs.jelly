@@ -123,7 +123,7 @@
                                                     <div>
                                                         <j:if test="${!match.getKind().equals(match.SINGLE_2)}">
                                                             <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show older change">
-                                                                &#128279;
+                                                                ${it.getLinkSymbol()}
                                                             </a>
                                                         </j:if>
                                                         <j:choose>
@@ -138,7 +138,7 @@
 
                                                         <j:if test="${!match.getKind().equals(match.SINGLE_1)}">
                                                             <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show newer change">
-                                                                &#128279;
+                                                                ${it.getLinkSymbol()}
                                                             </a>
                                                         </j:if>
                                                     </div>
@@ -292,12 +292,12 @@
                                                         </div>
                                                         <div>
                                                             <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show older change">
-                                                                &#128279;
+                                                                ${it.getLinkSymbol()}
                                                             </a>
                                                             ${subCaption}
 
                                                             <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show newer change">
-                                                                &#128279;
+                                                                ${it.getLinkSymbol()}
                                                             </a>
                                                         </div>
                                                     </div>
@@ -364,7 +364,7 @@
                                                         </div>
                                                         <div>
                                                             <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show older change">
-                                                                &#128279;
+                                                                ${it.getLinkSymbol()}
                                                             </a>
                                                             <span class="file_removed">file removed</span>: ${subCaption}
                                                         </div>
@@ -430,7 +430,7 @@
                                                         <div>
                                                             <span class="file_added">file added</span>: ${subCaption}
                                                             <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none">
-                                                                &#128279;
+                                                                ${it.getLinkSymbol()}
                                                             </a>
                                                         </div>
                                                     </div>

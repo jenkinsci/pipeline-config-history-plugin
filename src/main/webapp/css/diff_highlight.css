@@ -34,12 +34,10 @@ td.skipping {
 }
 
 td.diff_original {
-	/*background-color: #FF8C8C;*/
 	background-color: rgb(251, 233, 235);
 }
 
 td.diff_revised {
-	/*background-color: #CCCCFF;*/
 	background-color: rgb(236, 253, 240);
 }
 

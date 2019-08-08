@@ -1,8 +1,4 @@
 /*
- * This is a modified version of GetDiffLines from jobConfigHistory, which is to be found here:
- * https://github.com/jenkinsci/jobConfigHistory-plugin
- * The original license:
- *
  * The MIT License
  *
  * Copyright 2019 Robin Schulz

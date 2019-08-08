@@ -600,10 +600,11 @@ public class PipelineConfigHistoryProjectAction implements Action {
         currentLine = iterator.next();
       }
     } while (nextIteration);
-
-
-
     return sortedLines;
+  }
+
+  public String getLinkSymbol() {
+    return  PipelineConfigHistoryConsts.LINK_SYMBOL;
   }
 
   public final List<SingleLineView.Line> getSingleLineViewLines(String file1Str, String file2Str) {
