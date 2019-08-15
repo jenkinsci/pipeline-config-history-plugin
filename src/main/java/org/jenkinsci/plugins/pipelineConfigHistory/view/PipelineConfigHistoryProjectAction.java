@@ -542,18 +542,22 @@ public class PipelineConfigHistoryProjectAction implements Action {
       } else if (currentLine.getTag().equals(DiffRow.Tag.CHANGE)) {
         // start collecting all lines in the two buffers
         while (currentLine.getTag().equals(DiffRow.Tag.CHANGE) && iterator.hasNext()) {
-          currentDeleteBuffer.add(new SingleLineView.Line(
-              SingleLineView.Line.Kind.DELETE,
-              currentLine.getLeft().getText(),
-              currentLine.getLeft().getLineNumber(),
-              currentLine.getRight().getLineNumber()
-          ));
-          currentInsertBuffer.add(new SingleLineView.Line(
-              SingleLineView.Line.Kind.INSERT,
-              currentLine.getRight().getText(),
-              currentLine.getLeft().getLineNumber(),
-              currentLine.getRight().getLineNumber()
-          ));
+          if (currentLine.getLeft().getText() != null) {
+            currentDeleteBuffer.add(new SingleLineView.Line(
+                SingleLineView.Line.Kind.DELETE,
+                currentLine.getLeft().getText(),
+                currentLine.getLeft().getLineNumber(),
+                currentLine.getRight().getLineNumber()
+            ));
+          }
+          if (currentLine.getRight().getText() != null) {
+            currentInsertBuffer.add(new SingleLineView.Line(
+                SingleLineView.Line.Kind.INSERT,
+                currentLine.getRight().getText(),
+                currentLine.getLeft().getLineNumber(),
+                currentLine.getRight().getLineNumber()
+            ));
+          }
 
           // next line check
           if (iterator.hasNext()) {
