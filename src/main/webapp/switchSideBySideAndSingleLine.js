@@ -37,7 +37,7 @@ function toggleSideBySide_SingleLine() {
         showElement(sideBySide);
         button.innerHTML = "Show single-line view";
     } else {
-        //means singleLine is hidden
+        //means singleLine is shown
         hideElement(sideBySide);
         showElement(singleLine);
 
