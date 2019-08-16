@@ -21,8 +21,9 @@ function toggleCollapseContent(collapseButton, collapseableContent) {
         } else {
             //magic number is needed because the hiding process seems to have some influence on the scrollHeight.
           var offset = Math.ceil(collapseableContent.scrollHeight*0.06);
+          var newMaxHeight = Math.min(Math.ceil(screen.height*0.7), collapseableContent.scrollHeight + offset)
           console.log("offset= " + offset);
-          collapseableContent.style.maxHeight = collapseableContent.scrollHeight + offset + "px";
+          collapseableContent.style.maxHeight = newMaxHeight+ "px";
           collapseButton.innerHTML="&#x25bc;"
         }
 }
