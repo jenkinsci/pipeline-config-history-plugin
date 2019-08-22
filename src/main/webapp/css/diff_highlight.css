@@ -144,9 +144,11 @@ div.diffLine_Modifier.minus_style {
 div.singleLineView.description {
     font-size:13px;
     padding-top:8px;
-    color:rgba(255,255,255,0.2);
+    /*color:rgba(255,255,255,0.2);TODO CLEANUP*/
+    color:rgba(0,0,0,0.8);
 }
 
+/*
 .describedElement:hover {
     color:rgba(255,255,255,0.3)
 }
@@ -156,7 +158,20 @@ div.singleLineView.description {
     background-color:#4f4f4f;
     border-radius:3px;
     padding:2px;
+}*/
+
+/*TODO CLEANUP*/
+.describedElement:hover {
+    color: rgba(0, 0, 0, 0.4);
 }
+
+.describedElement {
+    background-color: rgba(56,56,56, 0.14);
+    color: rgba(0, 0, 0, 0.7);
+    border-radius:3px;
+    padding:2px;
+}
+
 
 
 /*

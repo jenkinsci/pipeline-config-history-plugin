@@ -60,39 +60,64 @@
                         <table class="center pch" style="width:100%">
                             <thead>
                                 <caption>
-                                    <div style="float:top">${caption}</div>
-                                    <div style="float:bottom" class="singleLineView description">
-                                        From
-                                        <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
-                                            <span class="describedElement">
-                                                <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp1)}:</span>
-                                                ${it.getTimestampWellFormatted(timestamp1)}
-                                                <j:if test="${it.isBuiltfromReplay(timestamp1)}">
-                                                    <i>
-                                                        (Replay from build
-                                                        ${it.getOriginalNumberFromReplayBuild(timestamp1)})
-                                                    </i>
-                                                </j:if>
-                                            </span>
-                                        </a>
-
-                                        <span style="padding:3px">To</span>
-
-                                        <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none">
-                                            <span class="describedElement">
-                                                <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp2)}:</span>
-                                                ${it.getTimestampWellFormatted(timestamp2)}
-                                                <j:if test="${it.isBuiltfromReplay(timestamp2)}">
-                                                    <i>
-                                                        (Replay from build
-                                                        ${it.getOriginalNumberFromReplayBuild(timestamp2)})
-                                                    </i>
-                                                </j:if>
-                                            </span>
-                                        </a>
-                                    </div>
-
+                                    ${caption}
                                 </caption>
+                                <tr>
+                                    <th colspan="2" class="subcaption">
+                                        <div>
+                                            From
+                                        </div>
+                                        <div class="singleLineView description">
+                                            <div>
+                                                <b>Date:</b>
+                                                <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none" class="url-button">
+                                                    <span class="describedElement">
+                                                        ${it.getTimestampWellFormatted(timestamp1)}
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <b>Build:</b>
+                                                <span class="describedElement">
+                                                    ${it.getBuildNumber(timestamp1)}
+                                                    <j:if test="${it.isBuiltfromReplay(timestamp1)}">
+                                                        <i>
+                                                            (Replay from build
+                                                            ${it.getOriginalNumberFromReplayBuild(timestamp1)})
+                                                        </i>
+                                                    </j:if>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                    <th colspan="2" class="subcaption">
+                                        <div>
+                                            To
+                                        </div>
+                                        <div class="singleLineView description">
+                                            <div>
+                                                <b>Date:</b>
+                                                <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none" class="url-button">
+                                                    <span class="describedElement">
+                                                        ${it.getTimestampWellFormatted(timestamp2)}
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <b>Build:</b>
+                                                <span class="describedElement">
+                                                    ${it.getBuildNumber(timestamp2)}
+                                                    <j:if test="${it.isBuiltfromReplay(timestamp2)}">
+                                                        <i>
+                                                            (Replay from build
+                                                            ${it.getOriginalNumberFromReplayBuild(timestamp2)})
+                                                        </i>
+                                                    </j:if>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </th>
+                                </tr>
                             </thead>
                             <tbody style="background-color:#fcfcfc">
                                 <j:set var="currentMatchNumber" value="0"/>
@@ -227,16 +252,26 @@
                         <table class="center pch" style="width:100%">
                             <thead>
                                 <caption>
-                                    <div style="float:top">
-                                        ${caption}
-                                    </div>
-                                    <div style="float:bottom" class="singleLineView description">
-                                        <div class="center">
-                                            Older Change:
-                                            <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none">
+                                    ${caption}
+                                </caption>
+                                <tr>
+                                    <th colspan="2" class="subcaption">
+                                        <div>
+                                            Older Change
+                                        </div>
+                                        <div class="singleLineView description">
+                                            <div>
+                                                <b>Date:</b>
+                                                <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none" class="url-button">
+                                                    <span class="describedElement">
+                                                        ${it.getTimestampWellFormatted(timestamp1)}
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <b>Build:</b>
                                                 <span class="describedElement">
-                                                    <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp1)}:</span>
-                                                    ${it.getTimestampWellFormatted(timestamp1)}
+                                                    ${it.getBuildNumber(timestamp1)}
                                                     <j:if test="${it.isBuiltfromReplay(timestamp1)}">
                                                         <i>
                                                             (Replay from build
@@ -244,14 +279,26 @@
                                                         </i>
                                                     </j:if>
                                                 </span>
-                                            </a>
+                                            </div>
                                         </div>
-                                        <div class="center">
-                                            Newer Change:
-                                            <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none">
+                                    </th>
+                                    <th colspan="2" class="subcaption">
+                                        <div>
+                                            Newer Change
+                                        </div>
+                                        <div class="singleLineView description">
+                                            <div>
+                                                <b>Date:</b>
+                                                <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none" class="url-button">
+                                                    <span class="describedElement">
+                                                        ${it.getTimestampWellFormatted(timestamp2)}
+                                                    </span>
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <b>Build:</b>
                                                 <span class="describedElement">
-                                                    <span style="text-decoration: underline;">Build ${it.getBuildNumber(timestamp2)}:</span>
-                                                    ${it.getTimestampWellFormatted(timestamp2)}
+                                                    ${it.getBuildNumber(timestamp2)}
                                                     <j:if test="${it.isBuiltfromReplay(timestamp2)}">
                                                         <i>
                                                             (Replay from build
@@ -259,10 +306,10 @@
                                                         </i>
                                                     </j:if>
                                                 </span>
-                                            </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </caption>
+                                    </th>
+                                </tr>
                             </thead>
                             <tbody style="background-color:#fcfcfc">
                                 <j:set var="currentMatchNumber" value="0"/>
