@@ -212,7 +212,7 @@ a.download-arrow:hover{
 
     padding: 8px;
 }
-/*####TEST IMPORT FROM JCH TODO CLEANUP####*/
+
 table.pch th.subcaption {
 
 	background-color: rgba(56, 56, 56, 0.05);
@@ -263,8 +263,6 @@ table.center.pch tr:first-child td.subcaption-wrap {
 }
 
 .collapseButton {
-  /*background-color:#488cf9;
-  border:1px solid #488cf9;*/
   background-color: inherit;
     border:1px solid rgba(56, 56, 56, 0.4);
 
@@ -288,8 +286,6 @@ table.center.pch tr:first-child td.subcaption-wrap {
 }
 
 .collapseButton:hover {
-  /*background-color:#4870f9;
-  border:1px solid #4870f9;*/
   color: grey;
 }
 
