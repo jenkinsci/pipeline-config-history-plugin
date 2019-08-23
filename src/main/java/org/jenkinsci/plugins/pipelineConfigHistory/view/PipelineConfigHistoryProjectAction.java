@@ -23,6 +23,7 @@
  */
 package org.jenkinsci.plugins.pipelineConfigHistory.view;
 
+import difflib.DiffRow;
 import hudson.XmlFile;
 import hudson.model.AbstractItem;
 import hudson.model.Action;
@@ -48,7 +49,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
@@ -497,6 +501,119 @@ public class PipelineConfigHistoryProjectAction implements Action {
    */
   public final List<SideBySideView.Line> getLines(String file1Str, String file2Str) {
     return new DiffLineGenerator(file1Str, file2Str).getLines();
+  }
+
+  public final List<SingleLineView.Line> getSingleLineViewLines(File file1, File file2) {
+    try {
+      return getSingleLineViewLines(PluginUtils.fileToString(file1), PluginUtils.fileToString(file2));
+    } catch (IOException e) {
+      LOG.log(Level.WARNING, "File could not be read: {0}", e.getMessage());
+      return Collections.emptyList();
+    }
+  }
+
+  public final List<SingleLineView.Line> getSingleLineViewLines(Match match) {
+    return getSingleLineViewLines(getLines(match));
+  }
+
+  public final List<SingleLineView.Line> getSingleLineViewLines(List<SideBySideView.Line> unsortedLines) {
+    List<SingleLineView.Line> sortedLines = new LinkedList<>();
+
+    List<SingleLineView.Line> currentInsertBuffer = new LinkedList<>();
+    List<SingleLineView.Line> currentDeleteBuffer = new LinkedList<>();
+
+    ListIterator<SideBySideView.Line> iterator = unsortedLines.listIterator();
+    if (!iterator.hasNext()) {
+      return sortedLines;
+    }
+
+    SideBySideView.Line currentLine = iterator.next();
+
+    boolean nextIteration = true;
+    do {
+      boolean changeLine = true;
+      if (currentLine.isSkipping()) {
+        sortedLines.add(new SingleLineView.Line(
+            SingleLineView.Line.Kind.SKIPPING,
+            "",
+            currentLine.getLeft().getLineNumber(),
+            currentLine.getRight().getLineNumber()
+        ));
+      } else if (currentLine.getTag().equals(DiffRow.Tag.CHANGE)) {
+        // start collecting all lines in the two buffers
+        while (currentLine.getTag().equals(DiffRow.Tag.CHANGE) && iterator.hasNext()) {
+          if (currentLine.getLeft().getText() != null) {
+            currentDeleteBuffer.add(new SingleLineView.Line(
+                SingleLineView.Line.Kind.DELETE,
+                currentLine.getLeft().getText(),
+                currentLine.getLeft().getLineNumber(),
+                currentLine.getRight().getLineNumber()
+            ));
+          }
+          if (currentLine.getRight().getText() != null) {
+            currentInsertBuffer.add(new SingleLineView.Line(
+                SingleLineView.Line.Kind.INSERT,
+                currentLine.getRight().getText(),
+                currentLine.getLeft().getLineNumber(),
+                currentLine.getRight().getLineNumber()
+            ));
+          }
+
+          // next line check
+          if (iterator.hasNext()) {
+            currentLine = iterator.next();
+          }
+          if (!currentLine.getTag().equals(DiffRow.Tag.CHANGE) || !iterator.hasNext()) {
+            //add the buffers to the list!
+            sortedLines.addAll(currentDeleteBuffer);
+            sortedLines.addAll(currentInsertBuffer);
+
+            currentDeleteBuffer = new LinkedList<>();
+            currentInsertBuffer = new LinkedList<>();
+
+            //else, the next line is swallowed.
+            changeLine = false;
+          }
+        }
+      } else if (currentLine.getTag().equals(DiffRow.Tag.EQUAL)) {
+        sortedLines.add(new SingleLineView.Line(
+            SingleLineView.Line.Kind.EQUAL,
+            currentLine.getLeft().getText(),
+            currentLine.getLeft().getLineNumber(),
+            currentLine.getRight().getLineNumber()
+        ));
+      } else if (currentLine.getTag().equals(DiffRow.Tag.DELETE)) {
+        sortedLines.add(new SingleLineView.Line(
+            SingleLineView.Line.Kind.DELETE,
+            currentLine.getLeft().getText(),
+            currentLine.getLeft().getLineNumber(),
+            currentLine.getRight().getLineNumber()
+        ));
+      } else if (currentLine.getTag().equals(DiffRow.Tag.INSERT)) {
+        sortedLines.add(new SingleLineView.Line(SingleLineView.Line.Kind.INSERT,
+            currentLine.getRight().getText(),
+            currentLine.getLeft().getLineNumber(),
+            currentLine.getRight().getLineNumber()
+        ));
+      }
+
+      if (!iterator.hasNext()) {
+        nextIteration = false;
+      }
+      if (nextIteration && changeLine) {
+        currentLine = iterator.next();
+      }
+    } while (nextIteration);
+    return sortedLines;
+  }
+
+  public String getLinkSymbol() {
+    return  PipelineConfigHistoryConsts.LINK_SYMBOL;
+  }
+
+  public final List<SingleLineView.Line> getSingleLineViewLines(String file1Str, String file2Str) {
+    List<SideBySideView.Line> unsortedLines = getLines(file1Str, file2Str);
+      return getSingleLineViewLines(unsortedLines);
   }
 
   /**

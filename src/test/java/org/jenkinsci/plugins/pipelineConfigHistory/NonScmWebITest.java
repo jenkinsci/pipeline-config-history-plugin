@@ -36,6 +36,8 @@ import org.apache.commons.lang.SystemUtils;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -74,6 +76,13 @@ public class NonScmWebITest {
       "node {\n" +
           "//nothing2\n" +
           "}";
+   public static final String[] SCRIPT_SCRIPT_SL_DIFFLINES = new String[] {
+       "node {",
+       "-" + System.lineSeparator() + "//nothing",
+       "+" + System.lineSeparator() + "//nothing2",
+       "}"
+
+   };
 
   public WorkflowJob workflowJob;
   private HtmlPage currentPage;
@@ -82,7 +91,6 @@ public class NonScmWebITest {
   private final String configOverviewString = "configOverview";
   private final String configSingleFileString = "configSingleFile";
   private final String showSingleDiff = "showSingleDiff";
-
 
   @Test
   public void test_0_indexTest() throws Exception {
@@ -93,8 +101,6 @@ public class NonScmWebITest {
       // Make sure all background JavaScript has completed so as expected exceptions have been thrown.
       WebClientUtil.waitForJSExec(webClient);
 
-
-      System.out.println("#################URL: " + indexUrl());
       currentPage = webClient.getPage(indexUrl());
       Assert.assertEquals(PipelineConfigHistoryConsts.DISPLAY_NAME + " [Jenkins]", currentPage.getTitleText());
       refresh();
@@ -195,8 +201,6 @@ public class NonScmWebITest {
           .collect(Collectors.toCollection(LinkedList::new)).getFirst()
           .click(new Event(), true);
       refresh();
-      System.out.println("DOWNLOADTEXTCONTENT:\n" + currentPageAsText);
-      System.out.println("DOWNLOADXMLCONTENT:\n" + currentPageAsXml);
 
       assertEquals(
           SCRIPT,
@@ -291,29 +295,8 @@ public class NonScmWebITest {
       // go to showAllDiffs
       refresh();
 
-
-      //TODO: REMOVE THIS TESZT
-      System.out.println("TESTING");
-      //Thread.sleep(5000000);
-
-
-      DomElement tbody = currentPage.getElementById("tbody_versionDiffsShown");
-
-      evaluateTableWithScripts(tbody, SCRIPT, SCRIPT_2);
-
-      /*DomElement leftTable = currentPage.getElementByName("left-table");
-      DomElement rightTable = currentPage.getElementByName("right-table");
-
-      double levenshteinPercentage = 1 -
-          ( (double) new LevenshteinDistance().apply(leftTable.asText(), getIndexedScript(SCRIPT)) / leftTable.asText().length());
-      //this is an os fix. It also hides the uglyness of getIndexedScript(..)
-      assertTrue(levenshteinPercentage >= 0.8);
-
-      if (SystemUtils.IS_OS_UNIX) {
-        //this will not work on windows.
-        assertEquals(leftTable.asText(), getIndexedScript(SCRIPT));
-        assertEquals(rightTable.asText(), getIndexedScript(SCRIPT_2));
-      }*/
+      DomElement tbody = currentPage.getElementById("diffLineTable-tbody-SL");
+      evaluateSingleLineTableWithLines(tbody, SCRIPT_SCRIPT_SL_DIFFLINES);
     }
   }
 
@@ -384,9 +367,9 @@ public class NonScmWebITest {
       refresh();
 
       System.out.println(currentPageAsText);
-      DomElement tbody = currentPage.getElementById("tbody_versionDiffsShown");
+      DomElement tbody = currentPage.getElementById("diffLineTable-tbody-SL");
 
-      evaluateTableWithScripts(tbody, SCRIPT, SCRIPT_2);
+      evaluateSingleLineTableWithLines(tbody, SCRIPT_SCRIPT_SL_DIFFLINES);
     }
 
   }
@@ -399,7 +382,7 @@ public class NonScmWebITest {
    * @param script1 the older change
    * @param script2 the newer change
    */
-  private void evaluateTableWithScripts(DomElement tbody, String script1, String script2) {
+  private void evaluateSideBySideTableWithScripts(DomElement tbody, String script1, String script2) {
     Iterable<DomElement> tableRowsIterable = tbody.getChildElements();
     ArrayList<DomElement> tableRowsList = new ArrayList<>(1);
     tableRowsIterable.forEach(tableRow -> tableRowsList.add(tableRowsList.size(), tableRow));
@@ -420,6 +403,27 @@ public class NonScmWebITest {
       assertEquals(scriptAsArray[i], tdArray[0].asText());
       assertEquals(script2AsArray[i], tdArray[1].asText());
     }
+  }
+
+  private void evaluateSingleLineTableWithLines(DomElement tbody, String[] lines) {
+    Iterable<DomElement> tableRowsIterable = tbody.getChildElements();
+    ArrayList<DomElement> tableRowsList = new ArrayList<>(1);
+    tableRowsIterable.forEach(tableRow -> tableRowsList.add(tableRowsList.size(), tableRow));
+
+    for (int i=0; i < tableRowsList.size(); ++i) {
+      DomElement tr = tableRowsList.get(i);
+      // current row's (ideally two) td cells (older and newer change)
+      DomElement td = null;
+      int j = 0;
+      for (DomElement trChild : tr.getChildElements()) {
+        if (trChild.getTagName().equals("td")) {
+          td = trChild;
+        }
+      }
+      assertNotNull(td);
+      assertEquals(lines[i], td.asText());
+    }
+
   }
 
   private String getIndexedScript(String script) {

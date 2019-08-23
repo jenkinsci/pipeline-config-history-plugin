@@ -30,19 +30,134 @@
 */
 
 td.skipping {
-    //height:100%;
-	background-color: #EAF2F5 !important;
+    background-color:rgb(250, 250, 250);
 }
 
 td.diff_original {
-    //height:100%;
-	background-color: #FF8C8C !important;
+	background-color: rgb(251, 233, 235);
 }
 
 td.diff_revised {
-    //height:100%;
-	background-color: #CCCCFF !important;
+	background-color: rgb(236, 253, 240);
 }
+
+td.singleLineView.skipping {
+    background-color:rgb(250, 250, 250);
+}
+
+
+td.singleLineView.diff_original {
+	background-color: rgb(251, 233, 235);
+}
+
+td.singleLineView.diff_revised {
+	background-color: rgb(236, 253, 240);
+}
+
+
+/*
+#####################################################################
+###                        line nums                              ###
+#####################################################################
+*/
+/*General*/
+
+table.diffLineTable th.lineNum {
+    width: 40px;
+    min-width:1%;
+    min-height:1%;
+    max-width:100%;
+    height:1%;
+
+    white-space: nowrap;
+
+    padding: 0px;
+	padding-left: 3px;
+	padding-right: 3px;
+
+    border-bottom: 0px;
+    border-radius: 0px;
+    border-bottom: 1px solid #e8e8e8;
+    border-color:rgb(232, 232, 232);
+
+    font-size:12.6px;
+    font-weight: normal;
+
+    color: rgba(0, 0, 0, 0.3);
+    background-color:rgb(250, 250, 250);
+
+    font-family: "Menlo", "DejaVu Sans Mono", "Liberation Mono", "Consolas", "Ubuntu Mono", "Courier New", "andale mono", "lucida console", monospace;
+}
+
+table.diffLineTable th.singleLineView.lineNum {
+    width: 50px;
+    border-bottom:0px;
+}
+
+/*lines where something happens*/
+table.diffLineTable th.singleLineView.lineNum.diff_equal {
+
+}
+
+table.diffLineTable th.lineNum.diff_original {
+    background-color: rgb(249, 215, 220);
+    border-color: rgb(250, 197, 205);
+    color:rgb(174, 151, 154);
+}
+
+table.diffLineTable th.lineNum.diff_revised {
+    background-color: rgb(221, 251, 230);
+    border-color: rgb(189, 240, 203);
+    color:rgb(155, 176, 161);
+}
+
+/*
+#####################################################################
+###                      line modifiers                           ###
+#####################################################################
+*/
+
+/*- or + for original or revised lines. */
+div.diffLine_Modifier {
+    font-weight: normal;
+    float:left;
+    width:18px;
+    text-align:center;
+}
+
+div.diffLine_Modifier.plus_style {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+div.diffLine_Modifier.minus_style {
+    color: rgba(0, 0, 0, 0.3);
+}
+
+/*
+#####################################################################
+###                      description:                             ###
+###                   info about the diff                         ###
+#####################################################################
+*/
+/*sort of a "second subcaption"*/
+
+div.singleLineView.description {
+    font-size:13px;
+    padding-top:8px;
+    color:rgba(0,0,0,0.8);
+}
+
+.describedElement:hover {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.describedElement {
+    background-color: rgba(56,56,56, 0.14);
+    color: rgba(0, 0, 0, 0.7);
+    border-radius:3px;
+    padding:2px;
+}
+
 
 
 /*
@@ -54,13 +169,11 @@ td.diff_revised {
 pre {
 	margin: 0;
 	white-space: pre-wrap;
-
-	background-color: inherit !important;
 }
 
-code {
-    padding:0px !important;
-	background-color: inherit !important;
+code.hljs {
+	background-color: inherit;
+    padding:0px;
 }
 
 
@@ -83,34 +196,14 @@ table.diffLineTable th {
     height:20px;
 }
 
-table.diffLineTable th.lineNum {
-    width: 6%;
-    min-width:1%;
-    min-height:1%;
-    max-width:100%;
-    height:1%;
-    white-space: nowrap;
-    padding: 0px;
-	padding-left: 3px;
-	padding-right: 3px;
-    border-bottom: 0px;
-    border-radius: 0px;
 
 
-    /*X-periment*/
-    border-bottom: 1px solid #e8e8e8;
-
-    color: #3762a8 !important;
-    font-size: 14px;
-    background-color: #f5f5f5;
-}
-
-table.diffLineTable td {
-    padding:0px !important;
-        height:20px;
-        border-top: 0px !important;
-        text-align:left !important;
-        width:100%;
+table.pch.diffLineTable td {
+    padding:0px;
+    height:20px;
+    border-top: 0px;
+    text-align:left;
+    width:100%;
 }
 
 
@@ -124,37 +217,12 @@ table.center.pch td.diffLineWrapper {
 
     border-left: 15px solid white;
     border-right: 15px solid white;
-    border-bottom: 15px solid white !important;
+    border-bottom: 15px solid white;
     border-top: 0px;
     width:100%;
     padding:0px;
 }
 
-table.center.pch td.diffLineWrapper-left {
-    border-right: 0px solid white;
-    border-left: 15px solid white;
-    border-bottom: 15px solid white !important;
-
-    padding:0px;
-            border-top: 0px;
-            text-align:left;
-
-    margin-left: 15px;
-
-    height:100%;
-}
-
-table.center.pch td.diffLineWrapper-right {
-    border-right: 15px solid white;
-    border-left: 0px solid white;
-    border-bottom: 15px solid white !important;
-
-    padding:0px;
-    border-top: 0px;
-    text-align:left;
-
-    height:100%;
-}
 
 /*
 #####################################################################
@@ -167,4 +235,12 @@ table.pch td.subcaption-wrap {
     /*No space between subcaption wrapper and table content.*/
     padding:0px;
     border:0px;
+}
+
+span.file_added {
+    color: rgba(0,140,0,0.5);
+}
+
+span.file_removed {
+    color: rgba(140,0,0,0.5);
 }

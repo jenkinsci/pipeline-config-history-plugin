@@ -27,7 +27,6 @@
 #####################################################################
 ###                     general modification                      ###
 #####################################################################
-###   TODO: cleanse this document of this abomination!
 */
 
 h1 {
@@ -35,14 +34,13 @@ h1 {
     font-size:28px;
 }
 
-table {
+table.pch {
     margin-top: 0px;
     border-spacing: 0;
     border: 1px solid #ddd;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
 }
-
 
 /*
 #####################################################################
@@ -56,7 +54,7 @@ table.center {
 
     /*experiment*/
     table-layout:fixed;
-    width:100% !important;
+    width:100%;
 }
 
 table.center th {
@@ -66,6 +64,12 @@ table.center th {
 table.center td {
     padding:0px;
     width:100%
+}
+
+div.center {
+    width:50%;
+    float: left;
+    text-align: center;
 }
 
 /*
@@ -108,14 +112,14 @@ table.pch  td {
     vertical-align: middle;
     border-right: 1px solid #ddd;
     border-top: 1px solid #ddd;
-    padding: 6px;
+    padding: 2px;
 }
 
 
 table.pch  th {
     text-align: center;
-    color: #488cf9 !important;
-    background-color:#efefef !important;
+    color: #488cf9;
+    background-color:#efefef;
 
     font-size: 16px;
     border-bottom:1px solid #ddd;
@@ -134,14 +138,6 @@ table.pch th:first-child {
 
 table.pch th:last-child {
     border-right: 0px;
-}
-
-table.pch tr:last-child td:first-child {
-    border-bottom: 0px;
-}
-
-table.pch tr:last-child td:last-child {
-    border-bottom: 0px;
 }
 
 table.pch tr td:first-child {
@@ -204,37 +200,54 @@ a.download-arrow:hover{
 */
 
 .subcaption {
-    background-color:#6d6d6d;
-    text-align:center !important;
-    color: white;
+    background-color:rgb(250, 250, 250);
+    color: rgba(0, 0, 0, 0.5);
 
-    padding: 8px !important;
+    text-align:center;
     font-size: 16px;
     font-weight: bold;
-    border-collapse:collapse;
+
+    border: 1px solid rgb(232, 232, 232);
     border-radius: 3px;
 
+    padding: 8px;
 }
 
-td.subcaption-wrap {
-margin: 5px !important;
-    border-left: 5px solid white !important;
-    border-right: 5px solid white !important;
+table.pch th.subcaption {
+
+	background-color: rgba(56, 56, 56, 0.05);
+    color:black;
+    text-align: left;
+
+    font-weight: bold;
+    font-size: 16px;
+
+	padding: 12px;
+
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
+	border-bottom: 1px solid #e8e8e8;
+
+    border-radius:0px;
 }
 
-tr:first-child td.subcaption-wrap {
-    border-top:10px solid white !important;
+table.pch td {
+    font-size: 12px;
 }
 
-td.subcaption2 {
-    background-color:#f9f9f9;
-    color: #488cf9;
 
-    padding: 2px !important;
-    font-size: 14px;
-    border-collapse:collapse;
-	border-bottom: 1px solid #ddd;
-	border-top: 1px solid #ddd !important;
+
+
+
+
+table.center.pch td.subcaption-wrap {
+    border-left: 5px solid white;
+    border-right: 5px solid white;
+}
+
+table.center.pch tr:first-child td.subcaption-wrap {
+    border-top:10px solid white;
 }
 
 
@@ -250,8 +263,9 @@ td.subcaption2 {
 }
 
 .collapseButton {
-  background-color:#488cf9;
-  border:1px solid #488cf9;
+  background-color: inherit;
+    border:1px solid rgba(56, 56, 56, 0.4);
+
   border-radius: 3px;
   height:25px;
   width:25px;
@@ -260,11 +274,11 @@ td.subcaption2 {
   display: table-cell;
   vertical-align: middle;
 
-  color:white;
+  color: rgba(0, 0, 0, 0.7);
   font-weight:bold;
   text-align:center;
-  float:right;
-  font-size: 20px;
+  float:left;
+  font-size: 8px;
 }
 
 .collapseButtonWrapper {
@@ -272,8 +286,7 @@ td.subcaption2 {
 }
 
 .collapseButton:hover {
-  background-color:#4870f9;
-  border:1px solid #4870f9;
+  color: grey;
 }
 
 /*No ugly frame around the text*/
@@ -289,7 +302,6 @@ td.subcaption2 {
   background-color: white;
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.15s ease-out;
 }
 
 
@@ -305,9 +317,9 @@ td.subcaption2 {
     width:100%;
 }
 
-.sortheader {
-    color: #488cf9 !important;
-    background-color:#efefef !important;
+table.sortable.pch a.sortheader {
+    color: #488cf9;
+    background-color:#efefef;
 }
 
 .button-wrapper {
@@ -337,3 +349,33 @@ td.subcaption2 {
     color: #383838;
 }
 
+.small-button {
+    background-color: rgb(250,250,250);
+    color: rgba(0, 0, 0, 0.7);
+
+    border: 1px solid rgba(56, 56, 56, 0.05);
+    border-radius: 2px;
+
+    padding: 3px;
+
+    font-size: 12px;
+    font-weight:bold;
+
+    outline:none;
+}
+
+.small-button::-moz-focus-inner {
+    border: 0;
+}
+
+.small-button:hover{
+    background-color: rgb(200, 200, 200);
+    color: #383838;
+}
+
+.small-button-wrapper {
+    padding: 2px;
+    background-color: rgb(250,250,250);
+    border: 1px solid rgb(232, 232, 232);
+    border-radius:2px;
+}

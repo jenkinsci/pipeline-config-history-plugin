@@ -1,6 +1,9 @@
 # Changelog
 All notable changes to this project are documented in this file.
 
+## [1.5] - tbd
+* New feature: Add a line-under-line view for diffs
+
 ## [1.4] - 24.07.19
 * New feature: Make this plugin configurable in so far as that you
   + can limit the number of history entries created per pipeline job.

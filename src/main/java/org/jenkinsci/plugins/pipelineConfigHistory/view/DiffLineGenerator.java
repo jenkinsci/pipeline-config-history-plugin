@@ -23,6 +23,7 @@
  */
 package org.jenkinsci.plugins.pipelineConfigHistory.view;
 
+import difflib.DiffRow;
 import difflib.DiffUtils;
 import difflib.Patch;
 import difflib.StringUtills;
@@ -30,6 +31,7 @@ import difflib.StringUtills;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DiffLineGenerator {
 
@@ -54,6 +56,16 @@ public class DiffLineGenerator {
             .split("\\n"));
 
     List<SideBySideView.Line> lines = new GetDiffLines(stringDiffLines).get();
+
+    //if one file is empty, all lines must be either INSERT or DELETE, depending on which file is empty
+    //this is necessary because GetDiffLines always sneaks in a ghost line in these cases.
+    if (file1Content.isEmpty() || file2Content.isEmpty()) {
+      lines.stream().forEach(line -> {
+        if (line.isEqual()) {
+          line.setTag(file1Content.isEmpty() ? DiffRow.Tag.INSERT : DiffRow.Tag.DELETE);
+        }
+      });
+    }
 
     return (lines.stream().anyMatch(line -> !line.isEmpty())) ? lines : Collections.emptyList();
   }
