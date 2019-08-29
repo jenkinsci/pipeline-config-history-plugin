@@ -72,7 +72,7 @@
                                                 <j:set var="buildNumber_olderChange" value="${it.getBuildNumber(timestamp1)}"/>
                                                 <j:if test="${it.buildExists(buildNumber_olderChange)}">
                                                     <td style="width:40%; border:none; text-align:right; padding:0px">
-                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName()}/${buildNumber_olderChange}/replay/" style="text-decoration:none">
+                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName().replaceAll('/','/job/')}/${buildNumber_olderChange}/replay/" style="text-decoration:none">
                                                             <img src="${rootURL}/images/24x24/redo.png"/>
                                                             ${%Replay Build}
                                                             ${buildNumber_olderChange}
@@ -113,7 +113,7 @@
                                                 <j:set var="buildNumber_newerChange" value="${it.getBuildNumber(timestamp2)}"/>
                                                 <j:if test="${it.buildExists(buildNumber_newerChange)}">
                                                     <td style="width:40%; border:none; text-align:right; padding:0px">
-                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName()}/${buildNumber_newerChange}/replay/" style="text-decoration:none">
+                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName().replaceAll('/','/job/')}/${buildNumber_newerChange}/replay/" style="text-decoration:none">
                                                             <img src="${rootURL}/images/24x24/redo.png"/>
                                                             ${%Replay Build}
                                                             ${buildNumber_newerChange}
@@ -292,7 +292,7 @@
                                                 <j:set var="buildNumber_olderChange" value="${it.getBuildNumber(timestamp1)}"/>
                                                 <j:if test="${it.buildExists(buildNumber_olderChange)}">
                                                     <td style="width:40%; border:none; text-align:right; padding:0px">
-                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName()}/${buildNumber_olderChange}/replay/" style="text-decoration:none">
+                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName().replaceAll('/','/job/')}/${buildNumber_olderChange}/replay/" style="text-decoration:none">
                                                             <img src="${rootURL}/images/24x24/redo.png"/>
                                                             ${%Replay Build}
                                                             ${buildNumber_olderChange}
@@ -334,7 +334,7 @@
                                                 <j:set var="buildNumber_newerChange" value="${it.getBuildNumber(timestamp2)}"/>
                                                 <j:if test="${it.buildExists(buildNumber_newerChange)}">
                                                     <td style="width:40%; border:none; text-align:right; padding:0px">
-                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName()}/${buildNumber_newerChange}/replay/" style="text-decoration:none">
+                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName().replaceAll('/','/job/')}/${buildNumber_newerChange}/replay/" style="text-decoration:none">
                                                             <img src="${rootURL}/images/24x24/redo.png"/>
                                                             ${%Replay Build}
                                                             ${buildNumber_newerChange}
