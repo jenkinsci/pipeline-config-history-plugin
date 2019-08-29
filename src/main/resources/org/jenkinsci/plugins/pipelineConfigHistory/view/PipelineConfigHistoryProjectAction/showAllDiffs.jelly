@@ -52,8 +52,8 @@
                         <button id="toggleView" name="toggleView" class="pch small-button" style="align:right" onclick="toggleSideBySide_SingleLine()">
                             ${%Show side-by-side view}
                         </button>
-
                     </div>
+
                     <div style="padding:2px;"/>
 
                     <div id="content_singleLineView">
@@ -65,7 +65,21 @@
                                 <tr>
                                     <th colspan="2" class="subcaption">
                                         <div>
-                                            ${%From}
+                                            <table style="border:0px; width:100%;">
+                                                <th class="subcaption" style="padding:0px;  width:60%; border:none; background-color:inherit;">
+                                                    ${%Older Change}
+                                                </th>
+                                                <j:set var="buildNumber_olderChange" value="${it.getBuildNumber(timestamp1)}"/>
+                                                <j:if test="${it.buildExists(buildNumber_olderChange)}">
+                                                    <td style="width:40%; border:none; text-align:right; padding:0px">
+                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName()}/${buildNumber_olderChange}/replay/" style="text-decoration:none">
+                                                            <img src="${rootURL}/images/24x24/redo.png"/>
+                                                            ${%Replay Build}
+                                                            ${buildNumber_olderChange}
+                                                        </a>
+                                                    </td>
+                                                </j:if>
+                                            </table>
                                         </div>
                                         <div class="singleLineView description">
                                             <div>
@@ -92,7 +106,21 @@
                                     </th>
                                     <th colspan="2" class="subcaption">
                                         <div>
-                                            ${%To}
+                                            <table style="border:0px; width:100%;">
+                                                <th class="subcaption" style="padding:0px;  width:60%; border:none; background-color:inherit;">
+                                                    ${%Newer Change}
+                                                </th>
+                                                <j:set var="buildNumber_newerChange" value="${it.getBuildNumber(timestamp2)}"/>
+                                                <j:if test="${it.buildExists(buildNumber_newerChange)}">
+                                                    <td style="width:40%; border:none; text-align:right; padding:0px">
+                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName()}/${buildNumber_newerChange}/replay/" style="text-decoration:none">
+                                                            <img src="${rootURL}/images/24x24/redo.png"/>
+                                                            ${%Replay Build}
+                                                            ${buildNumber_newerChange}
+                                                        </a>
+                                                    </td>
+                                                </j:if>
+                                            </table>
                                         </div>
                                         <div class="singleLineView description">
                                             <div>
@@ -257,7 +285,22 @@
                                 <tr>
                                     <th colspan="2" class="subcaption">
                                         <div>
-                                            ${%Older Change}
+                                            <table style="border:0px; width:100%;">
+                                                <th class="subcaption" style="padding:0px;  width:60%; border:none; background-color:inherit;">
+                                                    ${%Older Change}
+                                                </th>
+                                                <j:set var="buildNumber_olderChange" value="${it.getBuildNumber(timestamp1)}"/>
+                                                <j:if test="${it.buildExists(buildNumber_olderChange)}">
+                                                    <td style="width:40%; border:none; text-align:right; padding:0px">
+                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName()}/${buildNumber_olderChange}/replay/" style="text-decoration:none">
+                                                            <img src="${rootURL}/images/24x24/redo.png"/>
+                                                            ${%Replay Build}
+                                                            ${buildNumber_olderChange}
+                                                        </a>
+                                                    </td>
+                                                </j:if>
+
+                                            </table>
                                         </div>
                                         <div class="singleLineView description">
                                             <div>
@@ -284,7 +327,21 @@
                                     </th>
                                     <th colspan="2" class="subcaption">
                                         <div>
-                                            ${%Newer Change}
+                                            <table style="border:0px; width:100%;">
+                                                <th class="subcaption" style="padding:0px;  width:60%; border:none; background-color:inherit;">
+                                                    ${%Newer Change}
+                                                </th>
+                                                <j:set var="buildNumber_newerChange" value="${it.getBuildNumber(timestamp2)}"/>
+                                                <j:if test="${it.buildExists(buildNumber_newerChange)}">
+                                                    <td style="width:40%; border:none; text-align:right; padding:0px">
+                                                        <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName()}/${buildNumber_newerChange}/replay/" style="text-decoration:none">
+                                                            <img src="${rootURL}/images/24x24/redo.png"/>
+                                                            ${%Replay Build}
+                                                            ${buildNumber_newerChange}
+                                                        </a>
+                                                    </td>
+                                                </j:if>
+                                            </table>
                                         </div>
                                         <div class="singleLineView description">
                                             <div>

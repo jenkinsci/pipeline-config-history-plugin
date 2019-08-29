@@ -358,6 +358,11 @@ public class PipelineConfigHistoryProjectAction implements Action {
     }
   }
 
+
+  public boolean buildExists(int build) {
+    return project.getBuildByNumber(build) != null;
+  }
+
   /**
    * Get the current pipeline project.
    *

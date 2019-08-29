@@ -158,6 +158,14 @@ div.singleLineView.description {
     padding:2px;
 }
 
+a.describedElement {
+/*TODO*/
+    text-decoration:none;
+    color: inherit;
+    outline: 0;
+    padding:5px;
+}
+
 
 
 /*
