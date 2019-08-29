@@ -59,11 +59,11 @@
 
                         <table style="width:100%" class="screenFillingTable pch">
                             <caption>
-                                ${it.getProject().getFullName()}: Revision
+                                ${it.getProject().getFullName()}: ${%Revision}
                                 <span class="target">
                                     ${it.getTimestampWellFormatted(timestamp)}
                                     <j:if test="${it.isBuiltfromReplay(timestamp)}">
-                                        (Replay from build
+                                        (${%Replay from build}
                                         ${it.getOriginalNumberFromReplayBuild(timestamp)})
                                     </j:if>
                                 </span>
@@ -73,15 +73,15 @@
                                     <th>
                                         <j:choose>
                                             <j:when test="${displayType.equalsIgnoreCase(&quot;Jenkinsfile&quot;)}">
-                                                ${it.getPipelineHistoryDescription(timestamp).getRootScriptName()} (Root Script)
+                                                ${it.getPipelineHistoryDescription(timestamp).getRootScriptName()} (${%Root Script})
                                                 <br/>
-                                                (Src:
+                                                (${%Source}:
                                                 ${it.getJenkinsfilePath()})
                                             </j:when>
                                             <j:otherwise>
                                                 ${fileName}
                                                 <j:if test="${fileName.equals(&quot;build.xml&quot;)}">
-                                                    (Root Script Container)
+                                                    (${%Root Script Container})
                                                 </j:if>
                                             </j:otherwise>
                                         </j:choose>

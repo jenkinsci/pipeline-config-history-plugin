@@ -39,14 +39,14 @@
                 <j:when test="${anyMatchUnequal}">
                     <table class="center sortable pch" style="width:100%">
                         <caption>
-                            ${it.getProject().getFullName()} Differences
+                            ${it.getProject().getFullName()} ${%Differences}
                         </caption>
                         <thead>
                             <tr>
                                 <th>
-                                    Files (${it.getTimestampWellFormatted(timestamp1)}
+                                    ${%Files} (${it.getTimestampWellFormatted(timestamp1)}
                                     <j:if test="${it.isBuiltfromReplay(timestamp1)}">
-                                        , Replay from build
+                                        , ${%Replay from build}
                                         ${it.getOriginalNumberFromReplayBuild(timestamp1)}
                                     </j:if>
                                     )
@@ -54,14 +54,14 @@
                                 <th>
                                     Files (${it.getTimestampWellFormatted(timestamp2)}
                                     <j:if test="${it.isBuiltfromReplay(timestamp2)}">
-                                        , Replay from build
+                                        , ${%Replay from build}
                                         ${it.getOriginalNumberFromReplayBuild(timestamp2)}
                                     </j:if>
                                     )
                                 </th>
                                 <j:if test="${anyMatchUnequal}">
                                     <th>
-                                        Show Diff
+                                        ${%Show Diff}
                                     </th>
                                 </j:if>
                             </tr>
@@ -75,7 +75,7 @@
                                             <td class="unequal">
                                                 <j:choose>
                                                     <j:when test="${match.getFile1().getName().equals(&quot;build.xml&quot;)}">
-                                                        <b>Root Script:</b> ${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()}
+                                                        <b>${%Root Script:}</b> ${it.getPipelineHistoryDescription(timestamp1).getRootScriptName()}
                                                         <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;displayType=Jenkinsfile" style="text-decoration:none">
                                                             ${it.getLinkSymbol()}
                                                         </a>
@@ -91,7 +91,7 @@
                                             <td class="unequal">
                                                 <j:choose>
                                                     <j:when test="${match.getFile2().getName().equals(&quot;build.xml&quot;)}">
-                                                        <b>Root Script:</b> ${it.getPipelineHistoryDescription(timestamp2).getRootScriptName()}
+                                                        <b>${%Root Script:}</b> ${it.getPipelineHistoryDescription(timestamp2).getRootScriptName()}
                                                         <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;displayType=Jenkinsfile" style="text-decoration:none">
                                                             ${it.getLinkSymbol()}
                                                         </a>
@@ -110,13 +110,13 @@
                                                     <j:when test="${match.getFile1().getName().equals(&quot;build.xml&quot;)}">
                                                         <!--build.xml-->
                                                         (<a href="showSingleDiff?timestamp1=${timestamp1}&amp;timestamp2=${timestamp2}&amp;fileHash1=${match.getFile1().hashCode()}&amp;fileHash2=${match.getFile2().hashCode()}&amp;buildXmlDisplayType=Jenkinsfile">
-                                                        Show Diff
+                                                        ${%Show Diff}
                                                     </a>)
 
                                                     </j:when>
                                                     <j:otherwise>
                                                         (<a href="showSingleDiff?timestamp1=${timestamp1}&amp;timestamp2=${timestamp2}&amp;fileHash1=${match.getFile1().hashCode()}&amp;fileHash2=${match.getFile2().hashCode()}">
-                                                        Show Diff
+                                                        ${%Show Diff}
                                                     </a>)
                                                     </j:otherwise>
                                                 </j:choose>
@@ -169,7 +169,7 @@
                 </j:when>
                 <j:otherwise>
                     <!--no diff existing-->
-                    <table class="pch"><caption style="width:100%">${it.getProject().getFullName()}: Revisions are not different.</caption></table>
+                    <table class="pch"><caption style="width:100%">${it.getProject().getFullName()}: ${%Revisions are not different.}</caption></table>
                 </j:otherwise>
             </j:choose>
         </l:main-panel>

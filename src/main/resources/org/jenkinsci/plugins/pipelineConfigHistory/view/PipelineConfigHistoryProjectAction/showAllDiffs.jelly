@@ -50,7 +50,7 @@
 
                     <div class="small-button-wrapper">
                         <button id="toggleView" name="toggleView" class="pch small-button" style="align:right" onclick="toggleSideBySide_SingleLine()">
-                            Show side-by-side view
+                            ${%Show side-by-side view}
                         </button>
 
                     </div>
@@ -65,11 +65,11 @@
                                 <tr>
                                     <th colspan="2" class="subcaption">
                                         <div>
-                                            From
+                                            ${%From}
                                         </div>
                                         <div class="singleLineView description">
                                             <div>
-                                                <b>Date:</b>
+                                                <b>${%Date:}</b>
                                                 <a href="configOverview?timestamp=${timestamp1}" style="text-decoration:none" class="url-button">
                                                     <span class="describedElement">
                                                         ${it.getTimestampWellFormatted(timestamp1)}
@@ -77,12 +77,12 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <b>Build:</b>
+                                                <b>${%Build:}</b>
                                                 <span class="describedElement">
                                                     ${it.getBuildNumber(timestamp1)}
                                                     <j:if test="${it.isBuiltfromReplay(timestamp1)}">
                                                         <i>
-                                                            (Replay from build
+                                                            (${%Replay from build}
                                                             ${it.getOriginalNumberFromReplayBuild(timestamp1)})
                                                         </i>
                                                     </j:if>
@@ -92,11 +92,11 @@
                                     </th>
                                     <th colspan="2" class="subcaption">
                                         <div>
-                                            To
+                                            ${%To}
                                         </div>
                                         <div class="singleLineView description">
                                             <div>
-                                                <b>Date:</b>
+                                                <b>${%Date:}</b>
                                                 <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none" class="url-button">
                                                     <span class="describedElement">
                                                         ${it.getTimestampWellFormatted(timestamp2)}
@@ -104,12 +104,12 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <b>Build:</b>
+                                                <b>${%Build:}</b>
                                                 <span class="describedElement">
                                                     ${it.getBuildNumber(timestamp2)}
                                                     <j:if test="${it.isBuiltfromReplay(timestamp2)}">
                                                         <i>
-                                                            (Replay from build
+                                                            (${%Replay from build}
                                                             ${it.getOriginalNumberFromReplayBuild(timestamp2)})
                                                         </i>
                                                     </j:if>
@@ -257,7 +257,7 @@
                                 <tr>
                                     <th colspan="2" class="subcaption">
                                         <div>
-                                            Older Change
+                                            ${%Older Change}
                                         </div>
                                         <div class="singleLineView description">
                                             <div>
@@ -269,7 +269,7 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <b>Build:</b>
+                                                <b>${%Build:}</b>
                                                 <span class="describedElement">
                                                     ${it.getBuildNumber(timestamp1)}
                                                     <j:if test="${it.isBuiltfromReplay(timestamp1)}">
@@ -284,11 +284,11 @@
                                     </th>
                                     <th colspan="2" class="subcaption">
                                         <div>
-                                            Newer Change
+                                            ${%Newer Change}
                                         </div>
                                         <div class="singleLineView description">
                                             <div>
-                                                <b>Date:</b>
+                                                <b>${%Date:}</b>
                                                 <a href="configOverview?timestamp=${timestamp2}" style="text-decoration:none" class="url-button">
                                                     <span class="describedElement">
                                                         ${it.getTimestampWellFormatted(timestamp2)}
@@ -296,12 +296,12 @@
                                                 </a>
                                             </div>
                                             <div>
-                                                <b>Build:</b>
+                                                <b>${%Build:}</b>
                                                 <span class="describedElement">
                                                     ${it.getBuildNumber(timestamp2)}
                                                     <j:if test="${it.isBuiltfromReplay(timestamp2)}">
                                                         <i>
-                                                            (Replay from build
+                                                            (${%Replay from build}
                                                             ${it.getOriginalNumberFromReplayBuild(timestamp2)})
                                                         </i>
                                                     </j:if>
@@ -413,7 +413,7 @@
                                                             <a href="configSingleFile?timestamp=${timestamp1}&amp;fileHash=${match.getFile1().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none" title="show older change">
                                                                 ${it.getLinkSymbol()}
                                                             </a>
-                                                            <span class="file_removed">file removed</span>: ${subCaption}
+                                                            <span class="file_removed">${%file removed}</span>: ${subCaption}
                                                         </div>
                                                     </div>
                                                 </td>
@@ -475,7 +475,7 @@
                                                             <button class="collapseButton" id="collapseButton_SBS${currentMatchNumber}">&#x25b6;</button>
                                                         </div>
                                                         <div>
-                                                            <span class="file_added">file added</span>: ${subCaption}
+                                                            <span class="file_added">${%file added}</span>: ${subCaption}
                                                             <a href="configSingleFile?timestamp=${timestamp2}&amp;fileHash=${match.getFile2().hashCode()}&amp;fileName=${subCaption}&amp;displayType=${displayType}" style="text-decoration:none">
                                                                 ${it.getLinkSymbol()}
                                                             </a>
@@ -547,7 +547,7 @@
                 </j:when>
                 <j:otherwise>
                     <!--no diff existing-->
-                    <table class="pch"><caption style="width:100%">${it.getProject().getFullName()}: Revisions are not different.</caption></table>
+                    <table class="pch"><caption style="width:100%">${it.getProject().getFullName()}: ${%Revisions are not different.}</caption></table>
                 </j:otherwise>
             </j:choose>
 
