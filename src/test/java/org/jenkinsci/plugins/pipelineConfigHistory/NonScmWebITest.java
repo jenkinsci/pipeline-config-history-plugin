@@ -228,9 +228,6 @@ public class NonScmWebITest {
       refresh();
 
       // go to configOverview
-
-      System.out.println("ANCHORS: " + currentPage.getAnchors());
-      Thread.sleep(20000000);
       currentPage = currentPage.getAnchors()
           .stream()
           .filter(htmlAnchor -> htmlAnchor.getHrefAttribute().startsWith(configOverviewString))
