@@ -35,7 +35,7 @@
             <j:set var="allFiles" value="${it.getAllFilesExceptHistoryXmlFromDirectory(rootDirectory)}"/>
             <table class="pane sortable pch" style="width:100%">
                 <caption>
-                    ${it.getProject().getFullName()}: Revision
+                    ${it.getProject().getFullName()}: ${%Revision}
                     <span class="target">
                         ${it.getTimestampWellFormatted(timestamp)}
                         <j:if test="${it.isBuiltfromReplay(timestamp)}">
@@ -47,9 +47,9 @@
                 </caption>
                 <thead>
                     <tr>
-                        <th>File</th>
-                        <th>Download</th>
-                        <th>Show File</th>
+                        <th>${%File}</th>
+                        <th>${%Download}</th>
+                        <th>${%Show File}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,7 +62,7 @@
                                     <j:when test="${realFile.getName().equals(&quot;build.xml&quot;)}">
                                         <b>${it.getPipelineHistoryDescription(timestamp).getRootScriptName()}</b>
                                         <br/>
-                                        (Src:
+                                        (${%Source}:
                                         ${it.getJenkinsfilePath()})
                                     </j:when>
                                     <j:otherwise>
@@ -93,24 +93,24 @@
                                     <j:when test="${realFile.getName().equals(&quot;build.xml&quot;)}">
                                         <span style="padding-right:5px; padding-left:5px">
                                             <a href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile">
-                                                View Fancy
+                                                ${%View Fancy}
                                             </a>
                                         </span>
                                         <span style="padding-right:5px; padding-left:5px">
                                             <a href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=Jenkinsfile-raw">
-                                                (RAW)
+                                                (${%RAW})
                                             </a>
                                         </span>
                                     </j:when>
                                     <j:otherwise>
                                         <span style="padding-right:5px; padding-left:5px">
                                             <a href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=embedded">
-                                                View Fancy
+                                                ${%View Fancy}
                                             </a>
                                         </span>
                                         <span style="padding-right:5px; padding-left:5px">
                                             <a href="configSingleFile?timestamp=${timestamp}&amp;fileHash=${realFile.hashCode()}&amp;fileName=${fileNameDisplayAble}&amp;displayType=raw">
-                                                (RAW)
+                                                (${%RAW})
                                             </a>
                                         </span>
                                     </j:otherwise>

@@ -34,7 +34,7 @@
             <j:choose>
                 <j:when test="${historyDescriptions.size() == 0}">
                     <table style="width:100%">
-                        <caption>No pipeline configuration history available.</caption>
+                        <caption>${%No pipeline configuration history available.}</caption>
                     </table>
                 </j:when>
                 <j:otherwise>
@@ -44,11 +44,11 @@
                             <caption>${it.getProject().getFullName()}</caption>
                             <thead>
                                 <tr>
-                                    <th initialSortDir="up">Date</th>
-                                    <th>Associated Build</th>
-                                    <th>Browse Configuration</th>
-                                    <th>Config A</th>
-                                    <th>Config B</th>
+                                    <th initialSortDir="up">${%Date}</th>
+                                    <th>${%Associated Build}</th>
+                                    <th>${%Browse Configuration}</th>
+                                    <th>${%Config A}</th>
+                                    <th>${%Config B}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -67,21 +67,21 @@
                                         <td>
                                             <j:set var="buildNumber" value="${it.getBuildNumber(historyDescription.getTimestamp())}"/>
                                             <a href="../${buildNumber}">
-                                                Build
+                                                ${%Build}
                                                 #${buildNumber}
                                             </a>
                                             <j:if test="${it.isBuiltfromReplay(historyDescription.getTimestamp())}">
                                                 <j:set var="replayedBuild_Number" value="${it.getOriginalNumberFromReplayBuild(historyDescription.getTimestamp())}"/>
-                                                (<i>Replay</i> from
+                                                (<i>${%Replay}</i> ${%from}
                                                 <a href="../${replayedBuild_Number}">
-                                                    Build
+                                                    ${%Build}
                                                     #${replayedBuild_Number}
                                                 </a>
                                                 )
                                             </j:if>
                                         </td>
                                         <td>
-                                            <a href="configOverview?timestamp=${historyDescription.getTimestamp()}">Show Configuration</a>
+                                            <a href="configOverview?timestamp=${historyDescription.getTimestamp()}">${%Show Configuration}</a>
                                         </td>
 
                                         <!--No need to look at the historyDescriptions.size() > 2 case
