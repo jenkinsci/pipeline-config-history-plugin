@@ -175,11 +175,13 @@
                                                             <th class="singleLineView lineNum ${line.cssClass}">${line.lineNumLeft}</th>
                                                             <th class="singleLineView lineNum ${line.cssClass}">${line.lineNumRight}</th>
                                                             <td class="singleLineView ${line.cssClass}">
-                                                                <pre style="padding-left:18px">
-                                                                    <code>
-                                                                        ${line.content}
-                                                                    </code>
-                                                                </pre>
+                                                                <div style="margin-left: ${it.getLeadingWhitespace(line.content)*0.5}em;">
+                                                                    <pre style="padding-left:24px">
+                                                                        <code>
+                                                                            ${line.content.trim()}
+                                                                        </code>
+                                                                    </pre>
+                                                                </div>
                                                             </td>
                                                         </tr>
                                                     </j:when>
@@ -190,10 +192,11 @@
                                                             <th class="singleLineView lineNum ${line.cssClass}">${line.lineNumRight}</th>
                                                             <td class="singleLineView ${line.cssClass}">
                                                                 <div class="diffLine_Modifier plus_style">+</div>
-                                                                <div>
-                                                                    <pre>
+                                                                <j:set var="indentValue" value="${it.getLeadingWhitespace(line.content)*0.5}"/>
+                                                                <div style="margin-left:${indentValue}em; display:block">
+                                                                    <pre style="padding-left:24px">
                                                                         <code>
-                                                                            ${line.content}
+                                                                            ${line.content.trim()}
                                                                         </code>
                                                                     </pre>
                                                                 </div>
@@ -207,10 +210,11 @@
                                                             <th class="singleLineView lineNum ${line.cssClass}"></th>
                                                             <td class="singleLineView ${line.cssClass}">
                                                                 <div class="diffLine_Modifier minus_style">-</div>
-                                                                <div>
-                                                                    <pre>
+                                                                <j:set var="indentValue" value="${it.getLeadingWhitespace(line.content)*0.5}"/>
+                                                                <div style="margin-left:${indentValue}em; display:block">
+                                                                    <pre style="padding-left:24px">
                                                                         <code>
-                                                                            ${line.content}
+                                                                            ${line.content.trim()}
                                                                         </code>
                                                                     </pre>
                                                                 </div>
@@ -343,19 +347,23 @@
                                                                 <j:otherwise>
                                                                     <th class="lineNum">${line.left.lineNumber}</th>
                                                                     <td class="${line.left.cssClass}">
-                                                                        <pre>
-                                                                            <code>
-                                                                                ${line.left.text}
-                                                                            </code>
-                                                                        </pre>
+                                                                        <div style="margin-left: ${it.getLeadingWhitespace(line.left.text)*0.5}em;">
+                                                                            <pre>
+                                                                                <code>
+                                                                                    ${line.left.text.trim()}
+                                                                                </code>
+                                                                            </pre>
+                                                                        </div>
                                                                     </td>
                                                                     <th class="lineNum">${line.right.lineNumber}</th>
                                                                     <td class="${line.right.cssClass}">
-                                                                        <pre>
-                                                                            <code>
-                                                                                ${line.right.text}
-                                                                            </code>
-                                                                        </pre>
+                                                                        <div style="margin-left: ${it.getLeadingWhitespace(line.right.text)*0.5}em;">
+                                                                            <pre>
+                                                                                <code>
+                                                                                    ${line.right.text.trim()}
+                                                                                </code>
+                                                                            </pre>
+                                                                        </div>
                                                                     </td>
                                                                 </j:otherwise>
                                                             </j:choose>
