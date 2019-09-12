@@ -712,6 +712,10 @@ public class PipelineConfigHistoryProjectAction implements Action {
     }
   }
 
+  public int getLeadingWhitespace(String str) {
+    return str == null ? 0 : str.indexOf(str.trim());
+  }
+
   @CheckForNull
   @Override
   public String getIconFileName() {
