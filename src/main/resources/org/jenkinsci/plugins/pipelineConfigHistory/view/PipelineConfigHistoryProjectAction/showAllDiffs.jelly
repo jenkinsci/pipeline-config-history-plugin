@@ -466,7 +466,7 @@
                                                                                                 <j:choose>
                                                                                                     <j:when test="${line.isChange()}">
                                                                                                         <code class="hljs">
-                                                                                                            ${line.left.text.trim()}
+                                                                                                            ${line.right.text.trim()}
                                                                                                         </code>
                                                                                                     </j:when>
                                                                                                     <j:otherwise>
