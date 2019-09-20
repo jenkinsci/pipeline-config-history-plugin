@@ -72,7 +72,7 @@ public class PipelineConfigHistoryProjectActionTest {
 			"}</pre></code>";
 	public static final String SCRIPT_SCRIPT2_DIFFLINES =
 			"none {, none {\n" +
-			"//nothing, //nothing2\n" +
+			"//nothing, //nothing<span class=\"editNewInline\">2</span>\n" +
 			"}, }";
 
 	public PipelineConfigHistoryProjectAction sut;
