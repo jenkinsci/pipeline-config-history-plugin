@@ -56,9 +56,13 @@ public class GetDiffLines {
   private final DiffRowGenerator dfg;
 
   /**
-   * Class for inline diffs.
+   * CSS Class for new-line inline diffs.
    */
   private static final String INLINE_NEW_CSS_CLASS = "editNewInline";
+
+  /**
+   * CSS Class for old-line inline diffs.
+   */
   private static final String INLINE_OLD_CSS_CLASS = "editOldInline";
 
   /**
