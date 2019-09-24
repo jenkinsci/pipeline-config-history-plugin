@@ -239,11 +239,14 @@
                                                                                 <div class="diffLine_Modifier plus_style">+</div>
                                                                                 <j:set var="indentValue" value="${it.getLeadingWhitespace(line.content)*0.5}"/>
                                                                                 <div style="margin-left:${indentValue}em; display:block">
-                                                                                    <pre style="padding-left:24px">
-                                                                                        <code>
+                                                                                    <div style="padding-left:24px">
+                                                                                        <!--this is not affected by highlight.js since it may contain inline diff highlighting
+                                                                                        which would break highlight.js for the rest of the file-->
+                                                                                        <!--todo maybe fix highlight.js to accept tagged strings? Filter Tags and merge afterwards (hard)-->
+                                                                                        <code class="hljs">
                                                                                             ${line.content.trim()}
                                                                                         </code>
-                                                                                    </pre>
+                                                                                    </div>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -257,11 +260,14 @@
                                                                                 <div class="diffLine_Modifier minus_style">-</div>
                                                                                 <j:set var="indentValue" value="${it.getLeadingWhitespace(line.content)*0.5}"/>
                                                                                 <div style="margin-left:${indentValue}em; display:block">
-                                                                                    <pre style="padding-left:24px">
-                                                                                        <code>
+                                                                                    <div style="padding-left:24px">
+                                                                                        <!--this is not affected by highlight.js since it may contain inline diff highlighting
+                                                                                        which would break highlight.js for the rest of the file-->
+                                                                                        <!--todo maybe fix highlight.js to accept tagged strings? Filter Tags and merge afterwards (hard)-->
+                                                                                        <code class="hljs">
                                                                                             ${line.content.trim()}
                                                                                         </code>
-                                                                                    </pre>
+                                                                                    </div>
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
@@ -438,21 +444,39 @@
                                                                                         <th class="lineNum ${line.left.cssClass}">${line.left.lineNumber}</th>
                                                                                         <td class="${line.left.cssClass}">
                                                                                             <div style="margin-left: ${it.getLeadingWhitespace(line.left.text)*0.5}em;">
-                                                                                                <pre>
-                                                                                                    <code>
-                                                                                                        ${line.left.text.trim()}
-                                                                                                    </code>
-                                                                                                </pre>
+                                                                                                <j:choose>
+                                                                                                    <j:when test="${line.isChange()}">
+                                                                                                        <code class="hljs">
+                                                                                                            ${line.left.text.trim()}
+                                                                                                        </code>
+                                                                                                    </j:when>
+                                                                                                    <j:otherwise>
+                                                                                                        <pre>
+                                                                                                            <code>
+                                                                                                                ${line.left.text.trim()}
+                                                                                                            </code>
+                                                                                                        </pre>
+                                                                                                    </j:otherwise>
+                                                                                                </j:choose>
                                                                                             </div>
                                                                                         </td>
                                                                                         <th class="lineNum ${line.right.cssClass}">${line.right.lineNumber}</th>
                                                                                         <td class="${line.right.cssClass}">
                                                                                             <div style="margin-left: ${it.getLeadingWhitespace(line.right.text)*0.5}em;">
-                                                                                                <pre>
-                                                                                                    <code>
-                                                                                                        ${line.right.text.trim()}
-                                                                                                    </code>
-                                                                                                </pre>
+                                                                                                <j:choose>
+                                                                                                    <j:when test="${line.isChange()}">
+                                                                                                        <code class="hljs">
+                                                                                                            ${line.right.text.trim()}
+                                                                                                        </code>
+                                                                                                    </j:when>
+                                                                                                    <j:otherwise>
+                                                                                                        <pre>
+                                                                                                            <code>
+                                                                                                                ${line.right.text.trim()}
+                                                                                                            </code>
+                                                                                                        </pre>
+                                                                                                    </j:otherwise>
+                                                                                                </j:choose>
                                                                                             </div>
                                                                                         </td>
                                                                                     </j:otherwise>

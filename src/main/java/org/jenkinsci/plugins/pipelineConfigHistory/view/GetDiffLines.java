@@ -56,16 +56,29 @@ public class GetDiffLines {
   private final DiffRowGenerator dfg;
 
   /**
+   * CSS Class for new-line inline diffs.
+   */
+  private static final String INLINE_NEW_CSS_CLASS = "editNewInline";
+
+  /**
+   * CSS Class for old-line inline diffs.
+   */
+  private static final String INLINE_OLD_CSS_CLASS = "editOldInline";
+
+  /**
    * Constructor.
    *
    * @param diffLines to construct the {@link SideBySideView} for.
    */
   public GetDiffLines(List<String> diffLines) {
-    final DiffRowGenerator.Builder builder = new DiffRowGenerator.Builder();
-    builder.columnWidth(Integer.MAX_VALUE);
-    dfg = builder.build();
+    this.dfg = new DiffRowGenerator.Builder()
+        .showInlineDiffs(true)
+        .InlineNewCssClass(INLINE_NEW_CSS_CLASS)
+        .InlineOldCssClass(INLINE_OLD_CSS_CLASS)
+        .columnWidth(Integer.MAX_VALUE)
+        .build();
     this.diffLines = diffLines;
-    view = new SideBySideView();
+    this.view = new SideBySideView();
   }
 
   /**

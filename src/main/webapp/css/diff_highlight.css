@@ -183,6 +183,21 @@ code.hljs {
     padding:0px;
 }
 
+/*
+#####################################################################
+###                        inline diff hl                         ###
+#####################################################################
+*/
+span.editNewInline {
+    background-color: rgb(162, 242, 181);
+    border: 1px solid rgb(142, 232, 163);
+    border-radius: 2px;
+}
+span.editOldInline {
+    background-color: rgb(237, 159, 168);
+    border: 1px solid rgb(237, 144, 153);
+    border-radius: 2px;
+}
 
 /*
 #####################################################################
