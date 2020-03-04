@@ -11,7 +11,7 @@ On each completed build built from a pipeline config (including
 libraries) which differs from the latest history entry, a new history
 entry is created.
 
-These information are stored:
+**These information are stored:**
 
 -   The Jenkinsfile (or the pipeline script if you're not using pipeline
     via scm)
@@ -56,7 +56,7 @@ require a modification in your Jenkinsfile and/ or library scm.
 
 # Open issues
 
-TODO: include issue tracker 
+**TODO**: include issue tracker 
 
 ------------------------------------------------------------------------
 
@@ -69,10 +69,10 @@ on Github.
 ------------------------------------------------------------------------
 # Notes
 
-* This plugin uses highlight.js for syntax highlighting (code and diffs). See
+* This plugin uses *highlight.js* for syntax highlighting (code and diffs). See
     + [github](https://github.com/highlightjs/highlight.js/)
     + [homepage](https://highlightjs.org/)
     
-#### Development: Make hpi:run work with shared libraries
-* install shared library plugin (if not installed already)
-* install git (if you want to use the shared library plugin with git)
+* Development: Make `hpi:run` work with shared libraries
+    * install shared library plugin (if not installed already)
+    * install git (if you want to use the shared library plugin with git)
