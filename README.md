@@ -55,12 +55,6 @@ require a modification in your Jenkinsfile and/ or library scm.
 
 ------------------------------------------------------------------------
 
-# Open issues
-
-**TODO**: include issue tracker 
-
-------------------------------------------------------------------------
-
 # Changelog
 
 See
