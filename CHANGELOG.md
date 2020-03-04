@@ -4,6 +4,7 @@ All notable changes to this project are documented in this file.
 ## [1.6] - tbd
 * Fixed: lines weren't correctly indented when "auto-wrapped".
 * New feature: Add inline diff marks.
+* Move documentation to github.
 
 ## [1.5] - 09.09.19 
 * New feature: Add a line-under-line view for diffs
