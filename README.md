@@ -2,10 +2,9 @@ Pipeline Config History Plugin
 ==============================
 [![Build Status](https://ci.jenkins.io/buildStatus/icon?job=Plugins/pipeline-config-history-plugin/master)](https://ci.jenkins.io/job/plugins/job/pipeline-config-history-plugin/)
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/pipeline-config-history.svg)](https://plugins.jenkins.io/pipeline-config-history)
-[![GitHub release](https://img.shields.io/github/release/jenkinsci/pipeline-config-history-plugin.svg?label=changelog)](https://github.com/jenkinsci/pipeline-config-history-plugin/releases/latest)
 [![Issues](https://img.shields.io/github/issues/jenkinsci/pipeline-config-history-plugin)](https://github.com/jenkinsci/pipeline-config-history-plugin/issues)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/pipeline-config-history.svg?color=blue)](https://plugins.jenkins.io/pipeline-config-history)
-
+[![Contributors](https://img.shields.io/github/contributors/jenkinsci/pipeline-config-history-plugin.svg)](https://github.com/jenkinsci/configuration-as-code-plugin/graphs/contributors)
 
 This Plugin tracks changes in your pipeline configuration on a build
 basis (including replay builds):  
