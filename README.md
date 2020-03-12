@@ -34,23 +34,20 @@ require a modification in your Jenkinsfile and/ or library scm.
 
 #### Index Page
 
-![](https://wiki.jenkins.io/download/attachments/175210534/image2019-5-15_13-44-54.png?version=1&modificationDate=1557920696000&api=v2)
-
-#### Config Revision Overview Page
-
-![](https://wiki.jenkins.io/download/attachments/175210534/image2019-5-15_14-11-7.png?version=1&modificationDate=1557922269000&api=v2)
-
-#### Single File Page
-
-![](https://wiki.jenkins.io/download/attachments/175210534/image2019-5-15_13-53-17.png?version=1&modificationDate=1557921198000&api=v2)
-
-#### Single File Diff
-
-![](https://wiki.jenkins.io/download/attachments/175210534/image2019-9-12_15-30-49.png?version=1&modificationDate=1568295051000&api=v2)  
+![](docs/img/index.png)
 
 #### All Diffs In One Page
 
-![](https://wiki.jenkins.io/download/attachments/175210534/image2019-9-12_15-34-15.png?version=1&modificationDate=1568295256000&api=v2) 
+![](docs/img/all_diffs.png) 
+
+#### Config Revision Overview Page
+
+![](docs/img/revision_file_overview.png)
+
+#### Single File Page
+
+![](docs/img/single_file.png)
+
 
 
 ------------------------------------------------------------------------
