@@ -2,21 +2,69 @@ Pipeline Config History Plugin
 ==============================
 [![Build Status](https://ci.jenkins.io/buildStatus/icon?job=Plugins/pipeline-config-history-plugin/master)](https://ci.jenkins.io/job/plugins/job/pipeline-config-history-plugin/)
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/pipeline-config-history.svg)](https://plugins.jenkins.io/pipeline-config-history)
+[![Issues](https://img.shields.io/github/issues/jenkinsci/pipeline-config-history-plugin)](https://github.com/jenkinsci/pipeline-config-history-plugin/issues)
+[![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/pipeline-config-history.svg?color=blue)](https://plugins.jenkins.io/pipeline-config-history)
+[![Contributors](https://img.shields.io/github/contributors/jenkinsci/pipeline-config-history-plugin.svg)](https://github.com/jenkinsci/configuration-as-code-plugin/graphs/contributors)
 
-Jenkins plugin which, not unlike [JobConfigHistory](https://plugins.jenkins.io/jobConfigHistory),
-creates a history of pipeline configurations, triggered by their builds' "onCompletion" events. 
+This Plugin tracks changes in your pipeline configuration on a build
+basis (including replay builds):  
+On each completed build built from a pipeline config (including
+libraries) which differs from the latest history entry, a new history
+entry is created.
 
-Here you especially are able to see and compare changes in pipeline Libraries, 
-which are hidden in jobConfigHistory (or replay).
+**These information are stored:**
+
+-   The Jenkinsfile (or the pipeline script if you're not using pipeline
+    via scm)
+-   Globally shared libraries
+-   Shared Libraries accessible to the folder your pipeline might be
+    included in.
+
+The single configurations are viewable file-by-file with each file being
+downloadable.
+
+You can also easily compare pipeline changes between two builds with a
+file-wise or all-in-one side-by-side or line-under-line diff view.  
+Restoring old configurations however is not possible, since that would
+require a modification in your Jenkinsfile and/ or library scm.
+
+------------------------------------------------------------------------
+
+# Pictures
+
+#### Index Page
+
+![](docs/img/index.png)
+
+#### All Diffs In One Page
+
+![](docs/img/all_diffs.png) 
+
+#### Config Revision Overview Page
+
+![](docs/img/revision_file_overview.png)
+
+#### Single File Page
+
+![](docs/img/single_file.png)
 
 
-Make hpi:run work with shared libraries
----------------------------------------
-* install shared library plugin (if not installed already)
-* install git (if you want to use the shared library plugin with git)
 
-Notes
----------------------------------------
-* This plugin uses highlight.js for syntax highlighting (code and diffs). See
+------------------------------------------------------------------------
+
+# Changelog
+
+See
+[Changelog](https://github.com/jenkinsci/pipeline-config-history-plugin/blob/master/CHANGELOG.md)
+on Github.
+
+------------------------------------------------------------------------
+# Notes
+
+* This plugin uses *highlight.js* for syntax highlighting (code and diffs). See
     + [github](https://github.com/highlightjs/highlight.js/)
     + [homepage](https://highlightjs.org/)
+    
+* Development: Make `hpi:run` work with shared libraries
+    * install shared library plugin (if not installed already)
+    * install git (if you want to use the shared library plugin with git)
