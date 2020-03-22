@@ -30,7 +30,6 @@
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
         <version>3.47</version>
-        <relativePath />
     </parent>
 
     <artifactId>pipeline-config-history</artifactId>
@@ -172,4 +171,16 @@
             <timezone>+1</timezone>
         </developer>
     </developers>
+    <repositories>
+      <repository>
+        <id>repo.jenkins-ci.org</id>
+        <url>https://repo.jenkins-ci.org/public/</url>
+      </repository>
+    </repositories>
+    <pluginRepositories>
+      <pluginRepository>
+        <id>repo.jenkins-ci.org</id>
+        <url>https://repo.jenkins-ci.org/public/</url>
+      </pluginRepository>
+    </pluginRepositories>
 </project>
