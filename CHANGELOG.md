@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project are documented in this file.
 
-## [1.6] - tbd
+## [1.6] - 22.03.2020
 * Fixed: lines weren't correctly indented when "auto-wrapped".
 * New feature: Add inline diff marks.
 * Move documentation to github.
