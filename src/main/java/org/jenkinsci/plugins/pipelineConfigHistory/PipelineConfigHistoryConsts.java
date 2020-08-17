@@ -74,11 +74,6 @@ public final class PipelineConfigHistoryConsts {
    */
   public static final String ID_FORMATTER = "yyyy-MM-dd_HH-mm-ss";
 
-  /**
-   * any plugins needed for this plugin to work should be listed here by their short names.
-   */
-  static final String[] REQUIRED_PLUGINS_SHORT_NAMES = {"workflow-aggregator"};
-
   public static final String LINK_SYMBOL = "\ud83d\udd17";
 
 }
