@@ -113,9 +113,13 @@
     <dependencies>
         <dependency>
             <groupId>org.jenkins-ci.plugins.workflow</groupId>
-            <artifactId>workflow-aggregator</artifactId>
-            <!--This is the lowest version that will make a hello world pipeline build and also trigger the FlowExecutionListener.-->
-            <version>2.6</version>
+            <artifactId>workflow-job</artifactId>
+            <version>2.30</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins.workflow</groupId>
+            <artifactId>workflow-cps</artifactId>
+            <version>2.61</version>
         </dependency>
 
         <!--Non-Jenkins dependencies-->
@@ -135,18 +139,6 @@
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
             <version>3.1.6</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>mailer</artifactId>
-            <version>1.20</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>script-security</artifactId>
-            <version>1.46</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

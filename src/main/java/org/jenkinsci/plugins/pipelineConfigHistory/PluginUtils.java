@@ -200,33 +200,6 @@ public final class PluginUtils {
   }
 
   /**
-   * Test if the required plugins are installed.
-   *
-   * @return whether the required plugins this plugin needs to work correctly are installed or not.
-   */
-  public static boolean requiredPluginsInstalled() {
-    return getMissingRequiredPlugins().equals("");
-  }
-
-  /**
-   * Get the missing required plugins as String.
-   *
-   * @return the missing required plugins.
-   */
-  public static String getMissingRequiredPlugins() {
-    List<PluginWrapper> plugins = Jenkins.get().getPluginManager().getPlugins();
-
-    HashSet<String> shortNames =
-        new HashSet<>(Arrays.asList(PipelineConfigHistoryConsts.REQUIRED_PLUGINS_SHORT_NAMES));
-
-    for (PluginWrapper pluginWrapper : plugins) {
-      String name = pluginWrapper.getShortName();
-      shortNames.remove(name);
-    }
-    return shortNames.isEmpty() ? "" : shortNames.toString();
-  }
-
-  /**
    * Test if the scripts contained in the two files are equal.
    *
    * @param xmlFile1 file1

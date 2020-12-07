@@ -49,13 +49,6 @@ public class PipelineConfigHistoryActionFactory extends TransientActionFactory<W
   @Nonnull
   @Override
   public Collection<? extends Action> createFor(@Nonnull WorkflowJob abstractItem) {
-
-    if (!PluginUtils.requiredPluginsInstalled()) {
-      LOG.log(Level.WARNING, "Required plugins missing: "
-          + PluginUtils.getMissingRequiredPlugins());
-      return Collections.emptyList();
-    }
-
     final PipelineConfigHistoryProjectAction newAction = new PipelineConfigHistoryProjectAction(
         abstractItem);
 
