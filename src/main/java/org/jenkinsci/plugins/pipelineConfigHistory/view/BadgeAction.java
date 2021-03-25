@@ -54,7 +54,7 @@ public class BadgeAction implements BuildBadgeAction, RunAction2 {
 
   @Override
   public String getUrlName() {
-    return run.getParent().getUrl() + this.url;
+    return "/" + run.getParent().getUrl() + this.url;
   }
 
   public String getTooltip() {
