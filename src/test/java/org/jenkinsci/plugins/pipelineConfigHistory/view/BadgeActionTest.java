@@ -96,7 +96,7 @@ public class BadgeActionTest {
     assertEquals(2, pipeline.getBuildsAsMap().size());
 
     String url = secondRun.getAction(BadgeAction.class).getUrlName();
-    assertTrue(url.matches("http://localhost:\\d{1,5}/jenkins/job/" 
+    assertTrue(url.matches("/job/" 
       + PIPELINE_NAME 
       + "/pipeline-config-history/showAllDiffs\\"
       + "?timestamp1=\\d{4}-\\d{2}-\\d{2}_\\d{2}-\\d{2}-\\d{2}"
