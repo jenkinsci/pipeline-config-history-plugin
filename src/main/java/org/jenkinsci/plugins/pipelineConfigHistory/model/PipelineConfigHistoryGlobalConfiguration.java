@@ -33,18 +33,22 @@ public class PipelineConfigHistoryGlobalConfiguration extends GlobalConfiguratio
 
   @Override
   public boolean configure(StaplerRequest request, JSONObject formData) {
-
-    maxHistoryEntries = formData.getString("maxHistoryEntries").trim();
-    maxDaysToKeepEntries = formData.getString("maxDaysToKeepEntries").trim();
-
+    request.bindJSON(this, formData);
     save();
     return true;
   }
 
   public String getMaxHistoryEntries() { return maxHistoryEntries;}
 
+  public void setMaxHistoryEntries(String maxHistoryEntries) {
+    this.maxHistoryEntries = maxHistoryEntries.trim();
+  }
+
   public String getMaxDaysToKeepEntries() { return  maxDaysToKeepEntries;}
 
+  public void setMaxDaysToKeepEntries(String maxDaysToKeepEntries) {
+    this.maxDaysToKeepEntries = maxDaysToKeepEntries.trim();
+  }
 
   public Optional<Integer> getMaxHistoryEntriesOptional() {
     try {
