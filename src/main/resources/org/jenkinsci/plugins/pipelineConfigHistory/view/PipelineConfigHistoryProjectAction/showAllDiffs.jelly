@@ -73,7 +73,7 @@
                                                 <j:if test="${it.buildExists(buildNumber_olderChange)}">
                                                     <td style="width:40%; border:none; text-align:right; padding:0px">
                                                         <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName().replaceAll('/','/job/')}/${buildNumber_olderChange}/replay/" style="text-decoration:none">
-                                                            <img src="${rootURL}/images/24x24/redo.png"/>
+                                                            <l:icon class="icon-redo icon-md"/>
                                                             ${%Replay Build}
                                                             ${buildNumber_olderChange}
                                                         </a>
@@ -114,7 +114,7 @@
                                                 <j:if test="${it.buildExists(buildNumber_newerChange)}">
                                                     <td style="width:40%; border:none; text-align:right; padding:0px">
                                                         <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName().replaceAll('/','/job/')}/${buildNumber_newerChange}/replay/" style="text-decoration:none">
-                                                            <img src="${rootURL}/images/24x24/redo.png"/>
+                                                            <l:icon class="icon-redo icon-md"/>
                                                             ${%Replay Build}
                                                             ${buildNumber_newerChange}
                                                         </a>
@@ -303,7 +303,7 @@
                                                 <j:if test="${it.buildExists(buildNumber_olderChange)}">
                                                     <td style="width:40%; border:none; text-align:right; padding:0px">
                                                         <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName().replaceAll('/','/job/')}/${buildNumber_olderChange}/replay/" style="text-decoration:none">
-                                                            <img src="${rootURL}/images/24x24/redo.png"/>
+                                                            <l:icon class="icon-redo icon-md"/>
                                                             ${%Replay Build}
                                                             ${buildNumber_olderChange}
                                                         </a>
@@ -345,7 +345,7 @@
                                                 <j:if test="${it.buildExists(buildNumber_newerChange)}">
                                                     <td style="width:40%; border:none; text-align:right; padding:0px">
                                                         <a class="describedElement" href="${rootURL}/job/${it.getProject().getFullName().replaceAll('/','/job/')}/${buildNumber_newerChange}/replay/" style="text-decoration:none">
-                                                            <img src="${rootURL}/images/24x24/redo.png"/>
+                                                            <l:icon class="icon-redo icon-md"/>
                                                             ${%Replay Build}
                                                             ${buildNumber_newerChange}
                                                         </a>
