@@ -275,6 +275,8 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
               (PipelineHistoryDescription) historyXml.getXStream().fromXML(input));
         } catch (NoSuchFileException ignored) {
           // The writer copies build.xml before publishing history.xml.
+          LOG.log(Level.FINE, "Skipping pipeline history revision with missing metadata: {0}",
+              historyXml.getFile());
         }
       }
     }
