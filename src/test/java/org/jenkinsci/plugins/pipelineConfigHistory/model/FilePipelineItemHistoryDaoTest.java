@@ -23,6 +23,8 @@
  */
 package org.jenkinsci.plugins.pipelineConfigHistory.model;
 
+import hudson.XmlFile;
+import org.jenkinsci.plugins.pipelineConfigHistory.PipelineConfigHistoryConsts;
 import org.jenkinsci.plugins.pipelineConfigHistory.PluginUtils;
 import org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition;
 import org.jenkinsci.plugins.workflow.job.WorkflowJob;
@@ -32,6 +34,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.Optional;
 
@@ -97,6 +101,32 @@ public class FilePipelineItemHistoryDaoTest {
 		assertEquals(pipelineProject, pipelineHistoryDescriptionOptional.get().getWorkflowJob());
 		assertEquals(pipelineProject.getFullName(), pipelineHistoryDescriptionOptional.get().getFullName());
 		assertEquals(1, pipelineHistoryDescriptionOptional.get().getBuildNumber());
+	}
+
+	@Test
+	public void getRevisionsSkipsRevisionUntilHistoryXmlIsWritten() throws Exception {
+		FilePipelineItemHistoryDao historyDao =
+				new FilePipelineItemHistoryDao(Files.createTempDirectory(
+					jenkinsRule.jenkins.getRootDir().toPath(), "pipeline-history").toFile());
+		createNewBuild(pipelineProject, SCRIPT);
+		historyDao.createHistory(pipelineProject, 1);
+		Map<String, PipelineHistoryDescription> completed = historyDao.getRevisions(pipelineProject);
+		assertEquals(1, completed.size());
+
+		Path completedBuildXml = historyDao.getMostRecentRevision(pipelineProject).toPath()
+				.resolve(PipelineConfigHistoryConsts.BUILD_XML_FILENAME);
+		String pendingId = "2099-01-01_00-00-00";
+		Path pending = Files.createDirectory(historyDao.getHistoryRootDirectory(pipelineProject)
+				.toPath().resolve(pendingId));
+		Files.copy(completedBuildXml, pending.resolve(PipelineConfigHistoryConsts.BUILD_XML_FILENAME));
+
+		assertEquals(completed.keySet(), historyDao.getRevisions(pipelineProject).keySet());
+
+		new XmlFile(pending.resolve(PipelineConfigHistoryConsts.HISTORY_XML_FILENAME).toFile())
+				.write(new PipelineHistoryDescription(pendingId, pipelineProject.getFullName(), "Jenkinsfile", 2));
+		Map<String, PipelineHistoryDescription> revisions = historyDao.getRevisions(pipelineProject);
+		assertEquals(2, revisions.size());
+		assertEquals(2, revisions.get(pendingId).getBuildNumber());
 	}
 
 	@Test
