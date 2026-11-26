@@ -29,7 +29,9 @@ import hudson.XmlFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -267,8 +269,13 @@ public class FilePipelineItemHistoryDao implements PipelineItemHistoryDao {
       return map;
     } else {
       for (File historyDir : files) {
-        map.put(historyDir.getName(),
-            getPipelineHistoryDescriptionFromHistoryXml(getHistoryXmlFile(historyDir)));
+        XmlFile historyXml = getHistoryXmlFile(historyDir);
+        try (InputStream input = Files.newInputStream(historyXml.getFile().toPath())) {
+          map.put(historyDir.getName(),
+              (PipelineHistoryDescription) historyXml.getXStream().fromXML(input));
+        } catch (NoSuchFileException ignored) {
+          // The writer copies build.xml before publishing history.xml.
+        }
       }
     }
 
